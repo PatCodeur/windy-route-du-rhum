@@ -1,6 +1,6 @@
 # Publication gratuite sur GitHub
 
-Le dépôt prévu est `PatCodeur/windy-route-du-rhum`. Le programme récupère le dernier relevé FTP et les archives chaque heure, puis publie uniquement les positions en HTTPS. L’ordinateur personnel peut rester éteint. Le plugin lui-même est ensuite envoyé aux serveurs officiels Windy.
+Le dépôt public est [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum). Le premier déploiement a réussi le 2 novembre 2026 : 115 bateaux identifiés, six classes et traces des archives. Le flux a été vérifié en HTTPS avec une autorisation CORS `*`. Le programme récupère le dernier relevé FTP et les archives chaque heure, puis publie uniquement les positions en HTTPS. L’ordinateur personnel peut rester éteint. Le plugin lui-même est ensuite envoyé aux serveurs officiels Windy.
 
 ## Configuration du dépôt
 
@@ -20,13 +20,13 @@ Dans **Settings → Pages → Build and deployment**, choisir **GitHub Actions**
 
 Dans **Actions → Actualiser les positions et publier le flux**, utiliser **Run workflow** sur la branche `main`. Le premier passage doit réussir avant de considérer le flux comme disponible.
 
-## Adresses attendues après un premier déploiement réussi
+## Adresses du flux publié
 
 - Accueil : `https://patcodeur.github.io/windy-route-du-rhum/`
 - Positions et traces : `https://patcodeur.github.io/windy-route-du-rhum/live/historique.json`
 - Contrôle du dernier relevé : `https://patcodeur.github.io/windy-route-du-rhum/live/status.json`
 
-Ces adresses sont prévues par la configuration ; leur présence dans ce document ne confirme pas leur mise en ligne. Contrôler le nombre de bateaux et la date UTC du relevé. Vérifier également que Windy peut lire le flux dans Safari et Chrome : HTTPS et autorisation CORS effective doivent être validés sur le site réel.
+Ces adresses ont été vérifiées après le premier déploiement. Contrôler le nombre de bateaux et la date UTC du relevé. Vérifier également que Windy peut lire le flux dans Safari et Chrome : HTTPS et autorisation CORS effective doivent être validés sur le site réel.
 
 ## Fonctionnement et reprise
 

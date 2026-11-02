@@ -1,6 +1,6 @@
 # Publier le suivi Route du Rhum pour les autres utilisateurs
 
-La préparation technique est disponible en version 0.9. La solution gratuite retenue utilise GitHub Actions et GitHub Pages : suivre [GITHUB-GRATUIT.md](GITHUB-GRATUIT.md). **Le flux et le plugin ne sont pas encore publiés.** Le dépôt est `PatCodeur/windy-route-du-rhum` ; l’adresse prévue du flux est indiquée dans le guide GitHub. Son accessibilité doit être vérifiée après le premier déploiement.
+La préparation technique est disponible en version 0.9. La solution gratuite retenue utilise GitHub Actions et GitHub Pages : suivre [GITHUB-GRATUIT.md](GITHUB-GRATUIT.md). **Le flux de positions est publié et vérifié ; l’envoi du plugin à Windy reste à effectuer.** Le dépôt est [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum) et le [flux HTTPS](https://patcodeur.github.io/windy-route-du-rhum/live/historique.json) contient les 115 bateaux identifiés. Le premier déploiement a réussi le 2 novembre 2026.
 
 Votre version locale fonctionne comme avant. Sa configuration FTP et son mot de passe ne font pas partie du paquet public.
 
