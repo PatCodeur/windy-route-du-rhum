@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "ESNext", "target": "es2022", "moduleResolution": "node",
+    "lib": ["es2022", "DOM"], "allowJs": true, "noEmit": true,
+    "paths": {
+      "@windy/*": ["./node_modules/@windycom/plugin-devtools/types/*", "./node_modules/@windycom/plugin-devtools/types/client/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.svelte", "src/**/*.js"]
+}

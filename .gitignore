@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.env
+*.log
+
+.ftp-config.json
+state/
+dist/live/
+release/
+work/
+deploy/runtime/
+
+.env.*
+__pycache__/
+*.pyc
+pages/

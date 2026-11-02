@@ -1,0 +1,23 @@
+{
+  "name": "windy-plugin-rhum-personnel",
+  "version": "0.9.0",
+  "private": true,
+  "type": "module",
+  "description": "Suivi de la flotte Route du Rhum sur Windy",
+  "scripts": {
+    "start": "rollup -w -c",
+    "build": "node tools/build.mjs",
+    "test": "node --test test/*.test.js",
+    "ftp:configure": "python3 tools/ftp-relay.py --configure",
+    "ftp:once": "python3 tools/ftp-relay.py --once",
+    "ftp": "python3 tools/ftp-relay.py",
+    "test:ftp": "python3 -m unittest discover -s test -p \"test_ftp_relay.py\"",
+    "build:public": "node tools/build-public.mjs",
+    "publish:check": "python3 tools/upload-plugin.py --dry-run",
+    "publish:windy": "python3 tools/upload-plugin.py",
+    "test:python": "python3 -m unittest discover -s test -p \"test_*.py\""
+  },
+  "dependencies": {
+    "@windycom/plugin-devtools": "^3.0.3"
+  }
+}

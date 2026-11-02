@@ -1,0 +1,11 @@
+{
+  "protocol": "ftp",
+  "host": "SERVEUR_FTP",
+  "port": 21,
+  "user": "IDENTIFIANT_FTP",
+  "remote_path": "pos.txt",
+  "archive_path": "Archives_posreports",
+  "interval_seconds": 300,
+  "timeout_seconds": 30,
+  "minimum_boats": 115
+}

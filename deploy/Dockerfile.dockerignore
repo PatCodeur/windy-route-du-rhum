@@ -1,0 +1,17 @@
+# Contexte strict : les données privées et les fichiers de développement
+# ne sont même pas envoyés au moteur Docker.
+**
+!src/
+!src/identities.js
+!src/historySnapshot.js
+!src/data.js
+!src/history.js
+!src/liveFeed.js
+!tools/
+!tools/publish-report.mjs
+!tools/ftp-relay.py
+!deploy/
+!deploy/Dockerfile
+!deploy/Dockerfile.dockerignore
+!deploy/http_server.py
+!deploy/run.py

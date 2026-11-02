@@ -1,0 +1,11 @@
+{
+  "protocol": "ftp",
+  "host": "ftp.exemple.fr",
+  "port": 21,
+  "user": "anonymous",
+  "remote_path": "pos.txt",
+  "archive_path": "Archives_posreports",
+  "interval_seconds": 300,
+  "timeout_seconds": 30,
+  "minimum_boats": 115
+}

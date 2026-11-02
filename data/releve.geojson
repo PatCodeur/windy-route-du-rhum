@@ -1,0 +1,3018 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "format_coordonnees": "deg-min",
+    "ordre_date": "mdy",
+    "decalage_source": "+0000",
+    "nombre_positions": 115,
+    "nombre_identites": 106,
+    "ids_sans_identite": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19
+    ],
+    "ids_sans_position": [
+      100
+    ],
+    "conventions_confirmees": true
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": 5,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.127166666666668,
+          47.907
+        ]
+      },
+      "properties": {
+        "id": 5,
+        "classe": "Ultim",
+        "skipper": "LAPERCHE Tom",
+        "bateau": "SVR LAZARTIGUE",
+        "rang_source": 1,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 248.0,
+        "vitesse_source": 31.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "47.5442N",
+        "longitude_source": "21.0763W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 6,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -20.520833333333332,
+          47.81666666666667
+        ]
+      },
+      "properties": {
+        "id": 6,
+        "classe": "Ultim",
+        "skipper": "LE CLEAC'H  Armel",
+        "bateau": "Maxi Banque Populaire XI",
+        "rang_source": 2,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 242.0,
+        "vitesse_source": 28.9,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "47.4900N",
+        "longitude_source": "20.3125W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 4,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -20.2145,
+          48.202666666666666
+        ]
+      },
+      "properties": {
+        "id": 4,
+        "classe": "Ultim",
+        "skipper": "COVILLE Thomas",
+        "bateau": "SODEBO ULTIM 3",
+        "rang_source": 3,
+        "date_source": "11/02/26 13:00:18",
+        "horodatage": "2026-11-02T13:00:18Z",
+        "direction_source": 237.0,
+        "vitesse_source": 25.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.1216N",
+        "longitude_source": "20.1287W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 3,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -19.779333333333334,
+          48.027166666666666
+        ]
+      },
+      "properties": {
+        "id": 3,
+        "classe": "Ultim",
+        "skipper": "CAUDRELIER Charles",
+        "bateau": "Maxi Edmond de Rothschild",
+        "rang_source": 4,
+        "date_source": "11/02/26 13:00:18",
+        "horodatage": "2026-11-02T13:00:18Z",
+        "direction_source": 236.0,
+        "vitesse_source": 26.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.0163N",
+        "longitude_source": "19.4676W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 2,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -19.669333333333334,
+          48.698166666666665
+        ]
+      },
+      "properties": {
+        "id": 2,
+        "classe": "Ultim",
+        "skipper": "BURTON Louis",
+        "bateau": "ARMAND THIERY",
+        "rang_source": 5,
+        "date_source": "11/02/26 13:00:18",
+        "horodatage": "2026-11-02T13:00:18Z",
+        "direction_source": 245.0,
+        "vitesse_source": 26.0,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.4189N",
+        "longitude_source": "19.4016W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 8,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.287,
+          49.48566666666667
+        ]
+      },
+      "properties": {
+        "id": 8,
+        "classe": "Ultim",
+        "skipper": "SOUDÉE Guirec",
+        "bateau": "LIAMM",
+        "rang_source": 6,
+        "date_source": "11/02/26 12:45:00",
+        "horodatage": "2026-11-02T12:45:00Z",
+        "direction_source": 243.0,
+        "vitesse_source": 32.6,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2914N",
+        "longitude_source": "17.1722W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.406666666666666,
+          48.98133333333333
+        ]
+      },
+      "properties": {
+        "id": 1,
+        "classe": "Ultim",
+        "skipper": "BARRIER Alexia",
+        "bateau": "IDEC SPORT-CIC",
+        "rang_source": 7,
+        "date_source": "11/02/26 12:45:00",
+        "horodatage": "2026-11-02T12:45:00Z",
+        "direction_source": 239.0,
+        "vitesse_source": 27.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.5888N",
+        "longitude_source": "16.2440W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 7,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.3305,
+          50.4355
+        ]
+      },
+      "properties": {
+        "id": 7,
+        "classe": "Ultim",
+        "skipper": "MARCHAND Anthony",
+        "bateau": "ACTUAL ULTIM 4",
+        "rang_source": 8,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 33.0,
+        "vitesse_source": 10.9,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.2613N",
+        "longitude_source": "14.1983W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 10,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.9785,
+          49.92616666666667
+        ]
+      },
+      "properties": {
+        "id": 10,
+        "classe": "Non renseignée",
+        "skipper": "",
+        "bateau": "Bateau #10",
+        "rang_source": 1,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 249.0,
+        "vitesse_source": 21.7,
+        "unite_vitesse": "nd",
+        "identite_connue": false,
+        "latitude_source": "49.5557N",
+        "longitude_source": "15.5871W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 19,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.4825,
+          49.554833333333335
+        ]
+      },
+      "properties": {
+        "id": 19,
+        "classe": "Non renseignée",
+        "skipper": "",
+        "bateau": "Bateau #19",
+        "rang_source": 2,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 232.0,
+        "vitesse_source": 19.9,
+        "unite_vitesse": "nd",
+        "identite_connue": false,
+        "latitude_source": "49.3329N",
+        "longitude_source": "15.2895W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 18,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.6645,
+          49.8795
+        ]
+      },
+      "properties": {
+        "id": 18,
+        "classe": "Non renseignée",
+        "skipper": "",
+        "bateau": "Bateau #18",
+        "rang_source": 3,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 242.0,
+        "vitesse_source": 25.5,
+        "unite_vitesse": "nd",
+        "identite_connue": false,
+        "latitude_source": "49.5277N",
+        "longitude_source": "15.3987W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 17,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.509333333333334,
+          49.83133333333333
+        ]
+      },
+      "properties": {
+        "id": 17,
+        "classe": "Non renseignée",
+        "skipper": "",
+        "bateau": "Bateau #17",
+        "rang_source": 4,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 242.0,
+        "vitesse_source": 21.4,
+        "unite_vitesse": "nd",
+        "identite_connue": false,
+        "latitude_source": "49.4988N",
+        "longitude_source": "15.3056W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 16,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.1855,
+          49.4655
+        ]
+      },
+      "properties": {
+        "id": 16,
+        "classe": "Non renseignée",
+        "skipper": "",
+        "bateau": "Bateau #16",
+        "rang_source": 5,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 237.0,
+        "vitesse_source": 24.2,
+        "unite_vitesse": "nd",
+        "identite_connue": false,
+        "latitude_source": "49.2793N",
+        "longitude_source": "15.1113W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 12,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.444666666666667,
+          49.88616666666667
+        ]
+      },
+      "properties": {
+        "id": 12,
+        "classe": "Non renseignée",
+        "skipper": "",
+        "bateau": "Bateau #12",
+        "rang_source": 6,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 240.0,
+        "vitesse_source": 24.3,
+        "unite_vitesse": "nd",
+        "identite_connue": false,
+        "latitude_source": "49.5317N",
+        "longitude_source": "15.2668W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 14,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.068666666666667,
+          49.403166666666664
+        ]
+      },
+      "properties": {
+        "id": 14,
+        "classe": "Non renseignée",
+        "skipper": "",
+        "bateau": "Bateau #14",
+        "rang_source": 7,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 241.0,
+        "vitesse_source": 24.4,
+        "unite_vitesse": "nd",
+        "identite_connue": false,
+        "latitude_source": "49.2419N",
+        "longitude_source": "15.0412W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 9,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.9095,
+          49.467
+        ]
+      },
+      "properties": {
+        "id": 9,
+        "classe": "Non renseignée",
+        "skipper": "",
+        "bateau": "Bateau #9",
+        "rang_source": 8,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 227.0,
+        "vitesse_source": 23.1,
+        "unite_vitesse": "nd",
+        "identite_connue": false,
+        "latitude_source": "49.2802N",
+        "longitude_source": "14.5457W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 13,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.0445,
+          49.95883333333333
+        ]
+      },
+      "properties": {
+        "id": 13,
+        "classe": "Non renseignée",
+        "skipper": "",
+        "bateau": "Bateau #13",
+        "rang_source": 9,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 230.0,
+        "vitesse_source": 22.4,
+        "unite_vitesse": "nd",
+        "identite_connue": false,
+        "latitude_source": "49.5753N",
+        "longitude_source": "15.0267W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 11,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.254166666666666,
+          49.586666666666666
+        ]
+      },
+      "properties": {
+        "id": 11,
+        "classe": "Non renseignée",
+        "skipper": "",
+        "bateau": "Bateau #11",
+        "rang_source": 10,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 235.0,
+        "vitesse_source": 23.0,
+        "unite_vitesse": "nd",
+        "identite_connue": false,
+        "latitude_source": "49.3520N",
+        "longitude_source": "14.1525W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 23,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.683666666666667,
+          49.392
+        ]
+      },
+      "properties": {
+        "id": 23,
+        "classe": "IMOCA",
+        "skipper": "BECCARIA BALDUZZI Amb.",
+        "bateau": "ALLAGRANDE MAPEI",
+        "rang_source": 1,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 237.0,
+        "vitesse_source": 25.2,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2352N",
+        "longitude_source": "15.4102W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 32,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.674833333333334,
+          49.457166666666666
+        ]
+      },
+      "properties": {
+        "id": 32,
+        "classe": "IMOCA",
+        "skipper": "GOODCHILD Sam",
+        "bateau": "MACIF SANTÉ PRÉVOYANCE",
+        "rang_source": 2,
+        "date_source": "11/02/26 13:00:21",
+        "horodatage": "2026-11-02T13:00:21Z",
+        "direction_source": 235.0,
+        "vitesse_source": 24.2,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2743N",
+        "longitude_source": "15.4049W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 34,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.4485,
+          49.6375
+        ]
+      },
+      "properties": {
+        "id": 34,
+        "classe": "IMOCA",
+        "skipper": "HOREAU Corentin",
+        "bateau": "MACSF",
+        "rang_source": 3,
+        "date_source": "11/02/26 13:00:38",
+        "horodatage": "2026-11-02T13:00:38Z",
+        "direction_source": 229.0,
+        "vitesse_source": 21.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.3825N",
+        "longitude_source": "15.2691W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 24,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.991333333333333,
+          50.032833333333336
+        ]
+      },
+      "properties": {
+        "id": 24,
+        "classe": "IMOCA",
+        "skipper": "BEYOU Jérémie",
+        "bateau": "CHARAL",
+        "rang_source": 4,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 218.0,
+        "vitesse_source": 22.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.0197N",
+        "longitude_source": "14.5948W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 26,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.017666666666667,
+          50.257666666666665
+        ]
+      },
+      "properties": {
+        "id": 26,
+        "classe": "IMOCA",
+        "skipper": "BONAFOUS Elodie",
+        "bateau": "ASSOCIATION PETITS PRINCES QUEGUINER",
+        "rang_source": 5,
+        "date_source": "11/02/26 13:00:18",
+        "horodatage": "2026-11-02T13:00:18Z",
+        "direction_source": 238.0,
+        "vitesse_source": 21.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.1546N",
+        "longitude_source": "15.0106W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 27,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.189666666666668,
+          49.68233333333333
+        ]
+      },
+      "properties": {
+        "id": 27,
+        "classe": "IMOCA",
+        "skipper": "CLAPCICH Francesca",
+        "bateau": "11TH HOUR RACING",
+        "rang_source": 6,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 233.0,
+        "vitesse_source": 26.0,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.4094N",
+        "longitude_source": "14.1138W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 38,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.498166666666666,
+          50.23416666666667
+        ]
+      },
+      "properties": {
+        "id": 38,
+        "classe": "IMOCA",
+        "skipper": "SIMON Sébastien",
+        "bateau": "GROUPE DUBREUIL - AIR CARAÏBES",
+        "rang_source": 7,
+        "date_source": "11/02/26 13:00:18",
+        "horodatage": "2026-11-02T13:00:18Z",
+        "direction_source": 234.0,
+        "vitesse_source": 22.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.1405N",
+        "longitude_source": "14.2989W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 33,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -14.262333333333334,
+          50.20466666666667
+        ]
+      },
+      "properties": {
+        "id": 33,
+        "classe": "IMOCA",
+        "skipper": "HERRMANN Boris",
+        "bateau": "MALIZIA 4",
+        "rang_source": 8,
+        "date_source": "11/02/26 12:45:03",
+        "horodatage": "2026-11-02T12:45:03Z",
+        "direction_source": 225.0,
+        "vitesse_source": 20.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.1228N",
+        "longitude_source": "14.1574W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 41,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.509333333333334,
+          49.61816666666667
+        ]
+      },
+      "properties": {
+        "id": 41,
+        "classe": "IMOCA",
+        "skipper": "TRIPON Armel",
+        "bateau": "LES P'TITS DOUDOUS",
+        "rang_source": 9,
+        "date_source": "11/02/26 12:45:18",
+        "horodatage": "2026-11-02T12:45:18Z",
+        "direction_source": 233.0,
+        "vitesse_source": 20.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.3709N",
+        "longitude_source": "13.3056W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 22,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.208833333333333,
+          49.6795
+        ]
+      },
+      "properties": {
+        "id": 22,
+        "classe": "IMOCA",
+        "skipper": "BEAUDART Davy",
+        "bateau": "BUREAU VALLEE",
+        "rang_source": 10,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 241.0,
+        "vitesse_source": 16.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.4077N",
+        "longitude_source": "12.1253W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 39,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.208833333333333,
+          49.851
+        ]
+      },
+      "properties": {
+        "id": 39,
+        "classe": "IMOCA",
+        "skipper": "SOREL  Maxime",
+        "bateau": "TEAM MAXIME SOREL",
+        "rang_source": 11,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 238.0,
+        "vitesse_source": 18.0,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.5106N",
+        "longitude_source": "12.1253W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 25,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -11.092,
+          50.122
+        ]
+      },
+      "properties": {
+        "id": 25,
+        "classe": "IMOCA",
+        "skipper": "BOISSIÈRES Arnaud",
+        "bateau": "APRIL Marine - recherche co partenaire",
+        "rang_source": 12,
+        "date_source": "11/02/26 13:00:18",
+        "horodatage": "2026-11-02T13:00:18Z",
+        "direction_source": 230.0,
+        "vitesse_source": 16.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.0732N",
+        "longitude_source": "11.0552W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 21,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.830166666666667,
+          50.05766666666667
+        ]
+      },
+      "properties": {
+        "id": 21,
+        "classe": "IMOCA",
+        "skipper": "ATTWELL Pierre-Louis",
+        "bateau": "RESILIENT",
+        "rang_source": 13,
+        "date_source": "11/02/26 12:45:00",
+        "horodatage": "2026-11-02T12:45:00Z",
+        "direction_source": 228.0,
+        "vitesse_source": 17.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.0346N",
+        "longitude_source": "10.4981W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 29,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.834166666666667,
+          49.9415
+        ]
+      },
+      "properties": {
+        "id": 29,
+        "classe": "IMOCA",
+        "skipper": "D'ESTAIS Nicolas",
+        "bateau": "CAFÉ JOYEUX",
+        "rang_source": 14,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 226.0,
+        "vitesse_source": 12.6,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.5649N",
+        "longitude_source": "10.5005W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 36,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.394,
+          49.628
+        ]
+      },
+      "properties": {
+        "id": 36,
+        "classe": "IMOCA",
+        "skipper": "MARSSET Sébastien",
+        "bateau": "FOUSSIER",
+        "rang_source": 15,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 235.0,
+        "vitesse_source": 15.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.3768N",
+        "longitude_source": "10.2364W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 40,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.9895,
+          49.07266666666667
+        ]
+      },
+      "properties": {
+        "id": 40,
+        "classe": "IMOCA",
+        "skipper": "SUSUKI Matasomo",
+        "bateau": "MILAI - FURUNO",
+        "rang_source": 16,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 307.0,
+        "vitesse_source": 16.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0436N",
+        "longitude_source": "9.5937W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 20,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.78,
+          49.06
+        ]
+      },
+      "properties": {
+        "id": 20,
+        "classe": "IMOCA",
+        "skipper": "AMEDEO Fabrice",
+        "bateau": "FDJ UNITED - OCÉAN CALLING",
+        "rang_source": 17,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 228.0,
+        "vitesse_source": 14.0,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0360N",
+        "longitude_source": "9.4680W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 35,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.923833333333333,
+          49.404666666666664
+        ]
+      },
+      "properties": {
+        "id": 35,
+        "classe": "IMOCA",
+        "skipper": "MARAIS Robin",
+        "bateau": "Respire - Ma Chance Moi Aussi",
+        "rang_source": 18,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 310.0,
+        "vitesse_source": 14.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2428N",
+        "longitude_source": "9.5543W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 30,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.804166666666667,
+          49.96783333333333
+        ]
+      },
+      "properties": {
+        "id": 30,
+        "classe": "IMOCA",
+        "skipper": "DARAMY Jean-Baptiste",
+        "bateau": "ANETT - KALHYGE",
+        "rang_source": 19,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 233.0,
+        "vitesse_source": 10.7,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.5807N",
+        "longitude_source": "9.4825W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 28,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.994833333333334,
+          50.33083333333333
+        ]
+      },
+      "properties": {
+        "id": 28,
+        "classe": "IMOCA",
+        "skipper": "COUSIN Manuel",
+        "bateau": "COUP DE POUCE",
+        "rang_source": 20,
+        "date_source": "11/02/26 13:00:18",
+        "horodatage": "2026-11-02T13:00:18Z",
+        "direction_source": 305.0,
+        "vitesse_source": 16.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.1985N",
+        "longitude_source": "9.5969W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 37,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.6945,
+          49.70666666666666
+        ]
+      },
+      "properties": {
+        "id": 37,
+        "classe": "IMOCA",
+        "skipper": "ROUGER Nicolas",
+        "bateau": "Demain c'est loin",
+        "rang_source": 21,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 298.0,
+        "vitesse_source": 10.6,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.4240N",
+        "longitude_source": "8.4167W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 31,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.966666666666667,
+          48.717333333333336
+        ]
+      },
+      "properties": {
+        "id": 31,
+        "classe": "IMOCA",
+        "skipper": "DORANGE Violette",
+        "bateau": "INITIATIVES COEUR",
+        "rang_source": 22,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 268.0,
+        "vitesse_source": 0.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.4304N",
+        "longitude_source": "3.5800W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 80,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.303666666666667,
+          48.9915
+        ]
+      },
+      "properties": {
+        "id": 80,
+        "classe": "Class40",
+        "skipper": "ROSETTI Luca",
+        "bateau": "MACCAFERRI FUTURA",
+        "rang_source": 1,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 231.0,
+        "vitesse_source": 15.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.5949N",
+        "longitude_source": "10.1822W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 74,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.303166666666666,
+          49.311
+        ]
+      },
+      "properties": {
+        "id": 74,
+        "classe": "Class40",
+        "skipper": "PIROUELLE Guillaume",
+        "bateau": "SOGESTRAN SEAFRIGO",
+        "rang_source": 2,
+        "date_source": "11/02/26 12:45:01",
+        "horodatage": "2026-11-02T12:45:01Z",
+        "direction_source": 234.0,
+        "vitesse_source": 15.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1866N",
+        "longitude_source": "10.1819W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 64,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.158,
+          49.067166666666665
+        ]
+      },
+      "properties": {
+        "id": 64,
+        "classe": "Class40",
+        "skipper": "LEBOUCHER  Pierre",
+        "bateau": "Institut imagine",
+        "rang_source": 3,
+        "date_source": "11/02/26 12:45:00",
+        "horodatage": "2026-11-02T12:45:00Z",
+        "direction_source": 303.0,
+        "vitesse_source": 16.9,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0403N",
+        "longitude_source": "10.0948W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 83,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.941,
+          48.5895
+        ]
+      },
+      "properties": {
+        "id": 83,
+        "classe": "Class40",
+        "skipper": "SERICANO Matteo",
+        "bateau": "LUCENTE",
+        "rang_source": 4,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 235.0,
+        "vitesse_source": 15.6,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.3537N",
+        "longitude_source": "9.5646W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 54,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.973333333333333,
+          48.68566666666667
+        ]
+      },
+      "properties": {
+        "id": 54,
+        "classe": "Class40",
+        "skipper": "FORNARO Andrea",
+        "bateau": "INFLUENCE 2",
+        "rang_source": 5,
+        "date_source": "11/02/26 13:00:01",
+        "horodatage": "2026-11-02T13:00:01Z",
+        "direction_source": 231.0,
+        "vitesse_source": 14.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.4114N",
+        "longitude_source": "9.5840W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 45,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.206166666666666,
+          49.13316666666667
+        ]
+      },
+      "properties": {
+        "id": 45,
+        "classe": "Class40",
+        "skipper": "BONNIER Jules",
+        "bateau": "PLASTIC ODYSSEY",
+        "rang_source": 6,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 305.0,
+        "vitesse_source": 17.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0799N",
+        "longitude_source": "10.1237W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 70,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.1645,
+          49.10433333333334
+        ]
+      },
+      "properties": {
+        "id": 70,
+        "classe": "Class40",
+        "skipper": "MATHELIN MOREAUX Wil",
+        "bateau": "Patapain-Les Invincibles",
+        "rang_source": 7,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 302.0,
+        "vitesse_source": 17.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0626N",
+        "longitude_source": "10.0987W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 84,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.983833333333333,
+          48.97266666666667
+        ]
+      },
+      "properties": {
+        "id": 84,
+        "classe": "Class40",
+        "skipper": "SINEAU Benoit",
+        "bateau": "EKINOX",
+        "rang_source": 8,
+        "date_source": "11/02/26 12:45:00",
+        "horodatage": "2026-11-02T12:45:00Z",
+        "direction_source": 231.0,
+        "vitesse_source": 14.2,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.5836N",
+        "longitude_source": "9.5903W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 53,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.051166666666667,
+          49.025
+        ]
+      },
+      "properties": {
+        "id": 53,
+        "classe": "Class40",
+        "skipper": "FOLLIN Robin",
+        "bateau": "SOLANO",
+        "rang_source": 9,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 224.0,
+        "vitesse_source": 16.6,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0150N",
+        "longitude_source": "10.0307W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 75,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.0895,
+          49.11983333333333
+        ]
+      },
+      "properties": {
+        "id": 75,
+        "classe": "Class40",
+        "skipper": "POLET Thimoté",
+        "bateau": "TEAM ZEISS",
+        "rang_source": 10,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 299.0,
+        "vitesse_source": 15.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0719N",
+        "longitude_source": "10.0537W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 50,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.143833333333333,
+          49.220666666666666
+        ]
+      },
+      "properties": {
+        "id": 50,
+        "classe": "Class40",
+        "skipper": "DOUGUET  Corentin",
+        "bateau": "SNSM, Faites un don !",
+        "rang_source": 11,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 313.0,
+        "vitesse_source": 15.6,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1324N",
+        "longitude_source": "10.0863W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 59,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.003333333333334,
+          49.075
+        ]
+      },
+      "properties": {
+        "id": 59,
+        "classe": "Class40",
+        "skipper": "KOLACEK Milan",
+        "bateau": "INLAND ROOTS OCEAN SOUL",
+        "rang_source": 12,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 233.0,
+        "vitesse_source": 15.6,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0450N",
+        "longitude_source": "10.0020W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 71,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.014,
+          49.111666666666665
+        ]
+      },
+      "properties": {
+        "id": 71,
+        "classe": "Class40",
+        "skipper": "MERGUI Mikael",
+        "bateau": "HIRSCH-CENTRAKOR",
+        "rang_source": 13,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 301.0,
+        "vitesse_source": 14.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0670N",
+        "longitude_source": "10.0084W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 79,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.800833333333333,
+          48.80766666666667
+        ]
+      },
+      "properties": {
+        "id": 79,
+        "classe": "Class40",
+        "skipper": "RIOU Vincent",
+        "bateau": "PIERREVAL-FONDATION GOODPLANET",
+        "rang_source": 14,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 231.0,
+        "vitesse_source": 14.7,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.4846N",
+        "longitude_source": "9.4805W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 73,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.555333333333333,
+          48.56783333333333
+        ]
+      },
+      "properties": {
+        "id": 73,
+        "classe": "Class40",
+        "skipper": "PIPEROL Kéni",
+        "bateau": "DRÉPAVOILE",
+        "rang_source": 15,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 229.0,
+        "vitesse_source": 16.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.3407N",
+        "longitude_source": "9.3332W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 89,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.6395,
+          49.05716666666667
+        ]
+      },
+      "properties": {
+        "id": 89,
+        "classe": "Class40",
+        "skipper": "TREHIN Axel",
+        "bateau": "EXALT",
+        "rang_source": 16,
+        "date_source": "11/02/26 12:45:00",
+        "horodatage": "2026-11-02T12:45:00Z",
+        "direction_source": 299.0,
+        "vitesse_source": 15.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0343N",
+        "longitude_source": "9.3837W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 55,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.787666666666667,
+          49.218833333333336
+        ]
+      },
+      "properties": {
+        "id": 55,
+        "classe": "Class40",
+        "skipper": "GERCKENS  Jonas",
+        "bateau": "BELGIUM OCEAN RACING - CURIUM",
+        "rang_source": 17,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 232.0,
+        "vitesse_source": 13.7,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1313N",
+        "longitude_source": "9.4726W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 47,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.764666666666667,
+          49.27616666666667
+        ]
+      },
+      "properties": {
+        "id": 47,
+        "classe": "Class40",
+        "skipper": "COSTA Pep",
+        "bateau": "VSF SPORTS",
+        "rang_source": 18,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 225.0,
+        "vitesse_source": 14.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1657N",
+        "longitude_source": "9.4588W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 60,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.5845,
+          48.99183333333333
+        ]
+      },
+      "properties": {
+        "id": 60,
+        "classe": "Class40",
+        "skipper": "L'HOSTIS Guillaume",
+        "bateau": "ALTERNATIVE SAILING / CONSTRUCTIONS DU BELON",
+        "rang_source": 19,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 296.0,
+        "vitesse_source": 14.0,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.5951N",
+        "longitude_source": "9.3507W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 67,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.679,
+          49.237
+        ]
+      },
+      "properties": {
+        "id": 67,
+        "classe": "Class40",
+        "skipper": "LOISON Alexis",
+        "bateau": "GROUPE RÉEL",
+        "rang_source": 20,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 307.0,
+        "vitesse_source": 15.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1422N",
+        "longitude_source": "9.4074W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 51,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.548666666666668,
+          49.1625
+        ]
+      },
+      "properties": {
+        "id": 51,
+        "classe": "Class40",
+        "skipper": "FAGUET Sophie",
+        "bateau": "DÉFI SOLIDAIRE AVEC ELLYE ET L'ARCHE",
+        "rang_source": 21,
+        "date_source": "11/02/26 12:45:00",
+        "horodatage": "2026-11-02T12:45:00Z",
+        "direction_source": 307.0,
+        "vitesse_source": 15.2,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0975N",
+        "longitude_source": "9.3292W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 57,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.4635,
+          49.007666666666665
+        ]
+      },
+      "properties": {
+        "id": 57,
+        "classe": "Class40",
+        "skipper": "HAMEZ Emmanuel",
+        "bateau": "VIRANGA",
+        "rang_source": 22,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 219.0,
+        "vitesse_source": 15.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0046N",
+        "longitude_source": "9.2781W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 72,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.552666666666667,
+          49.272166666666664
+        ]
+      },
+      "properties": {
+        "id": 72,
+        "classe": "Class40",
+        "skipper": "NEBOUT  Achile",
+        "bateau": "AMARRIS",
+        "rang_source": 23,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 303.0,
+        "vitesse_source": 13.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1633N",
+        "longitude_source": "9.3316W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 81,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.553,
+          49.41583333333333
+        ]
+      },
+      "properties": {
+        "id": 81,
+        "classe": "Class40",
+        "skipper": "RUPERT Henry",
+        "bateau": "EORA",
+        "rang_source": 24,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 305.0,
+        "vitesse_source": 14.2,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2495N",
+        "longitude_source": "9.3318W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 66,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.052166666666666,
+          50.373666666666665
+        ]
+      },
+      "properties": {
+        "id": 66,
+        "classe": "Class40",
+        "skipper": "LIPINSKI Ian",
+        "bateau": "CRÉDIT MUTUEL",
+        "rang_source": 25,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 304.0,
+        "vitesse_source": 14.9,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.2242N",
+        "longitude_source": "10.0313W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 52,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.4745,
+          49.377833333333335
+        ]
+      },
+      "properties": {
+        "id": 52,
+        "classe": "Class40",
+        "skipper": "FEQUET Loïc",
+        "bateau": "FUNAE",
+        "rang_source": 26,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 226.0,
+        "vitesse_source": 13.2,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2267N",
+        "longitude_source": "9.2847W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 90,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.324166666666667,
+          49.18933333333333
+        ]
+      },
+      "properties": {
+        "id": 90,
+        "classe": "Class40",
+        "skipper": "THOMAS Alexis",
+        "bateau": "AFTERDARA-ELCIA",
+        "rang_source": 27,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 297.0,
+        "vitesse_source": 13.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1136N",
+        "longitude_source": "9.1945W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 49,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.351,
+          49.3685
+        ]
+      },
+      "properties": {
+        "id": 49,
+        "classe": "Class40",
+        "skipper": "DELAHAYE Fabien",
+        "bateau": "LEGALLAIS",
+        "rang_source": 28,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 226.0,
+        "vitesse_source": 14.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2211N",
+        "longitude_source": "9.2106W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 68,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.398,
+          49.5565
+        ]
+      },
+      "properties": {
+        "id": 68,
+        "classe": "Class40",
+        "skipper": "LURTON Thomas",
+        "bateau": "SIRECO",
+        "rang_source": 29,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 276.0,
+        "vitesse_source": 10.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.3339N",
+        "longitude_source": "9.2388W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 61,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.353,
+          49.49366666666667
+        ]
+      },
+      "properties": {
+        "id": 61,
+        "classe": "Class40",
+        "skipper": "LANIECE Sasha",
+        "bateau": "ALDERAN",
+        "rang_source": 30,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 223.0,
+        "vitesse_source": 14.7,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2962N",
+        "longitude_source": "9.2118W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 46,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.81,
+          50.345333333333336
+        ]
+      },
+      "properties": {
+        "id": 46,
+        "classe": "Class40",
+        "skipper": "CLAVEAU Mathieu",
+        "bateau": "INHERENT-PHARE 40",
+        "rang_source": 31,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 297.0,
+        "vitesse_source": 14.7,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.2072N",
+        "longitude_source": "9.4860W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 86,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.312833333333334,
+          49.462666666666664
+        ]
+      },
+      "properties": {
+        "id": 86,
+        "classe": "Class40",
+        "skipper": "TASSIN Djemila",
+        "bateau": "DJEMILA SAILING - BELGIUM OCEAN RACING",
+        "rang_source": 32,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 306.0,
+        "vitesse_source": 14.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2776N",
+        "longitude_source": "9.1877W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 62,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.996,
+          48.87233333333333
+        ]
+      },
+      "properties": {
+        "id": 62,
+        "classe": "Class40",
+        "skipper": "LE CALVIC Matéo",
+        "bateau": "FONDATION ARC",
+        "rang_source": 33,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 286.0,
+        "vitesse_source": 15.6,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.5234N",
+        "longitude_source": "8.5976W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 85,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.0135,
+          49.34616666666667
+        ]
+      },
+      "properties": {
+        "id": 85,
+        "classe": "Class40",
+        "skipper": "TAKASI Lomano",
+        "bateau": "RÉAUTÉ CHOCOLAT",
+        "rang_source": 34,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 223.0,
+        "vitesse_source": 13.9,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2077N",
+        "longitude_source": "9.0081W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 88,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.82,
+          49.00516666666667
+        ]
+      },
+      "properties": {
+        "id": 88,
+        "classe": "Class40",
+        "skipper": "THOMAS Gaëtan",
+        "bateau": "BARCO BRESIL",
+        "rang_source": 35,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 217.0,
+        "vitesse_source": 14.0,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0031N",
+        "longitude_source": "8.4920W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 65,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.044666666666666,
+          49.6585
+        ]
+      },
+      "properties": {
+        "id": 65,
+        "classe": "Class40",
+        "skipper": "LEE Pamela",
+        "bateau": "#EMPOWHER",
+        "rang_source": 36,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 232.0,
+        "vitesse_source": 10.9,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.3951N",
+        "longitude_source": "9.0268W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 44,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.064,
+          50.126666666666665
+        ]
+      },
+      "properties": {
+        "id": 44,
+        "classe": "Class40",
+        "skipper": "BODIN Stéphane",
+        "bateau": "WASABIII",
+        "rang_source": 37,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 289.0,
+        "vitesse_source": 15.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "50.0760N",
+        "longitude_source": "9.0384W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 76,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.474,
+          49.42933333333333
+        ]
+      },
+      "properties": {
+        "id": 76,
+        "classe": "Class40",
+        "skipper": "POZZOLI Ulysse",
+        "bateau": "RENOVATEC Sailing Team",
+        "rang_source": 38,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 288.0,
+        "vitesse_source": 12.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2576N",
+        "longitude_source": "8.2844W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 58,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.433166666666667,
+          49.788666666666664
+        ]
+      },
+      "properties": {
+        "id": 58,
+        "classe": "Class40",
+        "skipper": "KHELIF Théa",
+        "bateau": "WOMEN OF COURSE",
+        "rang_source": 39,
+        "date_source": "11/02/26 12:45:00",
+        "horodatage": "2026-11-02T12:45:00Z",
+        "direction_source": 222.0,
+        "vitesse_source": 12.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.4732N",
+        "longitude_source": "8.2599W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 87,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.391333333333334,
+          49.72716666666667
+        ]
+      },
+      "properties": {
+        "id": 87,
+        "classe": "Class40",
+        "skipper": "TERNON Jean-Baptiste",
+        "bateau": "MIC ODYSSEY",
+        "rang_source": 40,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 288.0,
+        "vitesse_source": 9.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.4363N",
+        "longitude_source": "8.2348W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 48,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.1115,
+          49.868
+        ]
+      },
+      "properties": {
+        "id": 48,
+        "classe": "Class40",
+        "skipper": "COURBON Yves",
+        "bateau": "OCEANCONNECT",
+        "rang_source": 41,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 285.0,
+        "vitesse_source": 11.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.5208N",
+        "longitude_source": "8.0669W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 42,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.942166666666667,
+          49.568333333333335
+        ]
+      },
+      "properties": {
+        "id": 42,
+        "classe": "Class40",
+        "skipper": "BAUZA Aina",
+        "bateau": "ALICE MILLIAT FOUNDATION",
+        "rang_source": 42,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 280.0,
+        "vitesse_source": 11.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.3410N",
+        "longitude_source": "7.5653W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 82,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.759666666666667,
+          49.497
+        ]
+      },
+      "properties": {
+        "id": 82,
+        "classe": "Class40",
+        "skipper": "SEPHO Rodolphe",
+        "bateau": "CANBT-OTI/ RÊVE DE LARGE 5",
+        "rang_source": 43,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 292.0,
+        "vitesse_source": 9.9,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2982N",
+        "longitude_source": "7.4558W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 69,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.382666666666666,
+          48.75683333333333
+        ]
+      },
+      "properties": {
+        "id": 69,
+        "classe": "Class40",
+        "skipper": "MARIE Goulven",
+        "bateau": "QWANZA",
+        "rang_source": 44,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 216.0,
+        "vitesse_source": 12.0,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.4541N",
+        "longitude_source": "7.2296W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 63,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.4935,
+          49.483666666666664
+        ]
+      },
+      "properties": {
+        "id": 63,
+        "classe": "Class40",
+        "skipper": "LE NABOUR Quentin",
+        "bateau": "BLEU BLANC PLANÈTE LOCATION",
+        "rang_source": 45,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 135.0,
+        "vitesse_source": 3.6,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2902N",
+        "longitude_source": "7.2961W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 43,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.034,
+          48.6555
+        ]
+      },
+      "properties": {
+        "id": 43,
+        "classe": "Class40",
+        "skipper": "BERTRAND Yohan",
+        "bateau": "YODA",
+        "rang_source": 46,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 220.0,
+        "vitesse_source": 10.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.3933N",
+        "longitude_source": "7.0204W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 78,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.719666666666667,
+          48.3485
+        ]
+      },
+      "properties": {
+        "id": 78,
+        "classe": "Class40",
+        "skipper": "REBUFFAT Yanick",
+        "bateau": "MUSSULO40",
+        "rang_source": 47,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 273.0,
+        "vitesse_source": 9.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.2091N",
+        "longitude_source": "6.4318W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 77,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.109666666666667,
+          49.68783333333333
+        ]
+      },
+      "properties": {
+        "id": 77,
+        "classe": "Class40",
+        "skipper": "RATEAU Christophe",
+        "bateau": "GUSTAVE ROUSSY",
+        "rang_source": 48,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 331.0,
+        "vitesse_source": 6.2,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.4127N",
+        "longitude_source": "7.0658W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 56,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.8421666666666665,
+          48.546166666666664
+        ]
+      },
+      "properties": {
+        "id": 56,
+        "classe": "Class40",
+        "skipper": "GUERRA Marco",
+        "bateau": "IMAGIN’ACT-SOCOMEC",
+        "rang_source": 49,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 189.0,
+        "vitesse_source": 8.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.3277N",
+        "longitude_source": "4.5053W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 104,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.679833333333333,
+          49.16866666666667
+        ]
+      },
+      "properties": {
+        "id": 104,
+        "classe": "Vintage Multi",
+        "skipper": "SEGUIN Damien",
+        "bateau": "ARKEA - HANDICAP INTERNATIONAL",
+        "rang_source": 1,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 251.0,
+        "vitesse_source": 19.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1012N",
+        "longitude_source": "13.4079W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 98,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.586,
+          49.478833333333334
+        ]
+      },
+      "properties": {
+        "id": 98,
+        "classe": "Vintage Multi",
+        "skipper": "JOYON Francis",
+        "bateau": "OCEANS",
+        "rang_source": 2,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 315.0,
+        "vitesse_source": 20.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2873N",
+        "longitude_source": "13.3516W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 101,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.195666666666666,
+          49.742666666666665
+        ]
+      },
+      "properties": {
+        "id": 101,
+        "classe": "Vintage Multi",
+        "skipper": "PERON Eric",
+        "bateau": "FRENCH TOUCH - OCEANIA HOTELS",
+        "rang_source": 3,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 235.0,
+        "vitesse_source": 21.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.4456N",
+        "longitude_source": "13.1174W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 99,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.541666666666666,
+          49.4245
+        ]
+      },
+      "properties": {
+        "id": 99,
+        "classe": "Vintage Multi",
+        "skipper": "LAMIRE Gilles",
+        "bateau": "GROUPE GCA",
+        "rang_source": 4,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 226.0,
+        "vitesse_source": 18.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.2547N",
+        "longitude_source": "9.3250W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 96,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.3845,
+          49.208
+        ]
+      },
+      "properties": {
+        "id": 96,
+        "classe": "Vintage Multi",
+        "skipper": "GUILLEMOT Marc",
+        "bateau": "MG5-Wellness Training",
+        "rang_source": 5,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 233.0,
+        "vitesse_source": 11.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1248N",
+        "longitude_source": "9.2307W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 95,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.686,
+          49.8275
+        ]
+      },
+      "properties": {
+        "id": 95,
+        "classe": "Vintage Multi",
+        "skipper": "GUEGUEN Florian",
+        "bateau": "GRAINE DE COURAGE",
+        "rang_source": 6,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 235.0,
+        "vitesse_source": 13.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.4965N",
+        "longitude_source": "9.4116W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 91,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.806,
+          48.957
+        ]
+      },
+      "properties": {
+        "id": 91,
+        "classe": "Vintage Multi",
+        "skipper": "BOGRAND Christophe",
+        "bateau": "DES ENFANTS ET DES ARBRES",
+        "rang_source": 7,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 266.0,
+        "vitesse_source": 11.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.5742N",
+        "longitude_source": "8.4836W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 103,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.4185,
+          49.08566666666667
+        ]
+      },
+      "properties": {
+        "id": 103,
+        "classe": "Vintage Multi",
+        "skipper": "ROGER Thierry",
+        "bateau": "PERROS-GUIREC",
+        "rang_source": 8,
+        "date_source": "11/02/26 12:45:00",
+        "horodatage": "2026-11-02T12:45:00Z",
+        "direction_source": 255.0,
+        "vitesse_source": 10.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0514N",
+        "longitude_source": "8.2511W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 97,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.788833333333333,
+          49.69083333333333
+        ]
+      },
+      "properties": {
+        "id": 97,
+        "classe": "Vintage Multi",
+        "skipper": "GUIFFANT François",
+        "bateau": "WE EXPLORE",
+        "rang_source": 9,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 283.0,
+        "vitesse_source": 8.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.4145N",
+        "longitude_source": "8.4733W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 94,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.248333333333333,
+          49.534666666666666
+        ]
+      },
+      "properties": {
+        "id": 94,
+        "classe": "Vintage Multi",
+        "skipper": "ETHEIMER Laurent",
+        "bateau": "FIFTY FIFTY",
+        "rang_source": 10,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 282.0,
+        "vitesse_source": 10.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.3208N",
+        "longitude_source": "8.1490W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 92,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.500333333333334,
+          47.507666666666665
+        ]
+      },
+      "properties": {
+        "id": 92,
+        "classe": "Vintage Multi",
+        "skipper": "CAPELLE Charlie",
+        "bateau": "ACAPELLA - PROLUDIC - LA CHAINE DE L'ESPOIR",
+        "rang_source": 11,
+        "date_source": "11/02/26 12:45:00",
+        "horodatage": "2026-11-02T12:45:00Z",
+        "direction_source": 220.0,
+        "vitesse_source": 9.0,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "47.3046N",
+        "longitude_source": "6.3002W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 93,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.352333333333333,
+          48.081
+        ]
+      },
+      "properties": {
+        "id": 93,
+        "classe": "Vintage Multi",
+        "skipper": "DUCOSSON David",
+        "bateau": "TRILOGIK",
+        "rang_source": 12,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 190.0,
+        "vitesse_source": 8.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.0486N",
+        "longitude_source": "5.2114W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 102,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.966,
+          48.7175
+        ]
+      },
+      "properties": {
+        "id": 102,
+        "classe": "Vintage Multi",
+        "skipper": "PILLIARD Romain",
+        "bateau": "USE IT AGAIN",
+        "rang_source": 13,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 0.0,
+        "vitesse_source": 0.0,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.4305N",
+        "longitude_source": "3.5796W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 114,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.477166666666667,
+          48.7495
+        ]
+      },
+      "properties": {
+        "id": 114,
+        "classe": "Vintage Mono",
+        "skipper": "GAVIGNET SIDNEY",
+        "bateau": "LE CIGARE ROUGE",
+        "rang_source": 1,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 236.0,
+        "vitesse_source": 14.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.4497N",
+        "longitude_source": "9.2863W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 112,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.4955,
+          49.13766666666667
+        ]
+      },
+      "properties": {
+        "id": 112,
+        "classe": "Vintage Mono",
+        "skipper": "LE BORGNE Kieran",
+        "bateau": "ARMOR-LUX - LE FINISTÈRE ASSURANCE",
+        "rang_source": 2,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 228.0,
+        "vitesse_source": 13.8,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0826N",
+        "longitude_source": "9.2973W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 106,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.3295,
+          49.0545
+        ]
+      },
+      "properties": {
+        "id": 106,
+        "classe": "Vintage Mono",
+        "skipper": "CARADEC Tanguy",
+        "bateau": "EURVAD",
+        "rang_source": 3,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 226.0,
+        "vitesse_source": 14.3,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0327N",
+        "longitude_source": "9.1977W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 111,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.879833333333334,
+          49.967666666666666
+        ]
+      },
+      "properties": {
+        "id": 111,
+        "classe": "Vintage Mono",
+        "skipper": "ISOARD Patrick",
+        "bateau": "GROUPE COGEDIS POUR ENFANTS DU MÉKONG",
+        "rang_source": 4,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 282.0,
+        "vitesse_source": 13.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.5806N",
+        "longitude_source": "8.5279W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 117,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.491,
+          49.29683333333333
+        ]
+      },
+      "properties": {
+        "id": 117,
+        "classe": "Vintage Mono",
+        "skipper": "PILLIARD Titouan",
+        "bateau": "USE IT AGAIN FOR YOUTH",
+        "rang_source": 5,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 211.0,
+        "vitesse_source": 13.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1781N",
+        "longitude_source": "8.2946W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 105,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.691666666666666,
+          49.98766666666667
+        ]
+      },
+      "properties": {
+        "id": 105,
+        "classe": "Vintage Mono",
+        "skipper": "BACHMANN Christophe",
+        "bateau": "GRAIN DE SABLE",
+        "rang_source": 6,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 292.0,
+        "vitesse_source": 11.7,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.5926N",
+        "longitude_source": "8.4150W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 107,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.428166666666666,
+          49.546
+        ]
+      },
+      "properties": {
+        "id": 107,
+        "classe": "Vintage Mono",
+        "skipper": "CLERTON Wilfried",
+        "bateau": "ECHO-MER",
+        "rang_source": 7,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 279.0,
+        "vitesse_source": 10.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.3276N",
+        "longitude_source": "8.2569W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 113,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.251833333333333,
+          48.821333333333335
+        ]
+      },
+      "properties": {
+        "id": 113,
+        "classe": "Vintage Mono",
+        "skipper": "LE CAM  Jean",
+        "bateau": "ALEGRIA",
+        "rang_source": 8,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 251.0,
+        "vitesse_source": 9.5,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "48.4928N",
+        "longitude_source": "7.1511W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 109,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.405,
+          49.228833333333334
+        ]
+      },
+      "properties": {
+        "id": 109,
+        "classe": "Vintage Mono",
+        "skipper": "DE JAMBLINNE DE MEUX Amaury",
+        "bateau": "TAGAROA",
+        "rang_source": 9,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 274.0,
+        "vitesse_source": 8.7,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1373N",
+        "longitude_source": "7.2430W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 115,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.2651666666666666,
+          49.278666666666666
+        ]
+      },
+      "properties": {
+        "id": 115,
+        "classe": "Vintage Mono",
+        "skipper": "MAILHOS Frédéric",
+        "bateau": "FEVE - Votre épargne finance des fermes bio",
+        "rang_source": 10,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 267.0,
+        "vitesse_source": 9.1,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1672N",
+        "longitude_source": "7.1591W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 116,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.143666666666666,
+          49.23166666666667
+        ]
+      },
+      "properties": {
+        "id": 116,
+        "classe": "Vintage Mono",
+        "skipper": "NEMSGUERN Olivier",
+        "bateau": "ECOLHUMA",
+        "rang_source": 11,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 266.0,
+        "vitesse_source": 8.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.1390N",
+        "longitude_source": "7.0862W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 108,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.261166666666667,
+          47.68233333333333
+        ]
+      },
+      "properties": {
+        "id": 108,
+        "classe": "Vintage Mono",
+        "skipper": "COLUBI Gilles",
+        "bateau": "SNSM GUILVINEC",
+        "rang_source": 12,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 273.0,
+        "vitesse_source": 8.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "47.4094N",
+        "longitude_source": "6.1567W"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 110,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5965,
+          49.094166666666666
+        ]
+      },
+      "properties": {
+        "id": 110,
+        "classe": "Vintage Mono",
+        "skipper": "GERIN Remy",
+        "bateau": "FAIAOAHE",
+        "rang_source": 13,
+        "date_source": "11/02/26 13:00:00",
+        "horodatage": "2026-11-02T13:00:00Z",
+        "direction_source": 261.0,
+        "vitesse_source": 7.4,
+        "unite_vitesse": "nd",
+        "identite_connue": true,
+        "latitude_source": "49.0565N",
+        "longitude_source": "6.3579W"
+      }
+    }
+  ]
+}

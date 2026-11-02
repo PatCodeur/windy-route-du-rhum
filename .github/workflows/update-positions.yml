@@ -1,0 +1,50 @@
+name: Actualiser les positions et publier le flux
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+# La branche race-data et Pages doivent toujours avancer dans le même ordre.
+concurrency:
+  group: route-du-rhum-publication
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  publish:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Lire le code du plugin
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Préparer Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Récupérer les positions et sauvegarder la course
+        env:
+          RHUM_FTP_HOST: ${{ secrets.RHUM_FTP_HOST }}
+          RHUM_FTP_USER: ${{ secrets.RHUM_FTP_USER }}
+          RHUM_FTP_PASSWORD: ${{ secrets.RHUM_FTP_PASSWORD }}
+        run: python3 tools/pages-sync.py --once --output pages
+      - name: Préparer GitHub Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+      - name: Préparer le site public
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
+        with:
+          path: pages
+          retention-days: 1
+      - name: Publier le flux HTTPS
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
