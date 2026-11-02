@@ -240,13 +240,33 @@ def write_pages(work, output):
         shutil.copyfile(source, output / 'live' / name)
         (output / 'live' / name).chmod(0o644)
     (output / 'index.html').write_text('''<!doctype html>
-<html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
-<title>Route du Rhum — positions pour Windy</title>
-<style>body{font:18px/1.6 system-ui;max-width:760px;margin:64px auto;padding:0 24px;background:#102635;color:#edf7fc}a{color:#87d8ff}small{color:#bad0dd}</style>
-<h1>Route du Rhum · positions pour Windy</h1>
-<p>Ce flux permet d’afficher la flotte et ses traces dans le plugin Windy.</p>
-<p><a href="live/historique.json">Historique des positions</a> · <a href="live/status.json">Date du dernier relevé</a></p>
-<p><small>Actualisation horaire prévue, sous réserve de disponibilité des relevés et du service. Les heures des observations sont en UTC.</small></p>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Installez le suivi de la Route du Rhum dans Windy pour voir les bateaux, leurs traces et rejouer les positions avec la météo.">
+<title>Route du Rhum — installer le suivi dans Windy</title>
+<style>body{font:18px/1.6 system-ui;max-width:760px;margin:64px auto;padding:0 24px;background:#102635;color:#edf7fc}a{color:#87d8ff}h1{line-height:1.2}li{margin:16px 0}code{display:block;margin:12px 0;padding:16px;border:1px solid #416276;border-radius:8px;background:#163547;font:15px/1.6 ui-monospace,monospace;overflow-wrap:anywhere;user-select:text}small,.note{color:#bad0dd}footer{margin-top:40px;border-top:1px solid #416276;padding-top:16px;font-size:14px}@media(max-width:520px){body{margin:32px auto;padding:0 20px}h1{font-size:1.8em}code{font-size:13px}}</style>
+</head>
+<body>
+<main>
+<h1>Route du Rhum · suivi dans Windy</h1>
+<p>Affichez la flotte sur la carte météo, suivez les traces des bateaux et rejouez leurs positions.</p>
+<h2>Installer le plugin</h2>
+<ol>
+<li>Ouvrez <a href="https://www.windy.com/plugins">la page des plugins Windy</a>.</li>
+<li>Choisissez le chargement d’un plugin depuis une URL, puis copiez et collez cette adresse complète :
+<code>https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.0/plugin.min.js</code>
+Confirmez l’installation dans Windy.</li>
+<li>Ouvrez le menu Windy et choisissez <strong>Route du Rhum</strong> pour afficher la flotte.</li>
+</ol>
+<p>Le plugin est déjà installé dans ce navigateur ? <a href="https://www.windy.com/plugin/rhum-personnel">Ouvrir Route du Rhum dans Windy</a>.</p>
+<p class="note">Le lien d’ouverture fonctionne après l’installation. Pour une première visite, suivez les étapes ci-dessus. La demande d’examen pour la galerie Windy reste à envoyer.</p>
+</main>
+<footer>
+<p><a href="live/historique.json">Flux des positions et traces</a> · <a href="live/status.json">Date du dernier relevé</a></p>
+<p>Actualisation horaire prévue, sous réserve de disponibilité des relevés et du service. Les heures des observations sont en UTC.</p>
+</footer>
+</body>
 </html>\n''', encoding='utf-8')
 
 
