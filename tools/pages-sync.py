@@ -281,6 +281,32 @@ def report_shape(raw):
     return result
 
 
+def latest_publication_config(config, work):
+    """Tolère une évolution modérée de la flotte et refuse une chute massive."""
+    minimum = config['minimum_boats']
+    try:
+        previous = json.loads((Path(work) / 'dist/live/status.json').read_bytes())['boatCount']
+        if isinstance(previous, int) and not isinstance(previous, bool) and 1 <= previous <= 10000:
+            minimum = max(1, (previous * 9 + 9) // 10)
+    except (OSError, ValueError, TypeError, KeyError):
+        pass
+    return dict(config, minimum_boats=minimum)
+
+
+def finalize_public_status(work, latest_status, new_points):
+    """Les archives complètent les traces sans devenir le dernier relevé reçu."""
+    live = Path(work) / 'dist/live'
+    final = json.loads((live / 'status.json').read_bytes())
+    final.update(retrievedAt=latest_status['retrievedAt'], reportNewest=latest_status['reportNewest'],
+                 boatCount=latest_status['boatCount'], newPoints=new_points)
+    geojson = json.loads((live / 'positions.geojson').read_bytes())
+    geojson.update(final)
+    for name, document in [('status.json', final), ('positions.geojson', geojson)]:
+        raw = (json.dumps(document, ensure_ascii=False) + '\n').encode('utf-8')
+        validate_blob('dist/live/' + name, raw)
+        (live / name).write_bytes(raw)
+
+
 def sync_once(config, password, work, client_factory=None, budget_seconds=240, max_archives=36,
               stage=lambda value: None):
     """Dernier point d’abord ; les archives en attente reprennent au passage suivant."""
@@ -297,7 +323,9 @@ def sync_once(config, password, work, client_factory=None, budget_seconds=240, m
         stage('latest-validation')
         shape = report_shape(latest)
         print('Dernier relevé reçu : ' + '; '.join(key + '=' + str(value) for key, value in shape.items()) + '.')
-        result['latest'] = relay.publish_report(latest, config, work)
+        publication_config = latest_publication_config(config, work)
+        result['latest'] = relay.publish_report(latest, publication_config, work)
+        new_points = result['latest']['newPoints']
         stage('archive-list')
         try:
             names = relay.list_archive_names(client, config['archive_path'])
@@ -316,13 +344,16 @@ def sync_once(config, password, work, client_factory=None, budget_seconds=240, m
                 break  # Une réponse FTP peut être restée en attente après un RETR interrompu.
             try:
                 stage('archive-validation')
-                relay.publish_report(raw, config, work)
+                archive_status = relay.publish_report(raw, publication_config, work)
             except Exception:
                 result['archiveErrors'] += 1
                 continue
             published.add(name)
             result['archivesImported'] += 1
+            new_points += archive_status['newPoints']
         result['archivesPending'] = len(set(names) - published)
+    if result['archivesImported']:
+        finalize_public_status(work, result['latest'], new_points)
     manifest.parent.mkdir(parents=True, exist_ok=True)
     manifest.write_bytes(manifest_bytes(published))
     return result
@@ -355,7 +386,7 @@ def write_pages(work, output):
 <ol>
 <li>Ouvrez <a href="https://www.windy.com/plugins">la page des plugins Windy</a>.</li>
 <li>Choisissez le chargement d’un plugin depuis une URL, puis copiez et collez cette adresse complète :
-<code>https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.0/plugin.min.js</code>
+<code>https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js</code>
 Confirmez l’installation dans Windy.</li>
 <li>Ouvrez le menu Windy et choisissez <strong>Route du Rhum</strong> pour afficher la flotte.</li>
 </ol>

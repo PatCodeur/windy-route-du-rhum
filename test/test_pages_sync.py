@@ -129,12 +129,83 @@ class PagesTests(unittest.TestCase):
 
     def test_archive_budget_persists_completed_work_for_next_run(self):
         with tempfile.TemporaryDirectory() as work:
+            populate(work)
+            (Path(work) / pages.MANIFEST).unlink()
             ftp = FakeFTP()
             with patch.object(pages.relay, 'publish_report', return_value=STATUS):
                 result = pages.sync_once(CONFIG, 'secret', work, lambda: ftp, max_archives=1)
             self.assertEqual(result['archivesImported'], 1)
             self.assertEqual(result['archivesPending'], 1)
             self.assertEqual(pages.read_manifest((Path(work) / pages.MANIFEST).read_bytes()), {FIRST})
+
+    def test_latest_minimum_tracks_previous_source_count_and_bootstraps_strictly(self):
+        config = dict(CONFIG, minimum_boats=115)
+        with tempfile.TemporaryDirectory() as work:
+            self.assertEqual(pages.latest_publication_config(config, work)['minimum_boats'], 115)
+            path = Path(work) / 'dist/live/status.json'
+            path.parent.mkdir(parents=True)
+            for previous, expected in [(115, 104), (114, 103), (1, 1), (10000, 9000),
+                                       (0, 115), (True, 115), ('114', 115), (10001, 115), (None, 115)]:
+                path.write_text(json.dumps(dict(boatCount=previous)))
+                self.assertEqual(pages.latest_publication_config(config, work)['minimum_boats'], expected)
+            path.write_text('invalid json')
+            self.assertEqual(pages.latest_publication_config(config, work)['minimum_boats'], 115)
+            self.assertEqual(config['minimum_boats'], 115)
+
+    def test_latest_114_of_previous_115_accepts_but_50_rejects_without_losing_history(self):
+        config = dict(CONFIG, minimum_boats=115)
+        def report(count, hour):
+            return ('POSREPORT\n' + ''.join(
+                f'{boat};{boat};47.5442N;21.0763W;11/03/26 {hour}:00:00;248/31.1\n'
+                for boat in [boat for boat in range(1, 118) if boat not in (15, 100)][:count])).encode()
+        with tempfile.TemporaryDirectory() as directory:
+            work = Path(directory)
+            pages.prepare_runtime(ROOT, work)
+            pages.relay.publish_report(report(115, '15'), config, work)
+            ftp = FakeFTP(names=())
+            latest = report(114, '16')
+            ftp.size = lambda path: len(latest)
+            ftp.retrbinary = lambda command, callback: callback(latest)
+            result = pages.sync_once(config, 'secret', work, lambda: ftp)
+            self.assertEqual(result['latest']['boatCount'], 114)
+            status = json.loads((work / 'dist/live/status.json').read_bytes())
+            self.assertEqual(status['boatCount'], 114)
+            geojson = json.loads((work / 'dist/live/positions.geojson').read_bytes())
+            self.assertEqual(len(geojson['features']), 115)
+            missing = next(item for item in geojson['features'] if item['id'] == 117)
+            self.assertEqual(missing['properties']['time'], '2026-11-03T15:00:00.000Z')
+            before = {path.relative_to(work): path.read_bytes() for path in work.rglob('*.json')}
+            latest = report(50, '17')
+            with self.assertRaisesRegex(ValueError, 'Relevé incomplet'):
+                pages.sync_once(config, 'secret', work, lambda: ftp)
+            self.assertEqual(before, {path.relative_to(work): path.read_bytes() for path in work.rglob('*.json')})
+
+    def test_archive_import_preserves_latest_source_metadata_and_sums_new_points(self):
+        config = dict(CONFIG, minimum_boats=115)
+        def report(count, hour):
+            return ('POSREPORT\n' + ''.join(
+                f'{boat};{boat};47.5442N;21.0763W;11/03/26 {hour}:00:00;248/31.1\n'
+                for boat in [boat for boat in range(1, 118) if boat not in (15, 100)][:count])).encode()
+        with tempfile.TemporaryDirectory() as directory:
+            work = Path(directory)
+            pages.prepare_runtime(ROOT, work)
+            pages.relay.publish_report(report(115, '15'), config, work)
+            ftp = FakeFTP(names=(FIRST, SECOND))
+            reports = {'pos.txt': report(114, '16'), 'Archives_posreports/' + FIRST: report(115, '14'),
+                       'Archives_posreports/' + SECOND: report(114, '13')}
+            ftp.size = lambda path: len(reports[path])
+            ftp.retrbinary = lambda command, callback: callback(reports[command.removeprefix('RETR ')])
+            result = pages.sync_once(config, 'secret', work, lambda: ftp)
+            self.assertEqual(result['archivesImported'], 2)
+            status = json.loads((work / 'dist/live/status.json').read_bytes())
+            self.assertEqual(status['boatCount'], 114)
+            self.assertEqual(status['reportNewest'], '2026-11-03T16:00:00.000Z')
+            self.assertEqual(status['publishedNewest'], '2026-11-03T16:00:00.000Z')
+            self.assertEqual(status['newPoints'], 343)
+            geojson = json.loads((work / 'dist/live/positions.geojson').read_bytes())
+            self.assertEqual({key: geojson[key] for key in status}, status)
+            self.assertEqual(len(geojson['features']), 115)
+            self.assertEqual(pages.latest_publication_config(config, work)['minimum_boats'], 103)
 
     def test_snapshot_rejects_symlinks_private_metadata_and_unexpected_reports(self):
         with tempfile.TemporaryDirectory() as work:
