@@ -1,6 +1,6 @@
 # Publication gratuite sur GitHub
 
-Le dépôt public est [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum). Le [premier déploiement](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41508185794) a réussi le 2 novembre 2026 : 115 bateaux identifiés, six classes et traces des archives. Le flux a été vérifié en HTTPS avec une autorisation CORS `*`, un dernier pointage à 19:00:35 UTC et aucune archive encore en attente à la fin de ce passage. Le programme récupère le dernier relevé FTP et les archives chaque heure, puis publie uniquement les positions en HTTPS. L’ordinateur personnel peut rester éteint.
+Le dépôt public est [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum). Le [premier déploiement](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41508185794) a réussi le 2 novembre 2026 : 115 bateaux identifiés, six classes et traces des archives. Le flux a été vérifié en HTTPS avec une autorisation CORS `*`, un dernier pointage à 19:00:35 UTC et aucune archive encore en attente à la fin de ce passage. Le programme est prévu pour récupérer le dernier relevé FTP et les archives chaque heure, puis publier uniquement les positions en HTTPS. L’ordinateur personnel peut rester éteint.
 
 La version **0.9.0 du plugin est aussi publiée sur les serveurs officiels Windy**, après un envoi confirmé par HTTP 201. Son URL exacte d’installation, renvoyée par Windy, est :
 
@@ -46,7 +46,11 @@ Ces adresses ont été vérifiées après le premier déploiement : 115 bateaux,
 
 ## Fonctionnement et reprise
 
-Le passage est prévu à la minute 17 de chaque heure UTC. GitHub peut retarder les tâches planifiées ; ce n’est pas une garantie de publication à la seconde près. Un déclenchement manuel reste disponible.
+Depuis le 3 novembre 2026, une tâche gratuite cron-job.org est programmée à la **minute 10 de chaque heure**, dans le fuseau **Europe/Paris**. La programmation GitHub à la **minute 17** reste conservée comme déclenchement complémentaire. Le test complet depuis cron-job.org a réussi : [exécution GitHub 41609964985](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41609964985), dernier relevé publié et affiché dans Windy à **09:00:24 UTC**, **115 bateaux** et **48 relevés**. Un lancement horaire naturel reste à observer ; le prochain affiché lors du contrôle était le **3 novembre à 11:10 à Paris, soit 10:10 UTC**.
+
+Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md) pour le diagnostic, les réglages et les contrôles. Les alertes d’échec et de retour au succès ne sont pas activées ; seule l’alerte de désactivation automatique reste conservée. Le jeton doit être renouvelé avant le **1er février 2027**.
+
+Ces services ne garantissent pas la ponctualité de chaque passage. GitHub peut retarder ou abandonner des tâches planifiées en période de forte charge. Un déclenchement manuel reste disponible.
 
 Chaque passage valide d’abord `pos.txt`. En cas d’échec, le site précédent est conservé et la tâche apparaît en erreur. Ensuite, il importe jusqu’à 36 archives, avec un budget de quatre minutes pour leur traitement. Les archives restantes sont reprises au passage suivant. Une archive défectueuse n’efface pas les relevés déjà reçus.
 
