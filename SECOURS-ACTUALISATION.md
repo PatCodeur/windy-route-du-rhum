@@ -1,77 +1,77 @@
 # Actualisation horaire : diagnostic et secours
 
-Le 3 novembre 2026, une seule actualisation programmée GitHub a été observée à 01:36 UTC, puis aucune autre jusqu’à 09:00 UTC. Cette exécution avait réussi ; le dernier relevé publié restait celui de 01:02:54 UTC.
+## État de la correction 0.9.1 au 3 novembre 2026
 
-Une relance manuelle à 09:01:51 UTC a rétabli le service : [exécution GitHub 41607710682](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41607710682), réussie. Le flux récupéré à 09:02:22 UTC contenait 115 bateaux et des positions allant jusqu’à 08:00:29 UTC.
+**La reprise est vérifiée.** Le paquet [0.9.1](https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js), accepté par Windy avec HTTP 201, a été installé et contrôlé après rechargement. La [relance 41626579394](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41626579394) a réussi sur le commit `fc8a657dca0a279ceb0d24d8149719518ec23de9`. Le statut public indique une récupération à **11:19:41.550 UTC** et un dernier relevé à **11:00:18 UTC**, avec **114 bateaux dans le fichier source**. Windy affiche **115 dernières positions connues et 50 relevés** ; le prochain passage horaire naturel après correction reste à observer.
 
-## État du secours au 3 novembre 2026
+## Incidents observés et corrections
 
-La tâche cron-job.org **Route du Rhum — actualisation horaire**, numéro **8782527**, est enregistrée et active. Elle est programmée toutes les heures à la **minute 10**, dans le fuseau **Europe/Paris**. Le premier lancement horaire naturel a eu lieu le **3 novembre à 11:10 à Paris, soit 10:10 UTC**. La programmation GitHub à la minute 17 est conservée comme déclenchement complémentaire ; les exécutions sont sérialisées par le workflow.
+### Retard des déclenchements GitHub
 
-Le test lancé dans cron-job.org à **09:18:33 UTC** a reçu **HTTP 200** en 1,64 seconde. Il a déclenché l’[exécution GitHub 41609964985](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41609964985), qui a réussi jusqu’à la publication du site et s’est terminée à **09:19:14 UTC**. Le [statut public](https://patcodeur.github.io/windy-route-du-rhum/live/status.json) indiquait ensuite une récupération à **09:18:50.170 UTC**, un dernier relevé à **09:00:24 UTC** et **115 bateaux**. Le contrôle dans Windy a confirmé ce relevé, les **48 relevés disponibles** et **115 bateaux sur 115**.
+Le 3 novembre, une seule exécution programmée GitHub a été observée à **01:36 UTC**, réussie, puis aucune autre jusqu’à 09:00 UTC. Le dernier relevé publié était celui de 01:02:54 UTC.
 
-### Échec de validation constaté après le test initial
+Le premier test cron-job.org a lancé l’[exécution 41609964985](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41609964985), réussie : relevé **09:00:24 UTC**, **115 bateaux et 48 relevés** confirmés dans Windy.
 
-Le premier lancement horaire naturel, le **3 novembre à 10:10 UTC (11:10 à Paris)**, a bien été accepté par GitHub depuis cron-job.org. L’[exécution GitHub 41617045601](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41617045601) a ensuite échoué dans le traitement du relevé. Le déclenchement automatique fonctionne ; une réponse HTTP réussie ne garantit pas que la publication des positions réussisse.
+### Rang source non numérique
 
-Les journaux ajoutés au programme ont permis d’identifier le refus lors de l’[exécution 41620646088](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41620646088), lancée à **10:36:14 UTC** sur le commit `32285a0cce6399be7d45baf27474013f620de88e` :
+Le premier passage horaire naturel du secours a eu lieu à **10:10 UTC (11:10 à Paris)**. GitHub a accepté la demande, mais l’[exécution 41617045601](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41617045601) a échoué pendant le traitement du relevé.
+
+Le diagnostic de l’[exécution 41620646088](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41620646088), lancée à 10:36:14 UTC sur le commit `32285a0cce6399be7d45baf27474013f620de88e`, a confirmé :
 
 ```text
 Dernier relevé reçu : rows=115; rankZero=0; rankNonNumeric=1; rankOversized=0.
 Actualisation refusée (stage=latest-validation; category=rank-invalid).
 ```
 
-Le fichier FTP a donc été récupéré et contient **115 lignes de positions**, dont **une avec un rang non numérique**. Ce contrôle ne permet pas d’attribuer un statut sportif au skipper concerné. Le programme exigeant alors un rang entier positif, il a conservé le flux précédent, dont les dernières positions restent au **3 novembre à 09:00:24 UTC**. Les coordonnées ne doivent pas être supprimées à cause d’un rang non communiqué.
+Le FTP répondait avec **115 positions, dont une avec un rang non numérique**. Le contrôle trop strict du rang a conservé le flux précédent. Il ne permet pas d’attribuer un statut sportif au skipper. La version 0.9.1 accepte un rang textuel ou absent comme inconnu, affiché **— / Non communiqué**, tout en conservant la position. Elle ne calcule aucun rang de remplacement et conserve les contrôles des coordonnées, identifiants, heures, vitesses et caps.
 
-**La nouvelle mise à jour n’est pas encore rétablie.** Un correctif **0.9.1** est en préparation sur la branche prévue `release/rang-non-communique-0.9.1`. Il doit conserver la position et représenter un rang source textuel ou absent par un rang inconnu, affiché **— / Non communiqué**, sans inventer de classement. Les coordonnées, identifiants, heures, caps et vitesses restent contrôlés.
+Le plugin 0.9.0 refusait aussi un rang inconnu : installer 0.9.1 pour lire le flux corrigé. La liste et la fiche OCEANS n° 98 ont été contrôlées dans Windy : **Non communiqué** et **—**. Voir [PUBLICATION.md](PUBLICATION.md).
 
-Le plugin Windy **0.9.0 refuse aussi un rang inconnu dans le flux JSON**. Il faut donc publier puis vérifier **0.9.1 dans Windy avant d’activer le nouveau format dans le flux de production**. Aucun envoi de 0.9.1 à Windy n’est confirmé à ce stade ; `main` conserve le parseur précédent avec ses diagnostics. Voir [PUBLICATION.md](PUBLICATION.md) pour l’ordre de publication.
+### Effectif variable du fichier source
 
-Les erreurs réseau transitoires et les erreurs Git sont désormais réessayées jusqu’à trois fois, à vingt secondes d’intervalle, avec une nouvelle restauration de la sauvegarde à chaque essai. Les erreurs de validation ne sont pas réessayées automatiquement et les positions déjà publiées sont conservées. Les journaux exposent seulement des étapes, des catégories et des compteurs, sans texte reçu du FTP ni identifiants de connexion.
+La première relance après activation, [41625463979](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41625463979), a encore échoué : le relevé FTP de 11 h contenait **114 bateaux**, alors que le seuil fixe était de 115. Le relais utilise désormais au moins **90 % du dernier effectif source validé**, pour les nouveaux relevés et les archives ; le premier chargement sans historique exige toujours 115 bateaux. Les contrôles de structure, identifiants, coordonnées, heures, vitesses et caps restent actifs.
 
-Les notifications d’échec et de retour au succès ne sont pas activées. L’alerte par défaut en cas de désactivation automatique de la tâche est conservée.
+Le bateau absent reste dans l’historique à sa **dernière position connue**, sans position inventée ni heure rajeunie. Le contrôle dans Windy a confirmé SODEBO ULTIM 3 n° 4 au point du **3 novembre à 09:45:18 UTC**, tandis que le dernier fichier fournit 114 positions de 11 h. Le statut distingue l’effectif du fichier source et la date la plus récente effectivement publiée ; il n’est plus écrasé par la dernière archive importée.
 
-## Jeton GitHub et renouvellement
+Les erreurs réseau et Git sont réessayées jusqu’à trois fois à vingt secondes d’intervalle, avec restauration de la sauvegarde. Une erreur de validation conserve les positions sans nouvel essai. Les journaux exposent des étapes, catégories et compteurs, sans contenu FTP ni identifiants.
 
-Le propriétaire a créé puis saisi lui-même un jeton GitHub limité à ce dépôt dans le champ d’autorisation de cron-job.org. Les réglages demandés sont :
+## Configuration du secours
 
-- Propriétaire : `PatCodeur`.
-- Accès aux dépôts : **Only select repositories**, puis seulement `windy-route-du-rhum`.
-- Permissions du dépôt : **Actions — Read and write** ; **Metadata — Read-only**.
-- Durée : **90 jours**. L’échéance renvoyée est le **31 janvier 2027 à 23:00 UTC**, soit le **1er février à 00:00 à Paris**. Renouveler le jeton et remplacer sa valeur dans cron-job.org **avant le 1er février 2027**.
-
-Ne jamais placer le jeton dans ce dépôt ni dans une conversation. Les identifiants FTP restent dans les secrets GitHub Actions ; cron-job.org utilise le jeton seulement pour demander le lancement du workflow.
-
-## Configuration enregistrée
+La tâche active **Route du Rhum — actualisation horaire**, n° **8782527**, complète la programmation GitHub à la minute 17. Le workflow sérialise les passages.
 
 | Paramètre | Valeur |
 | --- | --- |
-| Nom | Route du Rhum — actualisation horaire |
-| Numéro de tâche | `8782527` |
 | URL | `https://api.github.com/repos/PatCodeur/windy-route-du-rhum/actions/workflows/update-positions.yml/dispatches` |
 | Méthode | `POST` |
-| Fuseau horaire | `Europe/Paris` |
-| Programmation | Toutes les heures, à la **minute 10** |
-| Corps de la requête | `{"ref":"main"}` |
+| Corps | `{"ref":"main"}` |
+| Fuseau | `Europe/Paris` |
+| Fréquence | Toutes les heures à la minute 10 |
 
-En-têtes :
-
-| Nom | Valeur |
+| En-tête | Valeur |
 | --- | --- |
 | `Accept` | `application/vnd.github+json` |
 | `Content-Type` | `application/json` |
 | `X-GitHub-Api-Version` | `2026-03-10` |
 | `Authorization` | `Bearer ` suivi du jeton, saisi directement par son propriétaire |
 
-## Contrôles à conserver
+Les notifications d’échec et de retour au succès ne sont pas activées. L’alerte de désactivation automatique est conservée. Une réponse HTTP réussie de cron-job.org confirme l’acceptation du déclenchement, pas le succès de la publication GitHub ; ses alertes surveillent cette requête HTTP.
 
-1. Consulter l’historique cron-job.org : la requête de déclenchement doit être acceptée par GitHub.
-2. Ouvrir [les exécutions du workflow](https://github.com/PatCodeur/windy-route-du-rhum/actions/workflows/update-positions.yml) : le lancement correspondant doit réussir jusqu’à la publication Pages. Un déclenchement externe apparaît comme `workflow_dispatch`.
-3. Vérifier le [statut public](https://patcodeur.github.io/windy-route-du-rhum/live/status.json) : `retrievedAt` doit avancer ; `publishedNewest` indique l’heure de la position la plus récente. Cette dernière n’avance que si le serveur source fournit de nouvelles observations.
-4. Vérifier dans Windy le dernier relevé et le nombre de bateaux. Le plugin relit le flux public toutes les cinq minutes ; utiliser **Dernier relevé** pour quitter un rejeu volontaire d’anciennes positions.
+## Jeton et renouvellement
 
-Une réponse HTTP réussie de cron-job.org confirme l’acceptation du déclenchement ; elle ne prouve pas à elle seule la réussite de l’actualisation GitHub. Les éventuelles notifications d’échec du service surveillent cette requête HTTP. Le contrôle du statut public vérifie la fraîcheur réelle du flux.
+Le propriétaire a créé et saisi lui-même un jeton limité à ce dépôt :
 
-Ce service fonctionne même lorsque l’ordinateur personnel est éteint. Il est gratuit et permet les requêtes POST avec en-têtes et corps personnalisés ; il ne garantit pas contractuellement la ponctualité de chaque lancement. Les tâches planifiées GitHub peuvent aussi être retardées ou abandonnées en période de forte charge.
+- Propriétaire : `PatCodeur`.
+- Accès : **Only select repositories**, uniquement `windy-route-du-rhum`.
+- Permissions : **Actions — Read and write**, **Metadata — Read-only**.
+- Durée : **90 jours** ; échéance renvoyée le **31 janvier 2027 à 23:00 UTC**, soit le **1er février à 00:00 à Paris**.
 
-Sources : [documentation GitHub du déclenchement d’un workflow](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event), [limites des tâches planifiées GitHub](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule), [fonctions et limites de cron-job.org](https://cron-job.org/en/faq/).
+Renouveler le jeton et remplacer sa valeur dans cron-job.org **avant le 1er février 2027**. Ne jamais l’ajouter au dépôt ou à une conversation. Les identifiants FTP restent dans les secrets GitHub ; le jeton conservé par cron-job.org sert à demander le lancement du workflow.
+
+## Contrôler une actualisation complète
+
+1. Vérifier dans l’historique cron-job.org l’acceptation de la demande par GitHub.
+2. Ouvrir [les exécutions du workflow](https://github.com/PatCodeur/windy-route-du-rhum/actions/workflows/update-positions.yml) : le passage correspondant doit réussir jusqu’à Pages. Le déclenchement externe apparaît comme `workflow_dispatch`.
+3. Lire le [statut public](https://patcodeur.github.io/windy-route-du-rhum/live/status.json) : `retrievedAt` doit avancer. `publishedNewest` indique la position la plus récente et n’avance que si le FTP fournit un nouveau relevé.
+4. Dans Windy, installer le paquet 0.9.1, choisir **Dernier relevé**, puis vérifier la date UTC, le nombre de bateaux et les traces. Le plugin relit le flux toutes les cinq minutes ; un rejeu volontaire conserve l’instant sélectionné.
+
+Le secours fonctionne ordinateur éteint. Le service gratuit accepte POST, en-têtes et corps personnalisés, mais ne garantit pas la ponctualité de chaque passage. Les tâches GitHub peuvent aussi être retardées ou abandonnées en période de charge. Sources : [déclenchement GitHub](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event), [limites de programmation GitHub](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule), [FAQ cron-job.org](https://cron-job.org/en/faq/).

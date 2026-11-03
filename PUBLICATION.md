@@ -1,74 +1,43 @@
 # Publier le suivi Route du Rhum pour les autres utilisateurs
 
-**La version 0.9.0 est publiée sur les serveurs officiels Windy.** L’envoi effectué depuis le Terminal le 2 novembre 2026 a été confirmé par une réponse HTTP 201. Le [flux HTTPS](https://patcodeur.github.io/windy-route-du-rhum/live/historique.json) est également publié : 115 bateaux identifiés, autorisation CORS `*` et dernier pointage vérifié à 19:00:35 UTC le 2 novembre 2026. La solution gratuite utilise GitHub Actions et GitHub Pages ; voir [GITHUB-GRATUIT.md](GITHUB-GRATUIT.md).
+**La version 0.9.1 est publiée, installée et vérifiée dans Windy.** L’envoi a reçu HTTP 201 le 3 novembre 2026. Le flux corrigé affiche le relevé **11:00:18 UTC**, **115 dernières positions connues** et **50 relevés**. Le dernier fichier FTP fournit 114 bateaux ; le bateau absent conserve son point daté précédent.
 
-URL exacte du plugin renvoyée par Windy pour l’installation :
+URL exacte renvoyée par Windy pour installer **0.9.1** :
 
 ```text
-https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.0/plugin.min.js
+https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js
 ```
 
-Le code est disponible dans [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum), et le TAR public dans la [release v0.9.0](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.0). **L’installation et le fonctionnement du plugin ont été vérifiés dans Windy. La demande d’examen pour la galerie Windy n’a pas encore été envoyée.**
+Sources : [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum). Le flux est hébergé gratuitement par GitHub Actions et GitHub Pages ; voir [GITHUB-GRATUIT.md](GITHUB-GRATUIT.md). La demande d’examen pour la galerie Windy n’a pas encore été envoyée.
 
-## Correctif 0.9.1 en préparation — non publié
+## Correctif 0.9.1 et état de mise en service
 
-Le 3 novembre 2026, le déclenchement horaire de **10:10 UTC (11:10 à Paris)** a été accepté, puis GitHub a refusé le nouveau relevé. Le diagnostic de l’[exécution 41620646088](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41620646088) a confirmé **115 lignes de positions, dont une avec un rang non numérique**. Le flux de production conserve le dernier relevé valide à **09:00:24 UTC** ; l’actualisation n’est pas encore rétablie. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
+Le 3 novembre, le relais a refusé un relevé contenant 115 positions, dont une avec un rang non numérique. Le correctif conserve les coordonnées et représente ce rang par **— / Non communiqué**, sans attribuer de statut sportif ni calculer un classement de remplacement. Les autres contrôles des positions restent actifs. Le plugin 0.9.0 refusait aussi ce rang : installer 0.9.1 pour lire le flux corrigé.
 
-La version **0.9.1** est en préparation pour accepter un rang source textuel ou absent sans perdre la position du bateau et afficher **— / Non communiqué**. Aucun classement de remplacement n’est calculé. Le paquet 0.9.0 déjà publié refuse aussi ces rangs dans le flux JSON : l’activation du nouveau flux doit donc attendre la publication du correctif Windy.
+Le paquet correspond au commit `ee1b59661e096e9508031ccf3b0cfff42c35cbb3`, conservé dans la [release v0.9.1](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.1). Le relais a reçu un contrôle de complétude adaptatif et une correction du statut public au commit `fc8a657dca0a279ceb0d24d8149719518ec23de9`. **168 tests Node et 50 tests Python réussissent**. La [reprise 41626579394](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41626579394) et le contrôle dans Windy ont réussi. Le prochain passage horaire naturel après correction reste à observer. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
 
-Ordre de mise en service :
-
-1. Préparer et vérifier le correctif sur `release/rang-non-communique-0.9.1`, puis construire son paquet public.
-2. Envoyer **0.9.1** à l’API Windy et conserver l’URL réellement renvoyée par le service. **Cet envoi n’est pas encore confirmé.**
-3. Installer cette version et vérifier sa lecture d’un relevé contenant un rang inconnu.
-4. Activer le correctif du relais sur `main`, relancer la récupération puis vérifier l’heure du flux public, les 115 bateaux, les traces et l’affichage dans Windy.
-
-La version installée et publiée demeure **0.9.0** tant que ces étapes ne sont pas confirmées. Les preuves de publication et l’URL 0.9.0 ci-dessous restent celles de la version déjà en ligne.
-
-## Installer et ouvrir le plugin
+## Installer ou mettre à jour dans Windy
 
 1. Ouvrir [les plugins Windy](https://www.windy.com/plugins).
-2. Choisir le chargement depuis une URL et coller l’adresse complète du bundle ci-dessus, puis confirmer l’installation.
-3. Ouvrir le menu Windy et choisir **Route du Rhum**.
+2. Choisir le chargement depuis une URL, coller l’adresse **0.9.1** ci-dessus et confirmer l’installation.
+3. Dans le menu Windy, ouvrir **Route du Rhum**, puis choisir **Dernier relevé** pour quitter un éventuel rejeu.
 
-Après cette installation dans le navigateur, le lien [Ouvrir Route du Rhum](https://www.windy.com/plugin/rhum-personnel) permet de rouvrir le panneau. Pour un premier visiteur, il faut d’abord effectuer les trois étapes : le lien d’ouverture n’installe pas automatiquement le plugin.
+Après installation dans ce navigateur, [Ouvrir Route du Rhum](https://www.windy.com/plugin/rhum-personnel) permet de rouvrir le panneau. Ce lien d’ouverture ne remplace pas l’installation. Un navigateur qui utilise encore 0.9.0 doit installer la nouvelle URL ; un simple rechargement ne remplace pas nécessairement le paquet déjà installé.
 
-Votre version locale fonctionne comme avant. Sa configuration FTP et son mot de passe ne font pas partie du paquet public.
+Le plugin lit le flux HTTPS toutes les cinq minutes et conserve les dernières données valides pendant une coupure. L’actualisation avance les bateaux si **Dernier relevé** est sélectionné ; elle conserve un instant de rejeu ou une heure météo future.
 
 ## Les deux éléments publiés
 
-| Élément | Rôle | Hébergement |
-|---|---|---|
-| Relais de positions | Récupère `pos.txt` et les archives, conserve les traces, sert un flux HTTPS | GitHub Actions + GitHub Pages (gratuit, dépôt public) |
-| Plugin Windy | Affiche les bateaux et lit ce flux automatiquement | Serveurs officiels `windy-plugins.com` |
+| Élément | Fonction | Hébergement |
+| --- | --- | --- |
+| Relais de positions | Récupère `pos.txt` et les archives ; conserve les traces ; sert le flux HTTPS | GitHub Actions + GitHub Pages |
+| Plugin Windy | Affiche les bateaux et lit automatiquement ce flux | Serveurs officiels `windy-plugins.com` |
 
-Les visiteurs utilisent l’URL officielle du plugin sans lancer un Terminal ni configurer le FTP. La version publique commence sans anciennes positions embarquées, récupère son premier relevé automatiquement et réessaie toutes les cinq minutes après une coupure. Si elle dispose déjà de données valides, elle les conserve pendant la coupure. Quand le dernier relevé est sélectionné, une actualisation avance les bateaux ; un instant de rejeu ou une heure météo future restent sélectionnés.
+Les visiteurs n’ont ni FTP à configurer ni Terminal à lancer. Les identifiants FTP restent dans les secrets GitHub, hors du code, du paquet Windy et des réponses publiques. L’alternative [Docker](deploy/README.md) n’a pas été déployée ici.
 
-## 1. Héberger le flux
+## Construire une prochaine version
 
-La solution gratuite est détaillée dans [GITHUB-GRATUIT.md](GITHUB-GRATUIT.md). Le dossier [deploy](deploy/README.md) reste une alternative sur serveur à installer : relais FTP, stockage persistant et accès HTTPS. Il nécessite un serveur compatible Docker et un domaine qui pointe vers celui-ci. Un hébergement web classique devra être examiné avant de retenir cette méthode.
-
-Le mot de passe FTP sera saisi sur le serveur dans un fichier privé, monté séparément du programme. Il n’est jamais inclus dans l’image, le JavaScript du plugin ou les réponses publiques. Le serveur expose seulement les trois fichiers du flux et une adresse de contrôle ; les fichiers de configuration et les archives internes restent inaccessibles par HTTP.
-
-Avant de construire le plugin public, vérifier que l’adresse HTTPS retenue, suivie de `/live/historique.json`, renvoie les positions réelles et autorise leur lecture depuis Windy. Le dossier de déploiement contient les commandes de contrôle. Aucun domaine d’exemple ne doit être utilisé comme adresse de production.
-
-## 2. Identité de publication et prochaines versions
-
-Pour une prochaine publication, prévoir :
-
-- le compte Windy qui publiera le plugin ;
-- le nom d’auteur à afficher ;
-- un dépôt GitHub du projet, public ou privé, et le commit correspondant à la version ;
-- une clé **Windy Plugins API**, créée depuis [api.windy.com/keys](https://api.windy.com/keys) et saisie dans le Terminal au moment de l’envoi ;
-- une véritable capture du plugin dans Windy, à placer dans `src/screenshot.png` ou `src/screenshot.jpg` pour présenter le résultat.
-
-Le nom technique `windy-plugin-rhum-personnel` est conservé. La version publique porte le titre **« Route du Rhum — suivi des bateaux »** et `private: false` dans ses métadonnées Windy. Le `private: true` du fichier `package.json` reste volontairement présent : il évite une publication npm, qui n’est pas la procédure utilisée par Windy.
-
-Ne copiez aucune clé API ni aucun mot de passe dans le dépôt ou dans la conversation.
-
-## 3. Construire le paquet public
-
-La commande suivante décrit la construction d’une prochaine version : renseigner le nom d’auteur et le commit de la version à publier. Augmenter sa version avant un nouvel envoi à Windy.
+Prévoir un numéro de version inédit, le compte Windy de publication, le nom d’auteur, le dépôt et le commit exact de la version. Une clé **Windy Plugins API** se crée sur [api.windy.com/keys](https://api.windy.com/keys). Ne placer aucune clé ni aucun mot de passe dans les sources ou dans une conversation.
 
 ```sh
 npm run build:public -- \
@@ -78,50 +47,31 @@ npm run build:public -- \
   --commit "COMMIT_GIT"
 ```
 
-La construction utilise un dossier temporaire et conserve les fichiers de votre installation locale. Elle retire l’historique embarqué, remplace le réglage local par l’adresse HTTPS publique et produit :
+La construction retire l’historique embarqué et règle le flux HTTPS sans modifier l’installation locale. Elle produit `release/windy-plugin-rhum-personnel-0.9.1.tar` : `plugin.js`, `plugin.min.js`, `plugin.json` et la capture si présente, sans configuration FTP, mot de passe, `state` ou sources de débogage. Les fichiers générés sont dans `release/public-plugin/`.
 
-```text
-release/windy-plugin-rhum-personnel-0.9.0.tar
-```
+## Vérifier et envoyer le paquet
 
-Ce TAR contient uniquement `plugin.js`, `plugin.min.js`, `plugin.json` et la capture si elle est présente. Il ne contient ni configuration FTP, ni mot de passe, ni dossier `state`, ni sources de débogage. Le dossier `release/public-plugin/` permet aussi d’inspecter les fichiers générés.
-
-Le TAR de la release 0.9.0 publiée mesure **268 800 octets**. Son empreinte SHA-256 est :
-
-```text
-6e2fe3fad09f29ee33e67dd672156ef4162f852c904dee2e340f1439b4cb27eb
-```
-
-## 4. Vérifier puis envoyer à Windy
-
-La vérification suivante reste hors ligne et ne demande aucune clé :
+Le contrôle hors ligne ne demande aucune clé :
 
 ```sh
-npm run publish:check -- --archive release/windy-plugin-rhum-personnel-0.9.0.tar
+npm run publish:check -- --archive release/windy-plugin-rhum-personnel-0.9.1.tar
 ```
 
-L’envoi de la version 0.9.0 a déjà réussi. La commande utilisée était :
+Commande utilisée pour l’envoi confirmé :
 
 ```sh
-npm run publish:windy -- --archive release/windy-plugin-rhum-personnel-0.9.0.tar
+npm run publish:windy -- --archive release/windy-plugin-rhum-personnel-0.9.1.tar
 ```
 
-L’outil vérifie d’abord le flux public HTTPS et ses autorisations de lecture depuis Windy, puis demande la clé Windy en saisie masquée. La clé est utilisée seulement pour l’envoi à l’API officielle et n’est pas enregistrée. Une archive ou un flux invalide interrompt l’envoi. Le Terminal affiche la réponse du service et les liens effectivement renvoyés par Windy ; il n’invente pas d’adresse d’installation. Une erreur signalée par Windy, même avec un statut HTTP 200, ne sera pas présentée comme une publication réussie.
+L’outil vérifie le flux HTTPS et CORS, puis demande la clé Windy en saisie masquée, sans l’enregistrer. Une archive ou un flux invalide interrompt l’envoi. Les liens affichés sont ceux réellement renvoyés par Windy.
 
-L’URL officielle renvoyée par Windy et les étapes d’installation figurent en tête de ce document. Le chargement, les filtres, une fiche bateau et le rejeu ont été vérifiés dans le navigateur. L’envoi réussi n’attribue pas encore une place dans la galerie. Pour une nouvelle publication, augmenter le numéro de version et utiliser le nom du TAR correspondant.
+| Paquet | Taille | SHA-256 |
+| --- | --- | --- |
+| 0.9.1, accepté le 3 novembre 2026 | 269 312 octets | `f02702ab59e85d1a6868803396c87047489afce2e576efe9d9b902efbbe592d9` |
+| 0.9.0, publié le 2 novembre 2026 | 268 800 octets | `6e2fe3fad09f29ee33e67dd672156ef4162f852c904dee2e340f1439b4cb27eb` |
 
-## 5. Apparition dans la galerie
+Le bundle 0.9.1 reçu depuis Windy a été contrôlé en HTTPS : HTTP 200, CORS `*`, **84 829 octets**, identique au fichier minifié du TAR. L’installation par son URL officielle a été confirmée dans Windy, puis vérifiée après rechargement : 115 bateaux, 50 relevés, rang **— / Non communiqué** sur la fiche OCEANS et conservation du dernier point connu du bateau absent. La [release historique v0.9.0](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.0) conserve le paquet initial publié le 2 novembre.
 
-La [procédure officielle Windy](https://docs.windy-plugins.com/getting-started/publishing-plugin.html) prévoit une publication sur ses serveurs, puis une demande d’examen pour rendre le plugin visible dans la galerie. Le code peut être stocké dans un dépôt GitHub public ou privé. Le [fil de la communauté indiqué par Windy](https://community.windy.com/topic/31066/list-of-finished-windy-plugins-v42) sert à présenter les plugins à examiner.
+## Apparition dans la galerie Windy
 
-Préparer pour cette présentation : l’URL officielle de la version publiée ci-dessus, une capture de la carte, le nom du plugin, sa fonction de suivi de la flotte et l’adresse du dépôt. La demande d’examen n’a pas encore été faite et aucun message n’a été envoyé au forum Windy.
-
-## Vérifications effectuées et restantes
-
-Les tests automatisés couvrent le démarrage local et public, le chargement et la reprise du flux, les archives FTP, la séparation du secret, les routes publiques et le paquet de publication. **162 tests Node et 40 tests Python réussissent** ; les compilations locale et publique ont été contrôlées.
-
-Le [premier workflow GitHub](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41508185794) a réussi. Le flux public a été vérifié en HTTPS, avec 115 bateaux et CORS `*` ; aucune archive n’était encore en attente à la fin de ce passage. La réception du paquet par Windy est confirmée par HTTP 201.
-
-Le contrôle dans Windy a confirmé l’installation depuis l’URL officielle et l’ouverture du panneau **Route du Rhum** : 115 bateaux, huit bateaux avec le filtre Ultim, fiche de Tom Laperche avec rang, coordonnées et moyennes 4 h/24 h. Le rejeu est passé à 18:00:19 UTC puis revenu au dernier pointage à 19:00:35 UTC. La réouverture par le lien du plugin fonctionne après installation dans ce navigateur. Une capture du résultat a été conservée pour préparer la demande d’examen pour la galerie, qui reste à envoyer.
-
-L’alternative Docker n’a pas été déployée ni vérifiée dans cet environnement. Les clés API et identifiants FTP restent en dehors des sources publiques.
+La [procédure officielle](https://docs.windy-plugins.com/getting-started/publishing-plugin.html) exige une demande d’examen après publication. Préparer l’URL, une capture réelle et la description pour le [fil indiqué par Windy](https://community.windy.com/topic/31066/list-of-finished-windy-plugins-v42). Aucun message n’a été envoyé et aucune présence dans la galerie n’est annoncée.
