@@ -2,7 +2,7 @@
 
 Le dépôt public est [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum). GitHub Actions récupère les positions FTP et leurs archives ; GitHub Pages publie les positions en HTTPS. L’ordinateur personnel peut rester éteint.
 
-**Le paquet Windy 0.9.1 est publié et vérifié dans Windy.** La [reprise du relais](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41626579394) a réussi le 3 novembre : relevé **11:00:18 UTC**, 114 bateaux reçus du FTP, **115 dernières positions connues** et 50 relevés dans Windy. Le bateau absent du dernier fichier reste à son dernier point connu, daté. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
+**Le paquet Windy 0.9.1 est publié et vérifié dans Windy.** La [reprise du relais](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203) a réussi le 3 novembre : relevé **12:00:18 UTC**, 114 bateaux reçus du FTP, **115 dernières positions connues** et 51 relevés dans Windy. Le bateau absent du dernier fichier reste à son dernier point connu, daté. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
 
 URL exacte d’installation renvoyée par Windy :
 
@@ -42,7 +42,7 @@ Dans **Settings → Pages → Build and deployment**, la source est **GitHub Act
 
 Depuis le 3 novembre, la tâche cron-job.org **8782527** déclenche le workflow à la **minute 10 de chaque heure**, dans le fuseau **Europe/Paris**. Le déclenchement GitHub à la **minute 17** est conservé. Les passages sont sérialisés pour éviter deux publications concurrentes.
 
-Le premier test externe et le lancement horaire naturel de 10:10 UTC ont confirmé le déclenchement. Le traitement a ensuite refusé un rang non numérique, puis un fichier de 114 bateaux. Les deux contrôles ont été corrigés et la relance manuelle a réussi. Le prochain passage horaire naturel après correction reste à observer.
+Le premier test externe et le lancement horaire naturel de 10:10 UTC ont confirmé le déclenchement. Le traitement a ensuite refusé un rang non numérique, puis un fichier de 114 bateaux. Les deux contrôles ont été corrigés et la relance manuelle a réussi. Le passage horaire naturel du **3 novembre à 12:10 UTC (13:10 à Paris)** a réussi, sans relance manuelle : [exécution 41633492203](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203).
 
 Les alertes d’échec et de retour au succès ne sont pas activées ; seule l’alerte de désactivation automatique de la tâche est conservée. Le jeton GitHub saisi par son propriétaire dans cron-job.org doit être remplacé **avant le 1er février 2027**. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md) pour les réglages et les contrôles.
 

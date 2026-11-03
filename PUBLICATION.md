@@ -1,6 +1,6 @@
 # Publier le suivi Route du Rhum pour les autres utilisateurs
 
-**La version 0.9.1 est publiée, installée et vérifiée dans Windy.** L’envoi a reçu HTTP 201 le 3 novembre 2026. Le flux corrigé affiche le relevé **11:00:18 UTC**, **115 dernières positions connues** et **50 relevés**. Le dernier fichier FTP fournit 114 bateaux ; le bateau absent conserve son point daté précédent.
+**La version 0.9.1 est publiée, installée et vérifiée dans Windy.** L’envoi a reçu HTTP 201 le 3 novembre 2026. Le flux corrigé affiche le relevé **12:00:18 UTC**, **115 dernières positions connues** et **51 relevés**. Le dernier fichier FTP fournit 114 bateaux ; le bateau absent conserve son point daté précédent.
 
 URL exacte renvoyée par Windy pour installer **0.9.1** :
 
@@ -14,7 +14,7 @@ Sources : [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-rou
 
 Le 3 novembre, le relais a refusé un relevé contenant 115 positions, dont une avec un rang non numérique. Le correctif conserve les coordonnées et représente ce rang par **— / Non communiqué**, sans attribuer de statut sportif ni calculer un classement de remplacement. Les autres contrôles des positions restent actifs. Le plugin 0.9.0 refusait aussi ce rang : installer 0.9.1 pour lire le flux corrigé.
 
-Le paquet correspond au commit `ee1b59661e096e9508031ccf3b0cfff42c35cbb3`, conservé dans la [release v0.9.1](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.1). Le relais a reçu un contrôle de complétude adaptatif et une correction du statut public au commit `fc8a657dca0a279ceb0d24d8149719518ec23de9`. **168 tests Node et 50 tests Python réussissent**. La [reprise 41626579394](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41626579394) et le contrôle dans Windy ont réussi. Le prochain passage horaire naturel après correction reste à observer. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
+Le paquet correspond au commit `ee1b59661e096e9508031ccf3b0cfff42c35cbb3`, conservé dans la [release v0.9.1](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.1). Le relais a reçu un contrôle de complétude adaptatif et une correction du statut public au commit `fc8a657dca0a279ceb0d24d8149719518ec23de9`. **168 tests Node et 50 tests Python réussissent**. La [reprise 41626579394](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41626579394) et le contrôle dans Windy ont réussi. Le passage horaire naturel du **3 novembre à 12:10 UTC (13:10 à Paris)** a réussi, sans relance manuelle : [exécution 41633492203](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203). Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
 
 ## Installer ou mettre à jour dans Windy
 
@@ -70,7 +70,7 @@ L’outil vérifie le flux HTTPS et CORS, puis demande la clé Windy en saisie m
 | 0.9.1, accepté le 3 novembre 2026 | 269 312 octets | `f02702ab59e85d1a6868803396c87047489afce2e576efe9d9b902efbbe592d9` |
 | 0.9.0, publié le 2 novembre 2026 | 268 800 octets | `6e2fe3fad09f29ee33e67dd672156ef4162f852c904dee2e340f1439b4cb27eb` |
 
-Le bundle 0.9.1 reçu depuis Windy a été contrôlé en HTTPS : HTTP 200, CORS `*`, **84 829 octets**, identique au fichier minifié du TAR. L’installation par son URL officielle a été confirmée dans Windy, puis vérifiée après rechargement : 115 bateaux, 50 relevés, rang **— / Non communiqué** sur la fiche OCEANS et conservation du dernier point connu du bateau absent. La [release historique v0.9.0](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.0) conserve le paquet initial publié le 2 novembre.
+Le bundle 0.9.1 reçu depuis Windy a été contrôlé en HTTPS : HTTP 200, CORS `*`, **84 829 octets**, identique au fichier minifié du TAR. L’installation par son URL officielle a été confirmée dans Windy, puis vérifiée après rechargement : 115 bateaux, 51 relevés, rang **— / Non communiqué** sur la fiche OCEANS et conservation du dernier point connu du bateau absent. La [release historique v0.9.0](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.0) conserve le paquet initial publié le 2 novembre.
 
 ## Apparition dans la galerie Windy
 

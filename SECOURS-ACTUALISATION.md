@@ -2,7 +2,7 @@
 
 ## État de la correction 0.9.1 au 3 novembre 2026
 
-**La reprise est vérifiée.** Le paquet [0.9.1](https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js), accepté par Windy avec HTTP 201, a été installé et contrôlé après rechargement. La [relance 41626579394](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41626579394) a réussi sur le commit `fc8a657dca0a279ceb0d24d8149719518ec23de9`. Le statut public indique une récupération à **11:19:41.550 UTC** et un dernier relevé à **11:00:18 UTC**, avec **114 bateaux dans le fichier source**. Windy affiche **115 dernières positions connues et 50 relevés** ; le prochain passage horaire naturel après correction reste à observer.
+**La reprise automatique est vérifiée.** Le paquet [0.9.1](https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js) est publié et installé. Le passage horaire naturel du **3 novembre à 12:10 UTC (13:10 à Paris)** a réussi, sans relance manuelle : [exécution 41633492203](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203). Le flux récupéré à **12:10:47 UTC** contient le dernier relevé à **12:00:18 UTC**, avec **114 bateaux dans le fichier source**. Le contrôle dans Windy confirme **115 dernières positions connues et 51 relevés**.
 
 ## Incidents observés et corrections
 
@@ -75,3 +75,7 @@ Renouveler le jeton et remplacer sa valeur dans cron-job.org **avant le 1er fév
 4. Dans Windy, installer le paquet 0.9.1, choisir **Dernier relevé**, puis vérifier la date UTC, le nombre de bateaux et les traces. Le plugin relit le flux toutes les cinq minutes ; un rejeu volontaire conserve l’instant sélectionné.
 
 Le secours fonctionne ordinateur éteint. Le service gratuit accepte POST, en-têtes et corps personnalisés, mais ne garantit pas la ponctualité de chaque passage. Les tâches GitHub peuvent aussi être retardées ou abandonnées en période de charge. Sources : [déclenchement GitHub](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event), [limites de programmation GitHub](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule), [FAQ cron-job.org](https://cron-job.org/en/faq/).
+
+## Contrôle du chargement dans un autre onglet
+
+Le 3 novembre à 13:41 à Paris, un autre onglet Windy affichait 0 / 0 et une erreur de chargement malgré le flux public valide. Réappliquer l’URL officielle **0.9.1 dans cet onglet**, attendre la confirmation d’installation puis rouvrir Route du Rhum a rétabli les 115 bateaux et le relevé 12:00:18 UTC. Le numéro de version auparavant chargé n’a pas été relevé ; cette récupération ne démontre pas une panne FTP. Vérifier l’installation dans chaque navigateur utilisé.
