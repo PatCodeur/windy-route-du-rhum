@@ -1,16 +1,20 @@
 # Actualisation horaire : diagnostic et secours
 
-## État de la correction 0.9.1 au 3 novembre 2026
+## État de la correction 0.9.2 au 3 novembre 2026
 
-**Le passage horaire du relais est vérifié ; l’avancement automatique dans le plugin 0.9.1 reste affecté par le défaut décrit ci-dessous.** Le paquet [0.9.1](https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js) est publié et installé. Le passage horaire naturel du **3 novembre à 12:10 UTC (13:10 à Paris)** a réussi, sans relance manuelle : [exécution 41633492203](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203). Le flux récupéré à **12:10:47 UTC** contient le dernier relevé à **12:00:18 UTC**, avec **114 bateaux dans le fichier source**. Le contrôle dans Windy confirme **115 dernières positions connues et 51 relevés**.
+**Le paquet [0.9.2](https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.2/plugin.min.js) est publié et installé dans l’onglet de l’utilisateur ; le passage horaire suivant a avancé automatiquement dans ce même onglet.** À **14:09:37 UTC (15:09:37 à Paris)**, Windy affichait **115 dernières positions connues**, **52 relevés**, le dernier relevé à **13:01:24 UTC** et **Suivi automatique actif**. Après récupération du flux à **14:12:06 UTC**, l’instant de course était passé à **14:00:26 UTC**, avec **53 / 53 relevés**, **115 / 115 bateaux**, le mode **Dernier relevé** et **Suivi automatique actif**, sans erreur affichée. L’onglet n’a été ni rechargé ni replacé manuellement sur **Dernier relevé** entre ces observations. Le fichier reçu depuis Windy est identique au paquet local, conservé dans la [release v0.9.2](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.2).
 
-## Correctif 0.9.2 préparé, en attente de publication Windy
+Le [passage naturel 41651082963](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41651082963), déclenché à **14:10 UTC (15:10 à Paris)**, s’est terminé avec succès à **14:11:02 UTC**. Le statut public indique `retrievedAt = 2026-11-03T14:10:46.765Z`, le relevé **14:00:26 UTC**, **115 bateaux source** et **114 nouveaux points**. Ce contrôle valide ce passage complet, sans garantir la ponctualité des passages futurs.
+
+Le fonctionnement du relais avait déjà été vérifié avec 0.9.1. Le passage horaire naturel du **3 novembre à 12:10 UTC (13:10 à Paris)** a réussi, sans relance manuelle : [exécution 41633492203](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203). Le flux récupéré à **12:10:47 UTC** contient le dernier relevé à **12:00:18 UTC**, avec **114 bateaux dans le fichier source**. Le contrôle historique dans Windy confirmait **115 dernières positions connues et 51 relevés**.
+
+## Correctif 0.9.2 publié et installé
 
 Le défaut d’avancement dans un onglet laissé ouvert a été reproduit : après un réglage de l’heure météo par le plugin, Windy peut renvoyer une heure arrondie à la minute. Quelques secondes suffisaient alors à faire sortir 0.9.1 du suivi du dernier relevé. Les téléchargements suivants pouvaient réussir tout en laissant les bateaux à l’ancien instant.
 
-Le correctif préparé distingue le choix explicite de suivre le dernier relevé d’un instant de rejeu. Un retour météo déclenché par le plugin conserve le point de course sélectionné. Le retour au premier plan, la reconnexion et le retour dans un onglet visible déclenchent aussi une tentative si la précédente date d’au moins cinq minutes. Le rejeu volontaire reste conservé.
+Le correctif 0.9.2 distingue le choix explicite de suivre le dernier relevé d’un instant de rejeu. Un retour météo déclenché par le plugin conserve le point de course sélectionné. Le retour au premier plan, la reconnexion et le retour dans un onglet visible déclenchent aussi une tentative si la précédente date d’au moins cinq minutes. Le rejeu volontaire reste conservé.
 
-L’envoi de **0.9.2 à Windy et son contrôle dans le navigateur restent à faire**. Aucun nouveau réglage FTP ou cron-job.org n’est nécessaire pour ce défaut du plugin. Une réussite GitHub prouve la publication du flux ; il faut également vérifier que l’instant affiché avance dans un onglet resté ouvert, sans appuyer sur **Dernier relevé** ni recharger la page.
+**179 tests Node ont réussi**, dont les actualisations successives avec arrondi de l’heure météo et la reprise après coupure. L’envoi de 0.9.2, son chargement et **l’avancement au passage horaire de 14:10 UTC** sont vérifiés dans le navigateur resté ouvert. Aucun nouveau réglage FTP ou cron-job.org n’est nécessaire pour ce défaut du plugin. Une réussite GitHub prouve la publication du flux ; il faut également vérifier que l’instant affiché avance dans un onglet resté ouvert, sans appuyer sur **Dernier relevé** ni recharger la page.
 
 ## Incidents observés et corrections
 
@@ -33,7 +37,7 @@ Actualisation refusée (stage=latest-validation; category=rank-invalid).
 
 Le FTP répondait avec **115 positions, dont une avec un rang non numérique**. Le contrôle trop strict du rang a conservé le flux précédent. Il ne permet pas d’attribuer un statut sportif au skipper. La version 0.9.1 accepte un rang textuel ou absent comme inconnu, affiché **— / Non communiqué**, tout en conservant la position. Elle ne calcule aucun rang de remplacement et conserve les contrôles des coordonnées, identifiants, heures, vitesses et caps.
 
-Le plugin 0.9.0 refusait aussi un rang inconnu : installer 0.9.1 pour lire le flux corrigé. La liste et la fiche OCEANS n° 98 ont été contrôlées dans Windy : **Non communiqué** et **—**. Voir [PUBLICATION.md](PUBLICATION.md).
+Le plugin 0.9.0 refusait aussi un rang inconnu. La version 0.9.1 a corrigé ce refus ; installer désormais 0.9.2, qui comprend aussi le correctif d’avancement. La liste et la fiche OCEANS n° 98 ont été contrôlées dans Windy : **Non communiqué** et **—**. Voir [PUBLICATION.md](PUBLICATION.md).
 
 ### Effectif variable du fichier source
 

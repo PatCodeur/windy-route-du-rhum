@@ -1,36 +1,36 @@
 # Publier le suivi Route du Rhum pour les autres utilisateurs
 
-**La version 0.9.1 est publiée et son chargement a été vérifié dans Windy.** L’envoi a reçu HTTP 201 le 3 novembre 2026. Lors du contrôle du relevé **12:00:18 UTC**, le plugin affichait **115 dernières positions connues** et **51 relevés**. Le fichier FTP fournissait 114 bateaux ; le bateau absent conservait son point daté précédent. Ce contrôle de chargement ne validait pas l’avancement automatique dans un onglet laissé ouvert.
+**La version 0.9.2 est publiée et installée dans l’onglet Windy de l’utilisateur.** Le service Windy a renvoyé son URL officielle le 3 novembre 2026. Le contrôle à **14:09:37 UTC (15:09:37 à Paris)** affichait **115 dernières positions connues**, **52 relevés**, le dernier relevé à **13:01:24 UTC** et **Suivi automatique actif**. Le passage horaire suivant a ensuite été vérifié dans ce même onglet, sans rechargement ni clic sur **Dernier relevé** : après la récupération du flux à **14:12:06 UTC**, l’instant de course est passé à **14:00:26 UTC** et le compteur à **53 / 53 relevés**, avec **115 / 115 bateaux** et **Suivi automatique actif**. Cette observation valide ce passage complet ; elle ne constitue pas une garantie de ponctualité des passages futurs.
 
-URL exacte renvoyée par Windy pour installer **0.9.1** :
+URL exacte renvoyée par Windy pour installer **0.9.2** :
 
 ```text
-https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js
+https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.2/plugin.min.js
 ```
 
 Sources : [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum). Le flux est hébergé gratuitement par GitHub Actions et GitHub Pages ; voir [GITHUB-GRATUIT.md](GITHUB-GRATUIT.md). La demande d’examen pour la galerie Windy n’a pas encore été envoyée.
 
-## Correctif 0.9.2 préparé : avancement automatique
+## Correctif 0.9.2 publié : avancement automatique
 
 Un défaut du plugin 0.9.1 a été reproduit : Windy peut arrondir l’heure envoyée par le plugin à la minute. Le plugin interprétait alors ce décalage de quelques secondes comme un départ du mode **Dernier relevé**. Il téléchargeait les nouveaux points mais conservait l’ancien instant à l’écran.
 
-Le correctif préparé pour **0.9.2** conserve explicitement le choix de suivre le dernier relevé et ne déplace plus le curseur de course lors du retour d’un réglage météo effectué par le plugin. Un rejeu choisi par l’utilisateur reste conservé. Une actualisation est aussi prévue au retour dans un onglet visible, au retour de la connexion ou au retour du focus si la dernière tentative date d’au moins cinq minutes.
+Le correctif **0.9.2** conserve explicitement le choix de suivre le dernier relevé et ne déplace plus le curseur de course lors du retour d’un réglage météo effectué par le plugin. Un rejeu choisi par l’utilisateur reste conservé. Une actualisation est aussi prévue au retour dans un onglet visible, au retour de la connexion ou au retour du focus si la dernière tentative date d’au moins cinq minutes.
 
-**0.9.2 attend encore son envoi à Windy et sa vérification dans le navigateur.** Aucune URL d’installation 0.9.2 n’est annoncée avant la réponse du service. Le FTP, les secrets GitHub et la tâche cron-job.org n’ont pas à être reconfigurés pour ce correctif du plugin. Réinstaller 0.9.1 ne corrige pas ce défaut d’avancement.
+**0.9.2 a été reçue depuis l’URL officielle et contrôlée : le fichier est identique à celui de l’archive publiée.** Les **179 tests Node** ont réussi, dont les actualisations successives avec arrondi météo et la reprise après coupure. La source du paquet est le commit `fb7e8f59b98a203b921081241744d4fc50903cbc`, conservé dans la [release v0.9.2](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.2), avec l’archive et son empreinte vérifiées. Le passage horaire naturel du **3 novembre à 14:10 UTC (15:10 à Paris)** a réussi : [exécution 41651082963](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41651082963), terminée à **14:11:02 UTC**. Le statut public indique une récupération à **14:10:46.765 UTC**, un relevé **14:00:26 UTC**, **115 bateaux source** et **114 nouveaux points**. L’avancement de 52 à 53 relevés a été observé dans l’onglet resté ouvert à 14:12:06 UTC, sans action sur la course. Le FTP, les secrets GitHub et la tâche cron-job.org n’ont pas à être reconfigurés pour ce correctif du plugin. Réinstaller 0.9.1 ne corrige pas ce défaut d’avancement.
 
 ## Correctif 0.9.1 et état de mise en service
 
-Le 3 novembre, le relais a refusé un relevé contenant 115 positions, dont une avec un rang non numérique. Le correctif conserve les coordonnées et représente ce rang par **— / Non communiqué**, sans attribuer de statut sportif ni calculer un classement de remplacement. Les autres contrôles des positions restent actifs. Le plugin 0.9.0 refusait aussi ce rang : installer 0.9.1 pour lire le flux corrigé.
+Le 3 novembre, le relais a refusé un relevé contenant 115 positions, dont une avec un rang non numérique. Le correctif conserve les coordonnées et représente ce rang par **— / Non communiqué**, sans attribuer de statut sportif ni calculer un classement de remplacement. Les autres contrôles des positions restent actifs. Le plugin 0.9.0 refusait aussi ce rang. La version 0.9.1 a corrigé ce refus ; installer désormais 0.9.2, qui comprend aussi le correctif d’avancement.
 
 Le paquet correspond au commit `ee1b59661e096e9508031ccf3b0cfff42c35cbb3`, conservé dans la [release v0.9.1](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.1). Le relais a reçu un contrôle de complétude adaptatif et une correction du statut public au commit `fc8a657dca0a279ceb0d24d8149719518ec23de9`. La validation de 0.9.1 et du relais corrigé comptait **168 tests Node et 50 tests Python réussis**. La [reprise 41626579394](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41626579394) et le contrôle dans Windy ont réussi. Le passage horaire naturel du **3 novembre à 12:10 UTC (13:10 à Paris)** a réussi, sans relance manuelle : [exécution 41633492203](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203). Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
 
 ## Installer ou mettre à jour dans Windy
 
 1. Ouvrir [les plugins Windy](https://www.windy.com/plugins).
-2. Choisir le chargement depuis une URL, coller l’adresse **0.9.1** ci-dessus et confirmer l’installation.
+2. Choisir le chargement depuis une URL, coller l’adresse **0.9.2** ci-dessus et confirmer l’installation.
 3. Dans le menu Windy, ouvrir **Route du Rhum**, puis choisir **Dernier relevé** pour quitter un éventuel rejeu.
 
-Après installation dans ce navigateur, [Ouvrir Route du Rhum](https://www.windy.com/plugin/rhum-personnel) permet de rouvrir le panneau. Ce lien d’ouverture ne remplace pas l’installation. Un navigateur qui utilise encore 0.9.0 doit installer la nouvelle URL ; un simple rechargement ne remplace pas nécessairement le paquet déjà installé.
+Après installation dans ce navigateur, [Ouvrir Route du Rhum](https://www.windy.com/plugin/rhum-personnel) permet de rouvrir le panneau. Ce lien d’ouverture ne remplace pas l’installation. Un navigateur qui utilise encore 0.9.0 ou 0.9.1 doit installer la nouvelle URL ; un simple rechargement ne remplace pas nécessairement le paquet déjà installé.
 
 Le plugin lit le flux HTTPS toutes les cinq minutes et conserve les dernières données valides pendant une coupure. Le fonctionnement attendu est d’avancer les bateaux en mode **Dernier relevé**, en conservant un rejeu ou une heure météo future choisis par l’utilisateur. Le défaut d’arrondi décrit ci-dessus peut empêcher cet avancement avec 0.9.1.
 
@@ -55,7 +55,7 @@ npm run build:public -- \
   --commit "COMMIT_GIT"
 ```
 
-La construction retire l’historique embarqué et règle le flux HTTPS sans modifier l’installation locale. Avec la version 0.9.2 préparée, elle produit `release/windy-plugin-rhum-personnel-0.9.2.tar` : `plugin.js`, `plugin.min.js`, `plugin.json` et la capture si présente, sans configuration FTP, mot de passe, `state` ou sources de débogage. Les fichiers générés sont dans `release/public-plugin/`.
+La construction retire l’historique embarqué et règle le flux HTTPS sans modifier l’installation locale. La version 0.9.2 produit `release/windy-plugin-rhum-personnel-0.9.2.tar` : `plugin.js`, `plugin.min.js`, `plugin.json` et la capture si présente, sans configuration FTP, mot de passe, `state` ou sources de débogage. Les fichiers générés sont dans `release/public-plugin/`.
 
 ## Vérifier et envoyer le paquet
 
@@ -65,20 +65,23 @@ Le contrôle hors ligne ne demande aucune clé :
 npm run publish:check -- --archive release/windy-plugin-rhum-personnel-0.9.2.tar
 ```
 
-Commande historique utilisée pour l’envoi confirmé de 0.9.1 :
+Commande utilisée pour l’envoi confirmé de 0.9.2 :
 
 ```sh
-npm run publish:windy -- --archive release/windy-plugin-rhum-personnel-0.9.1.tar
+npm run publish:windy -- --archive release/windy-plugin-rhum-personnel-0.9.2.tar
 ```
 
 L’outil vérifie le flux HTTPS et CORS, puis demande la clé Windy en saisie masquée, sans l’enregistrer. Une archive ou un flux invalide interrompt l’envoi. Les liens affichés sont ceux réellement renvoyés par Windy.
 
 | Paquet | Taille | SHA-256 |
 | --- | --- | --- |
+| 0.9.2, accepté le 3 novembre 2026 | 272 896 octets | `da1158aeb933a6faf5bb0f6b0235023ff3536139ab52466ac40cd5daf0e87a48` |
 | 0.9.1, accepté le 3 novembre 2026 | 269 312 octets | `f02702ab59e85d1a6868803396c87047489afce2e576efe9d9b902efbbe592d9` |
 | 0.9.0, publié le 2 novembre 2026 | 268 800 octets | `6e2fe3fad09f29ee33e67dd672156ef4162f852c904dee2e340f1439b4cb27eb` |
 
-Le bundle 0.9.1 reçu depuis Windy a été contrôlé en HTTPS : HTTP 200, CORS `*`, **84 829 octets**, identique au fichier minifié du TAR. L’installation par son URL officielle a été confirmée dans Windy, puis vérifiée après rechargement : 115 bateaux, 51 relevés, rang **— / Non communiqué** sur la fiche OCEANS et conservation du dernier point connu du bateau absent. La [release historique v0.9.0](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.0) conserve le paquet initial publié le 2 novembre.
+Le bundle **0.9.2** reçu depuis Windy contient **85 753 octets**, SHA-256 `2f6124ee673a2632e8572c9bc141b0cb0d700800f274aa9745a97b2271d97dab`, identique au fichier minifié du TAR. Son installation, le chargement initial de 52 relevés puis l’avancement automatique à 53 relevés ont été contrôlés dans l’onglet de l’utilisateur, sans rechargement entre les deux observations.
+
+Le bundle historique 0.9.1 reçu depuis Windy a été contrôlé en HTTPS : HTTP 200, CORS `*`, **84 829 octets**, identique au fichier minifié du TAR. L’installation par son URL officielle a été confirmée dans Windy, puis vérifiée après rechargement : 115 bateaux, 51 relevés, rang **— / Non communiqué** sur la fiche OCEANS et conservation du dernier point connu du bateau absent. La [release historique v0.9.0](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.0) conserve le paquet initial publié le 2 novembre.
 
 ## Apparition dans la galerie Windy
 

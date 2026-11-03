@@ -2,27 +2,27 @@
 
 Le dépôt public est [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum). GitHub Actions récupère les positions FTP et leurs archives ; GitHub Pages publie les positions en HTTPS. L’ordinateur personnel peut rester éteint.
 
-**Le paquet Windy 0.9.1 est publié et son chargement a été vérifié dans Windy.** La [reprise du relais](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203) a réussi le 3 novembre : relevé **12:00:18 UTC**, 114 bateaux reçus du FTP, **115 dernières positions connues** et 51 relevés dans Windy. Le bateau absent du dernier fichier reste à son dernier point connu, daté. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
+**Le paquet Windy 0.9.2 est publié et installé dans l’onglet de l’utilisateur.** Le contrôle du **3 novembre à 14:09:37 UTC (15:09:37 à Paris)** affichait **115 dernières positions connues**, **52 relevés**, le dernier relevé à **13:01:24 UTC** et **Suivi automatique actif**. Le passage naturel de **14:10 UTC (15:10 à Paris)** a ensuite réussi : [exécution 41651082963](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41651082963). À **14:12:06 UTC**, le même onglet affichait automatiquement le relevé **14:00:26 UTC**, **53 / 53 relevés** et **115 / 115 bateaux**, toujours avec **Suivi automatique actif**, sans rechargement ni clic sur **Dernier relevé**. Ce passage complet a été vérifié ; la ponctualité des passages futurs reste soumise aux services utilisés. Si un bateau est absent d’un relevé, son dernier point connu reste daté. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
 
 URL exacte d’installation renvoyée par Windy :
 
 ```text
-https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js
+https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.2/plugin.min.js
 ```
 
 ## Installer ou mettre à jour le plugin
 
 1. Ouvrir [les plugins Windy](https://www.windy.com/plugins).
-2. Choisir le chargement depuis une URL, coller l’adresse **0.9.1** ci-dessus et confirmer l’installation.
+2. Choisir le chargement depuis une URL, coller l’adresse **0.9.2** ci-dessus et confirmer l’installation.
 3. Dans le menu Windy, ouvrir **Route du Rhum**, puis **Dernier relevé**.
 
-[Ouvrir Route du Rhum](https://www.windy.com/plugin/rhum-personnel) permet ensuite de rouvrir le panneau dans ce navigateur. Le lien ne remplace pas l’installation. Installer 0.9.1 pour afficher **Non communiqué** sans perdre la position en cas de rang textuel. [PUBLICATION.md](PUBLICATION.md) décrit le paquet. L’examen pour la galerie reste à demander.
+[Ouvrir Route du Rhum](https://www.windy.com/plugin/rhum-personnel) permet ensuite de rouvrir le panneau dans ce navigateur. Le lien ne remplace pas l’installation. Installer 0.9.2 pour recevoir le correctif du suivi automatique et afficher **Non communiqué** sans perdre la position en cas de rang textuel. [PUBLICATION.md](PUBLICATION.md) décrit le paquet. L’examen pour la galerie reste à demander.
 
-## Avancement automatique : correctif 0.9.2 en préparation
+## Avancement automatique : correctif 0.9.2 publié
 
 Le relais a bien publié le relevé de 12 h, mais un défaut du plugin 0.9.1 peut laisser l’affichage à l’heure précédente : Windy arrondit parfois l’heure renvoyée après un réglage du plugin, ce qui désactivait involontairement le suivi du dernier relevé. Ce comportement a été reproduit.
 
-Le correctif préparé pour 0.9.2 conserve explicitement le choix **Dernier relevé**, préserve le point de course lors des retours météo déclenchés par le plugin et reprend l’actualisation après retour dans l’onglet ou reconnexion si la dernière tentative date d’au moins cinq minutes. Un rejeu volontaire reste conservé. **L’envoi à Windy et la vérification de 0.9.2 dans le navigateur restent à faire** ; l’URL ci-dessus reste celle de 0.9.1 déjà publiée.
+Le correctif 0.9.2 conserve explicitement le choix **Dernier relevé**, préserve le point de course lors des retours météo déclenchés par le plugin et reprend l’actualisation après retour dans l’onglet ou reconnexion si la dernière tentative date d’au moins cinq minutes. Un rejeu volontaire reste conservé. **179 tests Node ont réussi** et le chargement de 0.9.2 a été contrôlé dans le navigateur. Le fichier reçu de Windy est identique à celui du paquet publié. L’avancement de 52 à 53 relevés, à la publication horaire suivante, a été observé dans le même onglet sans intervention sur la course.
 
 Les secrets FTP et la tâche cron-job.org existants n’ont pas à être reconfigurés pour ce correctif. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md) pour distinguer la publication du flux et l’avancement de la carte.
 

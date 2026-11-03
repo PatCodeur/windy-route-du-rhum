@@ -386,7 +386,7 @@ def write_pages(work, output):
 <ol>
 <li>Ouvrez <a href="https://www.windy.com/plugins">la page des plugins Windy</a>.</li>
 <li>Choisissez le chargement d’un plugin depuis une URL, puis copiez et collez cette adresse complète :
-<code>https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js</code>
+<code>https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.2/plugin.min.js</code>
 Confirmez l’installation dans Windy.</li>
 <li>Ouvrez le menu Windy et choisissez <strong>Route du Rhum</strong> pour afficher la flotte.</li>
 </ol>
