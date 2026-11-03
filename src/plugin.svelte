@@ -21,6 +21,9 @@
     const publicMode = runtimeConfig.publicMode === true;
     let history = buildHistory(publicMode ? [] : historySnapshot);
     let activeTimestamp = history.newest ? Date.parse(history.newest) : Date.now();
+    // Le suivi du direct est un choix de navigation, indépendant des arrondis
+    // du calendrier météo et de l’arrivée d’un nouveau relevé.
+    let followLatest = true;
     let syncWeather = true;
     let weatherTimestamp = null;
     let weatherNotice = '';
@@ -157,6 +160,7 @@
     }
     function setRaceTime(timestamp) {
         if (!history.times.length || !Number.isFinite(timestamp)) return;
+        followLatest = timestamp === Date.parse(history.newest);
         activeTimestamp = timestamp;
         weatherNotice = '';
         if (syncWeather) void weatherLink?.push(timestamp);
@@ -165,15 +169,20 @@
         pause();
         syncWeather = event.currentTarget.checked;
         weatherNotice = '';
-        if (syncWeather && Number.isFinite(weatherTimestamp)) activeTimestamp = weatherTimestamp;
+        if (syncWeather && followLatest && history.times.length) setRaceTime(Date.parse(history.newest));
+        else if (syncWeather && Number.isFinite(weatherTimestamp)) {
+            activeTimestamp = weatherTimestamp;
+            followLatest = weatherTimestamp === Date.parse(history.newest);
+        }
     }
     function receiveWeatherTime(timestamp, { programmatic }) {
         weatherTimestamp = timestamp;
-        if (!syncWeather) return;
-        if (!programmatic) {
-            pause();
-            weatherNotice = '';
-        }
+        // Windy peut arrondir l’heure envoyée. Sa confirmation décrit la météo,
+        // pas une demande de déplacer les bateaux ou de quitter le direct.
+        if (!syncWeather || programmatic) return;
+        pause();
+        weatherNotice = '';
+        followLatest = timestamp === Date.parse(history.newest);
         activeTimestamp = timestamp;
     }
     function addFleets(fleets, label, followNewest = true) {
@@ -242,9 +251,9 @@
             if (automatic && Date.parse(stats(fleets.flat()).newest) < Date.parse(history.newest)) {
                 throw new Error('Le serveur a renvoyé un historique antérieur');
             }
-            // Suivre les nouveaux relevés si le dernier point était sélectionné.
-            // Une heure météo future et un instant de rejeu restent sélectionnés.
-            const followingLatest = atLatest && !playing && (!syncWeather || activeTimestamp <= Date.parse(history.newest));
+            // Le curseur météo normalisé ne doit jamais arrêter le suivi du direct.
+            // Une navigation volontaire et une lecture en cours restent conservées.
+            const followingLatest = followLatest && !playing;
             const followNewest = !history.times.length || !automatic || followingLatest;
             if (!automatic) pause();
             addFleets(fleets, publicMode ? 'Positions de course — vérification toutes les 5 min' : 'Flux HTTPS — actualisation toutes les 5 min', followNewest);
@@ -260,6 +269,13 @@
             if (!dead && turn === revision) busy = false;
         }
     }
+    function checkForUpdates() {
+        now = Date.now();
+        if (liveUrl && !busy && now - lastAttemptAt >= 300000) void loadUrl(liveUrl, true);
+    }
+    function resumeUpdates() {
+        if (!dead && document.visibilityState !== 'hidden') checkForUpdates();
+    }
     onMount(() => {
         try {
             mapLayers = createMapLayers({ map, L, onSelect: boat => { selectedId = boat.id; } });
@@ -270,10 +286,12 @@
                 onTime: receiveWeatherTime, onStatus: message => { weatherNotice = message; }
             });
             weatherLink.start();
-            timer = setInterval(() => {
-                now = Date.now();
-                if (liveUrl && !busy && now - lastAttemptAt >= 300000) void loadUrl(liveUrl, true);
-            }, 60000);
+            timer = setInterval(checkForUpdates, 60000);
+            // Les navigateurs suspendent parfois les minuteries des onglets en
+            // arrière-plan. Vérifier dès le retour, sans attendre une minute de plus.
+            window.addEventListener('focus', resumeUpdates);
+            window.addEventListener('online', resumeUpdates);
+            document.addEventListener('visibilitychange', resumeUpdates);
             if (publicMode) void loadUrl(liveUrl);
             finishLayers = createFinishLayers({ map, L, onError: cause => {
                 finishNotice = 'Le repère d’arrivée n’a pas pu être affiché. Les positions et les distances restent disponibles.';
@@ -289,6 +307,9 @@
         mounted = false;
         ++revision;
         clearInterval(timer);
+        window.removeEventListener('focus', resumeUpdates);
+        window.removeEventListener('online', resumeUpdates);
+        document.removeEventListener('visibilitychange', resumeUpdates);
         pause();
         controller?.abort();
         weatherLink?.stop();
@@ -327,9 +348,10 @@
                     <option value={1500}>Lente</option><option value={1000}>Normale</option><option value={350}>Rapide</option>
                 </select>
             </label>
-            <button class="last" on:click={() => seek(history.times.length - 1)}>Dernier relevé</button>
+            <button class="last" aria-pressed={followLatest} on:click={() => seek(history.times.length - 1)}>Dernier relevé</button>
         </div>
         <small>Repère {Number(cursorIndex) + 1} / {history.times.length} · {syncWeather ? 'interpolation entre relevés' : 'positions observées'}</small>
+        <small aria-live="polite">{followLatest ? 'Suivi automatique du dernier relevé actif.' : 'Rejeu : utilisez « Dernier relevé » pour reprendre le suivi automatique.'}</small>
     </div>
     <label class="sync-switch"><input type="checkbox" checked={syncWeather} on:change={changeSync} /> Lier à l’heure météo Windy</label>
     {#if syncWeather}

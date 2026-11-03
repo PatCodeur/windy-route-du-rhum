@@ -2,7 +2,7 @@
 
 Le dépôt public est [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum). GitHub Actions récupère les positions FTP et leurs archives ; GitHub Pages publie les positions en HTTPS. L’ordinateur personnel peut rester éteint.
 
-**Le paquet Windy 0.9.1 est publié et vérifié dans Windy.** La [reprise du relais](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203) a réussi le 3 novembre : relevé **12:00:18 UTC**, 114 bateaux reçus du FTP, **115 dernières positions connues** et 51 relevés dans Windy. Le bateau absent du dernier fichier reste à son dernier point connu, daté. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
+**Le paquet Windy 0.9.1 est publié et son chargement a été vérifié dans Windy.** La [reprise du relais](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203) a réussi le 3 novembre : relevé **12:00:18 UTC**, 114 bateaux reçus du FTP, **115 dernières positions connues** et 51 relevés dans Windy. Le bateau absent du dernier fichier reste à son dernier point connu, daté. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
 
 URL exacte d’installation renvoyée par Windy :
 
@@ -17,6 +17,14 @@ https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.j
 3. Dans le menu Windy, ouvrir **Route du Rhum**, puis **Dernier relevé**.
 
 [Ouvrir Route du Rhum](https://www.windy.com/plugin/rhum-personnel) permet ensuite de rouvrir le panneau dans ce navigateur. Le lien ne remplace pas l’installation. Installer 0.9.1 pour afficher **Non communiqué** sans perdre la position en cas de rang textuel. [PUBLICATION.md](PUBLICATION.md) décrit le paquet. L’examen pour la galerie reste à demander.
+
+## Avancement automatique : correctif 0.9.2 en préparation
+
+Le relais a bien publié le relevé de 12 h, mais un défaut du plugin 0.9.1 peut laisser l’affichage à l’heure précédente : Windy arrondit parfois l’heure renvoyée après un réglage du plugin, ce qui désactivait involontairement le suivi du dernier relevé. Ce comportement a été reproduit.
+
+Le correctif préparé pour 0.9.2 conserve explicitement le choix **Dernier relevé**, préserve le point de course lors des retours météo déclenchés par le plugin et reprend l’actualisation après retour dans l’onglet ou reconnexion si la dernière tentative date d’au moins cinq minutes. Un rejeu volontaire reste conservé. **L’envoi à Windy et la vérification de 0.9.2 dans le navigateur restent à faire** ; l’URL ci-dessus reste celle de 0.9.1 déjà publiée.
+
+Les secrets FTP et la tâche cron-job.org existants n’ont pas à être reconfigurés pour ce correctif. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md) pour distinguer la publication du flux et l’avancement de la carte.
 
 ## Configuration déjà effectuée
 
@@ -48,7 +56,7 @@ Les alertes d’échec et de retour au succès ne sont pas activées ; seule l�
 
 Chaque passage valide `pos.txt`, puis importe jusqu’à 36 archives en quatre minutes ; les autres attendent le passage suivant. Après le premier relevé de 115 bateaux, le seuil de complétude est de 90 % du dernier effectif source validé, pour les nouveaux relevés et les archives. Les identifiants, coordonnées, dates, caps et vitesses restent contrôlés. Un échec conserve les données précédentes ; les erreurs réseau ou Git sont réessayées trois fois à vingt secondes d’intervalle.
 
-La branche publique `race-data` sauvegarde les rapports normalisés et les noms des archives traitées pour reprendre sur une autre machine GitHub. Elle ne contient aucun identifiant FTP. Les visiteurs téléchargent la page d’accueil et trois fichiers de positions. Le plugin relit le flux toutes les cinq minutes et conserve les dernières données valides pendant une coupure. Utiliser **Dernier relevé** pour quitter un rejeu volontaire.
+La branche publique `race-data` sauvegarde les rapports normalisés et les noms des archives traitées pour reprendre sur une autre machine GitHub. Elle ne contient aucun identifiant FTP. Les visiteurs téléchargent la page d’accueil et trois fichiers de positions. Le plugin relit le flux toutes les cinq minutes et conserve les dernières données valides pendant une coupure. Le téléchargement du flux et l’avancement de l’instant affiché doivent être contrôlés séparément ; le défaut de 0.9.1 décrit plus haut concerne ce second point. **Dernier relevé** sert à quitter un rejeu volontaire.
 
 ## Gratuité et limites
 

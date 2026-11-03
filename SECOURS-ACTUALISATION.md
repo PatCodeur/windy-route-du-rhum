@@ -2,7 +2,15 @@
 
 ## État de la correction 0.9.1 au 3 novembre 2026
 
-**La reprise automatique est vérifiée.** Le paquet [0.9.1](https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js) est publié et installé. Le passage horaire naturel du **3 novembre à 12:10 UTC (13:10 à Paris)** a réussi, sans relance manuelle : [exécution 41633492203](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203). Le flux récupéré à **12:10:47 UTC** contient le dernier relevé à **12:00:18 UTC**, avec **114 bateaux dans le fichier source**. Le contrôle dans Windy confirme **115 dernières positions connues et 51 relevés**.
+**Le passage horaire du relais est vérifié ; l’avancement automatique dans le plugin 0.9.1 reste affecté par le défaut décrit ci-dessous.** Le paquet [0.9.1](https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.1/plugin.min.js) est publié et installé. Le passage horaire naturel du **3 novembre à 12:10 UTC (13:10 à Paris)** a réussi, sans relance manuelle : [exécution 41633492203](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41633492203). Le flux récupéré à **12:10:47 UTC** contient le dernier relevé à **12:00:18 UTC**, avec **114 bateaux dans le fichier source**. Le contrôle dans Windy confirme **115 dernières positions connues et 51 relevés**.
+
+## Correctif 0.9.2 préparé, en attente de publication Windy
+
+Le défaut d’avancement dans un onglet laissé ouvert a été reproduit : après un réglage de l’heure météo par le plugin, Windy peut renvoyer une heure arrondie à la minute. Quelques secondes suffisaient alors à faire sortir 0.9.1 du suivi du dernier relevé. Les téléchargements suivants pouvaient réussir tout en laissant les bateaux à l’ancien instant.
+
+Le correctif préparé distingue le choix explicite de suivre le dernier relevé d’un instant de rejeu. Un retour météo déclenché par le plugin conserve le point de course sélectionné. Le retour au premier plan, la reconnexion et le retour dans un onglet visible déclenchent aussi une tentative si la précédente date d’au moins cinq minutes. Le rejeu volontaire reste conservé.
+
+L’envoi de **0.9.2 à Windy et son contrôle dans le navigateur restent à faire**. Aucun nouveau réglage FTP ou cron-job.org n’est nécessaire pour ce défaut du plugin. Une réussite GitHub prouve la publication du flux ; il faut également vérifier que l’instant affiché avance dans un onglet resté ouvert, sans appuyer sur **Dernier relevé** ni recharger la page.
 
 ## Incidents observés et corrections
 
@@ -72,10 +80,10 @@ Renouveler le jeton et remplacer sa valeur dans cron-job.org **avant le 1er fév
 1. Vérifier dans l’historique cron-job.org l’acceptation de la demande par GitHub.
 2. Ouvrir [les exécutions du workflow](https://github.com/PatCodeur/windy-route-du-rhum/actions/workflows/update-positions.yml) : le passage correspondant doit réussir jusqu’à Pages. Le déclenchement externe apparaît comme `workflow_dispatch`.
 3. Lire le [statut public](https://patcodeur.github.io/windy-route-du-rhum/live/status.json) : `retrievedAt` doit avancer. `publishedNewest` indique la position la plus récente et n’avance que si le FTP fournit un nouveau relevé.
-4. Dans Windy, installer le paquet 0.9.1, choisir **Dernier relevé**, puis vérifier la date UTC, le nombre de bateaux et les traces. Le plugin relit le flux toutes les cinq minutes ; un rejeu volontaire conserve l’instant sélectionné.
+4. Dans Windy, vérifier la version installée, la date UTC, le nombre de bateaux et les traces. Pour tester l’avancement automatique, partir de **Dernier relevé**, laisser l’onglet ouvert jusqu’à la publication suivante, puis vérifier que la date avance sans intervention. Le plugin relit le flux toutes les cinq minutes ; le défaut de 0.9.1 décrit plus haut peut conserver l’ancien instant malgré un téléchargement réussi. Un rejeu volontaire doit conserver l’instant sélectionné.
 
 Le secours fonctionne ordinateur éteint. Le service gratuit accepte POST, en-têtes et corps personnalisés, mais ne garantit pas la ponctualité de chaque passage. Les tâches GitHub peuvent aussi être retardées ou abandonnées en période de charge. Sources : [déclenchement GitHub](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event), [limites de programmation GitHub](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule), [FAQ cron-job.org](https://cron-job.org/en/faq/).
 
 ## Contrôle du chargement dans un autre onglet
 
-Le 3 novembre à 13:41 à Paris, un autre onglet Windy affichait 0 / 0 et une erreur de chargement malgré le flux public valide. Réappliquer l’URL officielle **0.9.1 dans cet onglet**, attendre la confirmation d’installation puis rouvrir Route du Rhum a rétabli les 115 bateaux et le relevé 12:00:18 UTC. Le numéro de version auparavant chargé n’a pas été relevé ; cette récupération ne démontre pas une panne FTP. Vérifier l’installation dans chaque navigateur utilisé.
+Le 3 novembre à 13:41 à Paris, un autre onglet Windy affichait 0 / 0 et une erreur de chargement malgré le flux public valide. Réappliquer l’URL officielle **0.9.1 dans cet onglet**, attendre la confirmation d’installation puis rouvrir Route du Rhum a rétabli les 115 bateaux et le relevé 12:00:18 UTC. Le numéro de version auparavant chargé n’a pas été relevé ; cette récupération ne démontre pas une panne FTP et ne valide pas l’avancement automatique à l’heure suivante. Elle ne remplace pas le correctif du suivi du dernier relevé.

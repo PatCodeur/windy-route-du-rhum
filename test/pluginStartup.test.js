@@ -6,7 +6,10 @@ import suppliedReports from '../src/historySnapshot.js';
 
 const pluginUrl = new URL('../src/plugin.svelte', import.meta.url);
 
-function mapEnvironment({ failingDecoration = null, failBoats = false, fetch: fetchFeed = async () => {
+function mapEnvironment({ failingDecoration = null, failBoats = false,
+    normalizeWeather = timestamp => timestamp,
+    weatherCalendar = { start: Date.parse('2026-10-01T00:00:00Z'), end: Date.parse('2026-12-01T00:00:00Z') },
+    fetch: fetchFeed = async () => {
     throw new Error('Aucun chargement réseau prévu dans ce test');
 } } = {}) {
     const created = [];
@@ -30,6 +33,9 @@ function mapEnvironment({ failingDecoration = null, failBoats = false, fetch: fe
             return this;
         }
         off(type, listener) { this.events.get(type)?.delete(listener); return this; }
+        emit(type, value) { for (const listener of this.events.get(type) || []) listener(value); }
+        addEventListener(type, listener) { this.on(type, listener); }
+        removeEventListener(type, listener) { this.off(type, listener); }
     }
     class FakeMap extends Evented {
         layers = new Set();
@@ -77,17 +83,34 @@ function mapEnvironment({ failingDecoration = null, failBoats = false, fetch: fe
         constructor(options) { this.options = options; }
     }
     const store = new Evented();
-    store.get = () => store.timestamp;
+    store.calendar = weatherCalendar;
+    store.writes = [];
+    store.get = key => store[key];
+    store.set = (key, value) => {
+        assert.equal(key, 'timestamp');
+        store.writes.push(value);
+        store.timestamp = normalizeWeather(value);
+        store.emit('timestamp', store.timestamp);
+        return true;
+    };
+    const document = Object.assign(new Evented(), {
+        createElement: () => ({ innerHTML: '' }),
+        visibilityState: 'visible',
+    });
+    const window = new Evented();
     return {
         map, L: { Polyline, Marker, DivIcon }, store, mounts, destroys, created,
-        warnings, errors, intervals, tooltipCalls: () => tooltipCalls,
+        warnings, errors, intervals, document, window, tooltipCalls: () => tooltipCalls,
         advanceTime(milliseconds) { clock += milliseconds; },
+        emitWeather(timestamp) { store.timestamp = timestamp; store.emit('timestamp', timestamp); },
+        emitWindow(type) { window.emit(type); },
+        emitDocument(type) { document.emit(type); },
         svelte: {
             onMount(callback) { mounts.push(callback); },
             onDestroy(callback) { destroys.push(callback); },
         },
         globals: {
-            document: { createElement: () => ({ innerHTML: '' }) },
+            document, window,
             Date: ClockDate, URL, AbortController, fetch: fetchFeed,
             setTimeout() { return ++nextTimer; },
             clearTimeout() {},
@@ -137,7 +160,7 @@ async function prepareStartup(options) {
     vm.runInContext(body, context, { filename: 'plugin.svelte<script>' });
     assert.equal(env.mounts.length, 1);
     const reactive = body.slice(body.indexOf('$: navigation'), body.indexOf('    function showBoat'));
-    const reactiveInputs = '([history, activeTimestamp, syncWeather, now, selectedClass, query, selectedId, traceMode, colorMode])';
+    const reactiveInputs = '([history, activeTimestamp, syncWeather, now, selectedClass, query, selectedId, traceMode, colorMode, typeof followLatest === "undefined" ? undefined : followLatest])';
     let previousInputs = vm.runInContext(reactiveInputs, context);
     const state = () => {
         const inputs = vm.runInContext(reactiveInputs, context);
@@ -146,7 +169,7 @@ async function prepareStartup(options) {
             previousInputs = inputs;
         }
         return vm.runInContext(
-            '({ mapNotice, finishNotice, mounted, boatCount: boats.length, standingsCount: standings.size, activeTimestamp, cursorTime, cursorIndex, source, error, busy, fetchedAt, lastAttemptAt, liveUrl, newest: history.newest, reportCount: history.times.length, classes, displayOldest: formatDate(history.oldest) })', context);
+            '({ mapNotice, finishNotice, mounted, boatCount: boats.length, standingsCount: standings.size, activeTimestamp, weatherTimestamp, atLatest, followLatest: typeof followLatest === "undefined" ? undefined : followLatest, cursorTime, cursorIndex, source, error, busy, fetchedAt, lastAttemptAt, liveUrl, newest: history.newest, reportCount: history.times.length, classes, displayOldest: formatDate(history.oldest) })', context);
     };
     const active = kind => [...env.map.layers].filter(layer => layer.kind === kind);
     return {
@@ -439,4 +462,259 @@ test('Une actualisation publique conserve un instant de rejeu météo antérieur
         assert.ok(Date.parse(second.newest) > Date.parse(first.newest));
         assert.equal(second.activeTimestamp, requested);
     } finally { env.destroy(); }
+});
+
+async function pollAfter(env, milliseconds = 300000) {
+    env.advanceTime(milliseconds);
+    for (const tick of [...env.intervals.values()]) tick();
+    await settle();
+    return env.state();
+}
+
+const floorMinute = timestamp => Math.floor(timestamp / 60000) * 60000;
+const ceilMinute = timestamp => Math.ceil(timestamp / 60000) * 60000;
+
+for (const [rounding, normalizeWeather] of [['inférieure', floorMinute], ['supérieure', ceilMinute]]) {
+    test(`Le direct avance sur deux nouveaux relevés malgré l’arrondi météo à la minute ${rounding}`, async () => {
+        const firstReports = suppliedReports.slice(0, -2);
+        const secondReports = suppliedReports.slice(0, -1);
+        const responses = [firstReports, firstReports, secondReports, suppliedReports];
+        let attempts = 0;
+        const env = await prepareStartup({ ...publicOptions, historySnapshot: [], normalizeWeather,
+            fetch: async () => feedResponse(responses[attempts++]),
+        });
+        try {
+            env.mount();
+            await settle();
+            let previous = env.state();
+            assert.ok(env.store.writes.length > 0, 'Le véritable aller-retour via le store météo doit être exercé');
+            for (const expected of [firstReports, secondReports, suppliedReports]) {
+                const current = await pollAfter(env);
+                assert.equal(current.error, '');
+                assert.equal(current.activeTimestamp, Date.parse(current.newest), 'Le curseur de course reste sur le relevé exact');
+                assert.equal(current.weatherTimestamp, normalizeWeather(current.activeTimestamp));
+                assert.equal(current.followLatest, true);
+                assert.equal(current.atLatest, true);
+                assert.ok(Date.parse(current.fetchedAt) > Date.parse(previous.fetchedAt));
+                const expectedNewest = Math.max(...expected.flat().map(boat => Date.parse(boat.time)));
+                assert.equal(Date.parse(current.newest), expectedNewest);
+                assert.equal(env.evaluate('boats.every(boat => !boat.interpolated)'), true);
+                assertFleetStarted(env);
+                previous = current;
+            }
+            assert.equal(attempts, 4);
+            assert.equal(env.store.writes.length, 4);
+        } finally { env.destroy(); }
+    });
+}
+
+test('Une coupure réseau puis deux nouveaux relevés conservent le suivi du direct malgré l’arrondi météo', async () => {
+    let attempts = 0;
+    const firstReports = suppliedReports.slice(0, -2);
+    const secondReports = suppliedReports.slice(0, -1);
+    const env = await prepareStartup({ ...publicOptions, historySnapshot: [], normalizeWeather: floorMinute,
+        fetch: async () => {
+            ++attempts;
+            if (attempts === 2) throw new Error('Coupure temporaire');
+            return feedResponse(attempts === 1 ? firstReports : attempts === 3 ? secondReports : suppliedReports);
+        },
+    });
+    try {
+        env.mount();
+        await settle();
+        const first = env.state();
+        const interrupted = await pollAfter(env);
+        assert.match(interrupted.error, /dernier relevé reçu reste affiché/);
+        assert.equal(interrupted.activeTimestamp, Date.parse(first.newest));
+        assert.equal(interrupted.followLatest, true);
+        for (let index = 0; index < 2; index++) {
+            const recovered = await pollAfter(env);
+            assert.equal(recovered.error, '');
+            assert.ok(Date.parse(recovered.newest) > Date.parse(first.newest));
+            assert.equal(recovered.activeTimestamp, Date.parse(recovered.newest));
+            assert.equal(recovered.followLatest, true);
+            assert.equal(recovered.weatherTimestamp, floorMinute(recovered.activeTimestamp));
+        }
+        assert.equal(attempts, 4);
+    } finally { env.destroy(); }
+});
+
+test('Un vrai rejeu reste sélectionné puis Dernier relevé réactive le suivi automatique', async () => {
+    let attempts = 0;
+    const firstReports = suppliedReports.slice(0, -2);
+    const secondReports = suppliedReports.slice(0, -1);
+    const env = await prepareStartup({ ...publicOptions, historySnapshot: [], normalizeWeather: floorMinute,
+        fetch: async () => feedResponse(++attempts === 1 ? firstReports : attempts === 2 ? secondReports : suppliedReports),
+    });
+    try {
+        env.mount();
+        await settle();
+        env.state();
+        env.evaluate('seek(2)');
+        await settle();
+        const replay = env.state();
+        assert.equal(replay.followLatest, false);
+        assert.equal(replay.atLatest, false);
+        assert.equal(replay.activeTimestamp, env.evaluate('Date.parse(history.times[2])'));
+        const updatedReplay = await pollAfter(env);
+        assert.ok(Date.parse(updatedReplay.newest) > Date.parse(replay.newest));
+        assert.equal(updatedReplay.activeTimestamp, replay.activeTimestamp);
+        assert.equal(updatedReplay.followLatest, false);
+        env.evaluate('seek(history.times.length - 1)');
+        await settle();
+        const resumed = env.state();
+        assert.equal(resumed.activeTimestamp, Date.parse(resumed.newest));
+        assert.equal(resumed.followLatest, true);
+        const next = await pollAfter(env);
+        assert.ok(Date.parse(next.newest) > Date.parse(resumed.newest));
+        assert.equal(next.activeTimestamp, Date.parse(next.newest));
+        assert.equal(next.followLatest, true);
+    } finally { env.destroy(); }
+});
+
+for (const offset of [-2, 12]) {
+    test(`Un vrai déplacement du curseur météo de ${offset} h garde son heure pendant les actualisations`, async () => {
+        let attempts = 0;
+        const firstReports = suppliedReports.slice(0, -2);
+        const env = await prepareStartup({ ...publicOptions, historySnapshot: [], normalizeWeather: floorMinute,
+            fetch: async () => feedResponse(++attempts === 1 ? firstReports : suppliedReports),
+        });
+        try {
+            env.mount();
+            await settle();
+            const first = env.state();
+            const requested = first.activeTimestamp + offset * 3600000;
+            env.emitWeather(requested);
+            const selected = env.state();
+            assert.equal(selected.activeTimestamp, requested);
+            assert.equal(selected.followLatest, false);
+            const updated = await pollAfter(env);
+            assert.ok(Date.parse(updated.newest) > Date.parse(first.newest));
+            assert.equal(updated.activeTimestamp, requested);
+            assert.equal(updated.weatherTimestamp, requested);
+            assert.equal(updated.followLatest, false);
+        } finally { env.destroy(); }
+    });
+}
+
+for (const weatherCalendar of [null, {
+    start: Date.parse('2026-11-10T00:00:00Z'), end: Date.parse('2026-11-30T00:00:00Z'),
+}]) {
+    test(`Le direct continue lorsque le calendrier météo est ${weatherCalendar ? 'hors de la course' : 'absent'}`, async () => {
+        let attempts = 0;
+        const env = await prepareStartup({ ...publicOptions, historySnapshot: [], weatherCalendar,
+            fetch: async () => feedResponse(++attempts === 1 ? suppliedReports.slice(0, -1) : suppliedReports),
+        });
+        try {
+            env.mount();
+            await settle();
+            const first = env.state();
+            const next = await pollAfter(env);
+            assert.equal(next.error, '');
+            assert.ok(Date.parse(next.newest) > Date.parse(first.newest));
+            assert.equal(next.activeTimestamp, Date.parse(next.newest));
+            assert.equal(next.followLatest, true);
+            assert.equal(env.store.writes.length, 0);
+        } finally { env.destroy(); }
+    });
+}
+
+test('Réactiver la liaison météo au direct conserve le dernier relevé et les actualisations suivantes', async () => {
+    let attempts = 0;
+    const env = await prepareStartup({ ...publicOptions, historySnapshot: [], normalizeWeather: floorMinute,
+        fetch: async () => feedResponse(++attempts === 1 ? suppliedReports.slice(0, -2) :
+            attempts === 2 ? suppliedReports.slice(0, -1) : suppliedReports),
+    });
+    try {
+        env.mount();
+        await settle();
+        const first = env.state();
+        env.evaluate('changeSync({ currentTarget: { checked: false } })');
+        env.state();
+        const independent = await pollAfter(env);
+        assert.ok(Date.parse(independent.newest) > Date.parse(first.newest));
+        assert.equal(independent.activeTimestamp, Date.parse(independent.newest));
+        assert.equal(independent.weatherTimestamp, first.weatherTimestamp);
+        assert.equal(independent.followLatest, true);
+        env.evaluate('changeSync({ currentTarget: { checked: true } })');
+        await settle();
+        const linked = env.state();
+        assert.equal(linked.activeTimestamp, Date.parse(linked.newest));
+        assert.equal(linked.weatherTimestamp, floorMinute(linked.activeTimestamp));
+        assert.equal(linked.followLatest, true);
+        const next = await pollAfter(env);
+        assert.ok(Date.parse(next.newest) > Date.parse(linked.newest));
+        assert.equal(next.activeTimestamp, Date.parse(next.newest));
+        assert.equal(next.followLatest, true);
+    } finally { env.destroy(); }
+});
+
+test('Réactiver la liaison pendant un rejeu respecte la véritable heure météo choisie', async () => {
+    let attempts = 0;
+    const env = await prepareStartup({ ...publicOptions, historySnapshot: [], normalizeWeather: floorMinute,
+        fetch: async () => feedResponse(++attempts === 1 ? suppliedReports.slice(0, -1) : suppliedReports),
+    });
+    try {
+        env.mount();
+        await settle();
+        env.state();
+        env.evaluate('seek(2)');
+        await settle();
+        const replay = env.state();
+        env.evaluate('changeSync({ currentTarget: { checked: false } })');
+        const requested = replay.activeTimestamp + 3600000;
+        env.emitWeather(requested);
+        assert.equal(env.state().activeTimestamp, replay.activeTimestamp);
+        env.evaluate('changeSync({ currentTarget: { checked: true } })');
+        const linked = env.state();
+        assert.equal(linked.activeTimestamp, requested);
+        assert.equal(linked.followLatest, false);
+        const next = await pollAfter(env);
+        assert.ok(Date.parse(next.newest) > Date.parse(linked.newest));
+        assert.equal(next.activeTimestamp, requested);
+        assert.equal(next.followLatest, false);
+    } finally { env.destroy(); }
+});
+
+test('Le retour sur un onglet visible actualise immédiatement une vérification échue et retire ses écouteurs à la fermeture', async () => {
+    let attempts = 0;
+    const env = await prepareStartup({ ...publicOptions, historySnapshot: [], normalizeWeather: floorMinute,
+        fetch: async () => feedResponse(++attempts === 1 ? suppliedReports.slice(0, -1) : suppliedReports),
+    });
+    try {
+        env.mount();
+        await settle();
+        const first = env.state();
+        env.advanceTime(299999);
+        env.emitWindow('focus');
+        env.emitWindow('online');
+        env.emitDocument('visibilitychange');
+        await settle();
+        assert.equal(attempts, 1, 'Les événements ne doivent pas contourner le délai de vérification');
+        env.advanceTime(1);
+        env.document.visibilityState = 'hidden';
+        env.emitDocument('visibilitychange');
+        await settle();
+        assert.equal(attempts, 1);
+        env.document.visibilityState = 'visible';
+        env.emitDocument('visibilitychange');
+        env.emitWindow('focus');
+        env.emitWindow('online');
+        await settle();
+        assert.equal(attempts, 2, 'Les événements rapprochés doivent partager un seul chargement');
+        const updated = env.state();
+        assert.ok(Date.parse(updated.newest) > Date.parse(first.newest));
+        assert.equal(updated.activeTimestamp, Date.parse(updated.newest));
+        assert.equal(updated.followLatest, true);
+    } finally { env.destroy(); }
+    assert.equal(env.window.events.get('focus')?.size || 0, 0);
+    assert.equal(env.window.events.get('online')?.size || 0, 0);
+    assert.equal(env.document.events.get('visibilitychange')?.size || 0, 0);
+    assert.equal(env.store.events.get('timestamp')?.size || 0, 0);
+    env.advanceTime(300000);
+    env.emitWindow('focus');
+    env.emitWindow('online');
+    env.emitDocument('visibilitychange');
+    await settle();
+    assert.equal(attempts, 2);
 });
