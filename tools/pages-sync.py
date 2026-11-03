@@ -47,6 +47,46 @@ def failure_category(error, stage):
     if isinstance(error, OSError):
         return 'network' if stage in {'ftp-connect', 'latest-download'} else 'local-io'
     if isinstance(error, ValueError):
+        if stage == 'latest-validation':
+            # Le programme local enveloppe les contrôles connus dans ces préfixes.
+            # Seul leur code constant sort dans les journaux, jamais le détail
+            # susceptible de contenir une ligne du fichier reçu.
+            message = str(error)
+            position_error = re.match(r'\APublication refusée : Positions, ligne [0-9]+ : ', message)
+            if position_error:
+                detail = message[position_error.end():]
+                fields = (
+                    ('Le cap doit être compris entre 0° inclus et 360° exclus.', 'cap-range'),
+                    ('Cap invalide.', 'cap-invalid'),
+                    ('Rang invalide.', 'rank-invalid'),
+                    ('Rang doit être un entier positif.', 'rank-invalid'),
+                    ('Coordonnée latitude invalide : ', 'coordinate-invalid'),
+                    ('Coordonnée longitude invalide : ', 'coordinate-invalid'),
+                    ('Coordonnée hors limites : ', 'coordinate-invalid'),
+                    ('Date invalide (MM/JJ/AA HH:MM:SS attendu) : ', 'date-invalid'),
+                    ('Date ou heure UTC invalide.', 'date-invalid'),
+                    ('Vitesse invalide.', 'speed-invalid'),
+                    ('La vitesse doit être un nombre positif ou nul en nœuds.', 'speed-invalid'),
+                    ('ID invalide.', 'id-invalid'),
+                    ('ID doit être un entier positif.', 'id-invalid'),
+                    ('ID en double : ', 'duplicate-id'),
+                    ('Six champs séparés par des points-virgules sont attendus.', 'field-count'),
+                    ('Cap/vitesse invalide.', 'movement-format'),
+                )
+                for prefix, category in fields:
+                    if detail.startswith(prefix):
+                        return category
+                return 'report-format'
+            known = (
+                ('Publication refusée : Relevé incomplet :', 'report-incomplete'),
+                ('Publication refusée : Positions contradictoires pour le bateau #', 'history-conflict'),
+                ('Publication refusée : Un relevé archivé est invalide.', 'stored-report-invalid'),
+                ('Publication refusée : En-tête POSREPORT absent.', 'report-format'),
+                ('Publication refusée : Aucune position dans le relevé.', 'report-format'),
+            )
+            for prefix, category in known:
+                if message.startswith(prefix):
+                    return category
         return 'validation'
     return 'unexpected'
 

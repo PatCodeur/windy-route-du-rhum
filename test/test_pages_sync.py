@@ -323,6 +323,60 @@ class PagesTests(unittest.TestCase):
                 self.assertIn('stage=' + failed_stage + '; category=' + category, errors.getvalue())
                 self.assertNotIn('private-password', errors.getvalue())
 
+    def test_cli_classifies_known_publisher_failures_without_exposing_received_text(self):
+        environment = dict(RHUM_FTP_HOST='private-host', RHUM_FTP_USER='private-user', RHUM_FTP_PASSWORD='private-password')
+        sentinel = 'private-password private-host private-user RECEIVED-SECRET-SENTINEL'
+        cases = [
+            ('Publication refusée : Relevé incomplet : 114 bateaux reçus, 115 minimum attendus. ', 'report-incomplete'),
+            ('Publication refusée : Positions contradictoires pour le bateau #1 à ', 'history-conflict'),
+            ('Publication refusée : Un relevé archivé est invalide. ', 'stored-report-invalid'),
+            ('Publication refusée : Positions, ligne 4 : Coordonnée latitude invalide : ', 'coordinate-invalid'),
+            ('Publication refusée : Positions, ligne 4 : Coordonnée longitude invalide : ', 'coordinate-invalid'),
+            ('Publication refusée : Positions, ligne 4 : Coordonnée hors limites : ', 'coordinate-invalid'),
+            ('Publication refusée : Positions, ligne 7 : Le cap doit être compris entre 0° inclus et 360° exclus. ', 'cap-range'),
+            ('Publication refusée : Positions, ligne 7 : Cap invalide. ', 'cap-invalid'),
+            ('Publication refusée : Positions, ligne 4 : Rang invalide. ', 'rank-invalid'),
+            ('Publication refusée : Positions, ligne 4 : Rang doit être un entier positif. ', 'rank-invalid'),
+            ('Publication refusée : Positions, ligne 4 : Date invalide (MM/JJ/AA HH:MM:SS attendu) : ', 'date-invalid'),
+            ('Publication refusée : Positions, ligne 4 : Date ou heure UTC invalide. ', 'date-invalid'),
+            ('Publication refusée : Positions, ligne 4 : Vitesse invalide. ', 'speed-invalid'),
+            ('Publication refusée : Positions, ligne 4 : La vitesse doit être un nombre positif ou nul en nœuds. ', 'speed-invalid'),
+            ('Publication refusée : Positions, ligne 4 : ID invalide. ', 'id-invalid'),
+            ('Publication refusée : Positions, ligne 4 : ID doit être un entier positif. ', 'id-invalid'),
+            ('Publication refusée : Positions, ligne 4 : ID en double : ', 'duplicate-id'),
+            ('Publication refusée : Positions, ligne 4 : Six champs séparés par des points-virgules sont attendus. ', 'field-count'),
+            ('Publication refusée : Positions, ligne 4 : Cap/vitesse invalide. ', 'movement-format'),
+            ('Publication refusée : Positions, ligne 4 : Unknown nested parser error ', 'report-format'),
+            ('Publication refusée : Positions, ligne injected : Rang invalide. ', 'validation'),
+            ('Publication refusée : En-tête POSREPORT absent. ', 'report-format'),
+            ('Publication refusée : Aucune position dans le relevé. ', 'report-format'),
+            ('Remote text containing Relevé incomplet : ', 'validation'),
+            ('Unrecognized publisher error ', 'validation'),
+        ]
+        for message, category in cases:
+            with self.subTest(category=category, prefix=message), tempfile.TemporaryDirectory() as directory:
+                environment['RUNNER_TEMP'] = directory
+                exception = ValueError(message + sentinel)
+                self.assertEqual(pages.failure_category(exception, 'restore'), 'validation')
+                def fail(config, password, work, stage):
+                    stage('latest-validation')
+                    raise exception
+                output, errors = io.StringIO(), io.StringIO()
+                with patch.dict(os.environ, environment, clear=True), \
+                        patch.object(pages, 'restore_data', return_value='durable-commit'), \
+                        patch.object(pages, 'sync_once', side_effect=fail), \
+                        patch.object(pages, 'save_data') as save, patch.object(pages, 'write_pages') as write, \
+                        patch.object(pages.time, 'sleep') as sleep, \
+                        contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+                    self.assertEqual(pages.main(['--once', '--output', str(Path(directory) / 'pages')]), 1)
+                    save.assert_not_called()
+                    write.assert_not_called()
+                    sleep.assert_not_called()
+                log = output.getvalue() + errors.getvalue()
+                self.assertIn('stage=latest-validation; category=' + category, log)
+                for secret in ['private-password', 'private-host', 'private-user', 'RECEIVED-SECRET-SENTINEL']:
+                    self.assertNotIn(secret, log)
+
 
 if __name__ == '__main__':
     unittest.main()
