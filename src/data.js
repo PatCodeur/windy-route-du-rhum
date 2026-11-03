@@ -16,9 +16,20 @@ function positiveInteger(value, label) {
     return value;
 }
 
+function nonNegativeInteger(value, label) {
+    if (!Number.isSafeInteger(value) || value < 0) fail(`${label} doit être un entier positif ou nul.`);
+    return value;
+}
+
 function integerText(value, label) {
     if (!/^\d+$/.test(value)) fail(`${label} invalide.`);
     return positiveInteger(Number(value), label);
+}
+
+function sourceRank(value) {
+    // Un statut ou un champ vide ne donne aucun rang et n'invalide pas la position.
+    // 0 est la valeur canonique d'un classement non communiqué, sans interpréter le statut.
+    return /^\d+$/.test(value) ? nonNegativeInteger(Number(value), 'Rang') : 0;
 }
 
 function numberText(value, label) {
@@ -126,7 +137,7 @@ export function parsePositions(text, identities = {}) {
             if (fields.length !== 6) fail('Six champs séparés par des points-virgules sont attendus.');
             const [rankText, idText, latText, lonText, timeText, movementText] = fields;
             const id = integerText(idText, 'ID');
-            const rank = integerText(rankText, 'Rang');
+            const rank = sourceRank(rankText);
             if (seen.has(id)) fail(`ID en double : ${id}`);
             const lat = coordinate(latText, true);
             const lon = coordinate(lonText, false);
@@ -174,7 +185,7 @@ export function normalizeFleet(geojson) {
             if (feature.id !== undefined && feature.id !== id) fail('ID GeoJSON incohérent.');
             if (seen.has(id)) fail(`ID en double : ${id}`);
             seen.add(id);
-            const rank = positiveInteger(p.rank ?? p.rang_source, 'Rang');
+            const rank = nonNegativeInteger(p.rank ?? p.rang_source, 'Rang');
             const [lon, lat] = feature.geometry.coordinates;
             if (typeof lat !== 'number' || typeof lon !== 'number' || !Number.isFinite(lat) ||
                 !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) {

@@ -263,6 +263,63 @@ test('Le premier chargement public affiche la flotte et sélectionne le relevé 
     } finally { env.destroy(); }
 });
 
+test('Un premier relevé public conserve les 115 positions même sans rangs communiqués', async () => {
+    const fleet = suppliedReports.at(-1).map(boat => ({ ...boat, rank: 0 }));
+    const env = await prepareStartup({ ...publicOptions, historySnapshot: [], fetch: async () => feedResponse([fleet]) });
+    try {
+        env.mount();
+        await settle();
+        assert.equal(env.state().boatCount, 115);
+        assert.equal(env.state().standingsCount, 115);
+        assert.equal(env.active('boat').length, 115);
+        assert.equal(env.state().mapNotice, '');
+        assert.equal(env.state().error, '');
+        assert.equal(env.evaluate('boats.every(boat => boat.rank === 0)'), true);
+        assert.equal(env.evaluate('[...standings.values()].every(standing => standing.rank === null && !standing.isLeader)'), true);
+        assert.equal(env.evaluate('rankLabel(0)'), '—');
+        assert.equal(env.evaluate('rankLabel(null)'), '—');
+        assert.equal(env.evaluate('rankLabel(1)'), '1er');
+        assert.equal(env.evaluate('rankLabel(2)'), '2e');
+        const card = env.evaluate('boatCardHtml(boats[0], { fleet: boats, history })');
+        assert.match(card, /aria-label="Rang transmis : Non communiqué"/);
+        assert.match(card, /<strong>—<\/strong>/);
+        assert.doesNotMatch(card, /0<small>e<\/small>/);
+    } finally { env.destroy(); }
+});
+
+test('Un rang 0 ne bloque pas le relevé suivant et se place après les classés de sa classe', async () => {
+    let attempts = 0;
+    const earlier = suppliedReports.slice(0, -1);
+    const unrankedId = suppliedReports.at(-1)[0].id;
+    const later = suppliedReports.map((fleet, index) => index === suppliedReports.length - 1 ?
+        fleet.map(boat => boat.id === unrankedId ? { ...boat, rank: 0 } : boat) : fleet);
+    const env = await prepareStartup({ ...publicOptions, historySnapshot: [],
+        fetch: async () => feedResponse(++attempts === 1 ? earlier : later),
+    });
+    try {
+        env.mount();
+        await settle();
+        const previous = env.state();
+        env.advanceTime(300000);
+        for (const tick of env.intervals.values()) tick();
+        await settle();
+        const current = env.state();
+        assert.equal(attempts, 2);
+        assertFleetStarted(env);
+        assert.equal(current.error, '');
+        assert.ok(Date.parse(current.newest) > Date.parse(previous.newest));
+        assert.equal(current.activeTimestamp, Date.parse(current.newest));
+        assert.equal(env.evaluate(`boats.find(boat => boat.id === ${unrankedId}).rank`), 0);
+        const classIds = Array.from(env.evaluate(`filtered.filter(boat => boat.className ===
+            boats.find(boat => boat.id === ${unrankedId}).className).map(boat => boat.id)`));
+        assert.ok(classIds.length > 1);
+        assert.equal(classIds.at(-1), unrankedId);
+        const ranked = Array.from(env.evaluate(`filtered.filter(boat => boat.className ===
+            boats.find(boat => boat.id === ${unrankedId}).className && boat.rank > 0).map(boat => boat.rank)`));
+        assert.deepEqual(ranked, [...ranked].sort((a, b) => a - b));
+    } finally { env.destroy(); }
+});
+
 test('Un premier échec public est retenté après cinq minutes même sans relevé reçu', async () => {
     let attempts = 0;
     const env = await prepareStartup({ ...publicOptions, historySnapshot: [], fetch: async () => {

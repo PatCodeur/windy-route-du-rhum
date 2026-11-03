@@ -10,6 +10,21 @@ https://windy-plugins.com/2439056/windy-plugin-rhum-personnel/0.9.0/plugin.min.j
 
 Le code est disponible dans [PatCodeur/windy-route-du-rhum](https://github.com/PatCodeur/windy-route-du-rhum), et le TAR public dans la [release v0.9.0](https://github.com/PatCodeur/windy-route-du-rhum/releases/tag/v0.9.0). **L’installation et le fonctionnement du plugin ont été vérifiés dans Windy. La demande d’examen pour la galerie Windy n’a pas encore été envoyée.**
 
+## Correctif 0.9.1 en préparation — non publié
+
+Le 3 novembre 2026, le déclenchement horaire de **10:10 UTC (11:10 à Paris)** a été accepté, puis GitHub a refusé le nouveau relevé. Le diagnostic de l’[exécution 41620646088](https://github.com/PatCodeur/windy-route-du-rhum/actions/runs/41620646088) a confirmé **115 lignes de positions, dont une avec un rang non numérique**. Le flux de production conserve le dernier relevé valide à **09:00:24 UTC** ; l’actualisation n’est pas encore rétablie. Voir [SECOURS-ACTUALISATION.md](SECOURS-ACTUALISATION.md).
+
+La version **0.9.1** est en préparation pour accepter un rang source textuel ou absent sans perdre la position du bateau et afficher **— / Non communiqué**. Aucun classement de remplacement n’est calculé. Le paquet 0.9.0 déjà publié refuse aussi ces rangs dans le flux JSON : l’activation du nouveau flux doit donc attendre la publication du correctif Windy.
+
+Ordre de mise en service :
+
+1. Préparer et vérifier le correctif sur `release/rang-non-communique-0.9.1`, puis construire son paquet public.
+2. Envoyer **0.9.1** à l’API Windy et conserver l’URL réellement renvoyée par le service. **Cet envoi n’est pas encore confirmé.**
+3. Installer cette version et vérifier sa lecture d’un relevé contenant un rang inconnu.
+4. Activer le correctif du relais sur `main`, relancer la récupération puis vérifier l’heure du flux public, les 115 bateaux, les traces et l’affichage dans Windy.
+
+La version installée et publiée demeure **0.9.0** tant que ces étapes ne sont pas confirmées. Les preuves de publication et l’URL 0.9.0 ci-dessous restent celles de la version déjà en ligne.
+
 ## Installer et ouvrir le plugin
 
 1. Ouvrir [les plugins Windy](https://www.windy.com/plugins).

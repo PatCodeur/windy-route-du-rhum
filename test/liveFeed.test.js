@@ -17,6 +17,14 @@ test('Lit les trois formats de flux et restitue les mêmes observations normalis
     assert.deepEqual(parseFeed(history([[boat]]), identities), [[boat]]);
 });
 
+test('Un classement non numérique du POSREPORT devient un rang inconnu lisible dans l’historique public', () => {
+    const fleets = parseFeed(report.replace(/^1;/m, 'NC;'), identities);
+    assert.equal(fleets.length, 1);
+    assert.deepEqual(fleets[0], [{ ...boat, rank: 0 }]);
+    assert.deepEqual(parseFeed(history(fleets), identities), fleets);
+    assert.throws(() => parseFeed(history([[{ ...boat, rank: 'NC' }]]), identities), /Rang/);
+});
+
 test('Recharge les identités locales d’un flux normalisé resté anonyme', () => {
     const unknown = { ...boat, known: false, name: 'Bateau #5', skipper: '', className: 'Non renseignée' };
     assert.deepEqual(parseFeed(history([[unknown]]), identities), [[boat]]);

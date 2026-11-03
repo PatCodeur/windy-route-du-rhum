@@ -43,6 +43,32 @@ test('Conserve une position sans annuaire et accepte les rangs égaux entre clas
         { name: 'Bateau #9', className: 'Non renseignée', known: false });
 });
 
+test('Conserve le rang source 0 sans perdre le bateau ni lui inventer un classement', () => {
+    const boats = parsePositions(report(`${row}\n${row.replace(/^1;5;/, '0;9;')}`), identities);
+    assert.equal(boats.length, 2);
+    assert.equal(boats[0].rank, 1);
+    assert.equal(boats[1].rank, 0);
+    assert.equal(boats[1].id, 9);
+    assert.equal(boats[1].time, boats[0].time);
+    assert.throws(() => parsePositions(report(row.replace(/^1;/, '9007199254740992;'))), /Rang/);
+});
+
+test('Un rang source absent ou un statut conserve les positions sans inventer de classement', () => {
+    for (const value of ['', 'DNF', '-', 'NC', 'aucun', '-1', '1.5', 'NaN', 'Infinity', '1e2']) {
+        const boats = parsePositions(report(`${row}\n${row.replace(/^1;5;/, `${value};9;`)}`), identities);
+        assert.equal(boats.length, 2, value);
+        assert.equal(boats[0].rank, 1, value);
+        assert.equal(boats[1].rank, 0, value);
+        assert.equal(boats[1].id, 9, value);
+        assert.equal(boats[1].lat, boats[0].lat, value);
+        assert.equal(boats[1].time, boats[0].time, value);
+    }
+    const noRank = row.replace(/^1;/, 'NC;');
+    assert.throws(() => parsePositions(report(noRank.replace('47.5442N', '91.0000N'))), /Coordonnée/);
+    assert.throws(() => parsePositions(report(noRank.replace(';5;', ';0;'))), /ID/);
+    assert.throws(() => parsePositions(report(noRank.replace('248/31.1', '248/-1'))), /Vitesse/);
+});
+
 test('Rejette les coordonnées erronées au lieu de les interpréter comme degrés décimaux', () => {
     for (const invalid of ['47.6000N', '91.0000N', '90.0001N', '47.5442W', 'NaNN', '-47.5442N']) {
         assert.throws(() => parsePositions(report(row.replace('47.5442N', invalid))), undefined, invalid);
@@ -60,7 +86,7 @@ test('Valide les calendriers et heures UTC, indépendamment du fuseau de la mach
 
 test('Refuse relevés vides, champs manquants, ID dupliqué et mouvement invalide', () => {
     for (const invalid of ['', 'POSREPORT', report(row).replace('POSREPORT', 'AUTRE'),
-        report(`${row}\n${row}`), report(row.replace(';5;', ';0;')), report(row.replace('1;', '0;')),
+        report(`${row}\n${row}`), report(row.replace(';5;', ';0;')),
         report(row.replace('248/31.1', '360/31.1')), report(row.replace('248/31.1', '-1/31.1')),
         report(row.replace('248/31.1', 'NaN/31.1')), report(row.replace('248/31.1', '248/-1')),
         report(row.replace('248/31.1', '248/Infinity')), report(row.replace('248/31.1', '248/')),
@@ -83,6 +109,16 @@ const collection = (...features) => ({ type: 'FeatureCollection', features });
 
 test('Le GeoJSON Python et le flux texte produisent exactement la même flotte', () => {
     assert.deepEqual(normalizeFleet(collection(feature())), parsePositions(report(row), identities));
+});
+
+test('Accepte le rang 0 dans les propriétés GeoJSON Python et JS en conservant les validations', () => {
+    const [boat] = parsePositions(report(row.replace(/^1;/, '0;')), identities);
+    assert.deepEqual(normalizeFleet(collection(feature({ rang_source: 0 }))), [boat]);
+    assert.deepEqual(normalizeFleet(collection(feature({ rank: 0 }))), [boat]);
+    for (const invalid of [-1, 1.5, '0', 'NC', '', null, NaN, Infinity, 9007199254740992]) {
+        assert.throws(() => normalizeFleet(collection(feature({ rang_source: invalid }))), /Rang/);
+    }
+    assert.throws(() => normalizeFleet(collection(feature({ id: 0 }))), /ID/);
 });
 
 test('Accepte les propriétés JS, calcule les bornes UTC et les identités manquantes', () => {

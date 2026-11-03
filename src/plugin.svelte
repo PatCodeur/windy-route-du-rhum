@@ -60,6 +60,12 @@
     const distanceLabel = value => Number.isFinite(value) ? `${nautical.format(value)} MN` : '—';
     const gapLabel = value => Number.isFinite(value) ?
         `${value >= 0.05 ? '+' : ''}${nautical.format(Math.abs(value) < 0.05 ? 0 : value)} MN` : '—';
+    const rankLabel = rank => Number.isSafeInteger(rank) && rank > 0 ? `${rank}${rank === 1 ? 'er' : 'e'}` : '—';
+    function compareRanks(first, second) {
+        if (first === 0) return second === 0 ? 0 : 1;
+        if (second === 0) return -1;
+        return first - second;
+    }
     $: navigation = timelineState(history, activeTimestamp);
     $: cursorTime = navigation.time;
     $: cursorIndex = Math.max(0, navigation.index);
@@ -72,7 +78,7 @@
     $: fleetStats = stats(boats);
     $: filtered = boats.filter(boat => (!selectedClass || boat.className === selectedClass) &&
         fold(`${boat.id} ${boat.name} ${boat.skipper}`).includes(fold(query.trim())))
-        .sort((a, b) => a.className.localeCompare(b.className) || a.rank - b.rank || a.id - b.id);
+        .sort((a, b) => a.className.localeCompare(b.className) || compareRanks(a.rank, b.rank) || a.id - b.id);
     $: selectedBoat = boats.find(boat => boat.id === selectedId);
     $: if (mounted) draw(history, filtered, boats, selectedId, cursorTime, traceMode, colorMode, referenceTime, syncWeather);
 
@@ -397,9 +403,9 @@
         {#each filtered as boat (boat.id)}
             {@const standing = standings.get(boat.id)}
             <button class="boat" class:selected={boat.id === selectedId} style:border-left-color={boatColor(boat, colorMode)} on:click={() => showBoat(boat)}>
-                <div class="boat-heading"><b class="rank-chip">{boat.rank}{boat.rank === 1 ? 'er' : 'e'}</b><strong>{boat.name}</strong></div>
+                <div class="boat-heading"><b class="rank-chip">{rankLabel(standing.rank)}</b><strong>{boat.name}</strong></div>
                 <span>{boat.skipper || `ID ${boat.id} — identité à compléter`}</span>
-                <span>{boat.className} · Rang transmis {boat.rank}</span>
+                <span>{boat.className} · Rang transmis {standing.rank ?? 'Non communiqué'}</span>
                 <span>{boat.speed.toFixed(1)} nd · Cap {Math.round(boat.heading) % 360}°{boat.interpolated ? ' · estimés' : ''}</span>
                 <span class="boat-distances"><b>À la ligne : {distanceLabel(standing.distanceToFinishNm)}</b><br />Écart au leader : {gapLabel(standing.gapToLeaderNm)}{standing.isLeader ? ' · Leader' : ''}</span>
                 <small class:stale={oldPosition(boat, referenceTime)}>{formatDate(boat.time)}{oldPosition(boat, referenceTime) ? ' · ancienne (> 2 h)' : ''}</small>
