@@ -264,6 +264,23 @@ def prepare_runtime(repo, work):
     (work / 'package.json').write_text('{"type":"module"}\n', encoding='utf-8')
 
 
+def report_shape(raw):
+    """Compte les anomalies de rang sans journaliser aucun champ du relevé."""
+    rows = [line for line in raw.splitlines()[1:] if line.strip()]
+    result = dict(rows=len(rows), rankZero=0, rankNonNumeric=0, rankOversized=0)
+    for line in rows:
+        rank = line.split(b';', 1)[0].strip()
+        if not re.fullmatch(rb'[0-9]+', rank):
+            result['rankNonNumeric'] += 1
+            continue
+        significant = rank.lstrip(b'0')
+        if not significant:
+            result['rankZero'] += 1
+        elif len(significant) > 16 or (len(significant) == 16 and significant > b'9007199254740991'):
+            result['rankOversized'] += 1
+    return result
+
+
 def sync_once(config, password, work, client_factory=None, budget_seconds=240, max_archives=36,
               stage=lambda value: None):
     """Dernier point d’abord ; les archives en attente reprennent au passage suivant."""
@@ -278,6 +295,8 @@ def sync_once(config, password, work, client_factory=None, budget_seconds=240, m
         stage('latest-download')
         latest = relay.download_from_client(client, config['remote_path'])
         stage('latest-validation')
+        shape = report_shape(latest)
+        print('Dernier relevé reçu : ' + '; '.join(key + '=' + str(value) for key, value in shape.items()) + '.')
         result['latest'] = relay.publish_report(latest, config, work)
         stage('archive-list')
         try:

@@ -377,6 +377,32 @@ class PagesTests(unittest.TestCase):
                 for secret in ['private-password', 'private-host', 'private-user', 'RECEIVED-SECRET-SENTINEL']:
                     self.assertNotIn(secret, log)
 
+    def test_rank_shape_distinguishes_zero_from_invalid_and_oversized_without_values(self):
+        sentinel = b'PRIVATE-SOURCE-SENTINEL'
+        raw = b'POSREPORT\r\n' + b'\r\n'.join(rank + b';' + sentinel for rank in [
+            b'1', b' 002 ', b'0', b'000', b'-1', b'', b'abc', b'1.5',
+            b'9007199254740991', b'9007199254740992', b'9' * 10_000,
+        ]) + b'\r\n\r\n'
+        shape = pages.report_shape(raw)
+        self.assertEqual(shape, dict(rows=11, rankZero=2, rankNonNumeric=4, rankOversized=2))
+        self.assertNotIn(sentinel.decode(), json.dumps(shape))
+
+    def test_latest_shape_is_logged_before_validation_failure_without_source_text(self):
+        raw = b'POSREPORT\n0;PRIVATE-SOURCE-SENTINEL\n1;private-password\n'
+        ftp = FakeFTP(names=())
+        ftp.size = lambda path: len(raw)
+        ftp.retrbinary = lambda command, callback: callback(raw)
+        output = io.StringIO()
+        with tempfile.TemporaryDirectory() as directory, \
+                patch.object(pages.relay, 'publish_report', side_effect=ValueError('private-password')), \
+                contextlib.redirect_stdout(output):
+            with self.assertRaises(ValueError):
+                pages.sync_once(CONFIG, 'private-password', directory, lambda: ftp)
+        self.assertEqual(output.getvalue(),
+                         'Dernier relevé reçu : rows=2; rankZero=1; rankNonNumeric=0; rankOversized=0.\n')
+        self.assertNotIn('PRIVATE-SOURCE-SENTINEL', output.getvalue())
+        self.assertNotIn('private-password', output.getvalue())
+
 
 if __name__ == '__main__':
     unittest.main()
