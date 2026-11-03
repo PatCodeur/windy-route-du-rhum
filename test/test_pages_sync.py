@@ -209,6 +209,120 @@ class PagesTests(unittest.TestCase):
         for value in ['private-password', 'private-host', 'private-user']:
             self.assertNotIn(value, text)
 
+    def test_cli_retries_transient_ftp_with_fresh_workspace_before_publication(self):
+        environment = dict(RHUM_FTP_HOST='private-host', RHUM_FTP_USER='private-user', RHUM_FTP_PASSWORD='private-password')
+        workspaces = []
+
+        def sync(config, password, work, stage):
+            workspaces.append(Path(work))
+            stage('latest-download')
+            self.assertFalse((Path(work) / 'incomplete-report').exists())
+            if len(workspaces) == 1:
+                (Path(work) / 'incomplete-report').write_text('partial data')
+                raise TimeoutError('private-host private-user private-password')
+            populate(work)
+            return dict(archivesImported=1, archivesPending=0, archiveErrors=0)
+
+        output, errors = io.StringIO(), io.StringIO()
+        with tempfile.TemporaryDirectory() as directory:
+            environment['RUNNER_TEMP'] = directory
+            destination = Path(directory) / 'pages'
+            with patch.dict(os.environ, environment, clear=True), \
+                    patch.object(pages, 'restore_data', return_value='durable-commit') as restore, \
+                    patch.object(pages, 'sync_once', side_effect=sync), \
+                    patch.object(pages, 'save_data', return_value='new-commit') as save, \
+                    patch.object(pages.time, 'sleep') as sleep:
+                with contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+                    self.assertEqual(pages.main(['--once', '--output', str(destination)]), 0)
+                self.assertEqual(json.loads((destination / 'live/status.json').read_text()), STATUS)
+                self.assertFalse((destination / 'incomplete-report').exists())
+                self.assertEqual(restore.call_count, 2)
+                save.assert_called_once()
+                sleep.assert_called_once_with(20)
+        self.assertEqual(len(set(workspaces)), 2)
+        self.assertTrue(all(not work.exists() for work in workspaces))
+        self.assertIn('stage=latest-download; category=timeout; attempt=1/3', errors.getvalue())
+        for secret in ['private-password', 'private-host', 'private-user']:
+            self.assertNotIn(secret, output.getvalue() + errors.getvalue())
+
+    def test_cli_retries_git_save_using_the_newly_restored_commit(self):
+        environment = dict(RHUM_FTP_HOST='private-host', RHUM_FTP_USER='private-user', RHUM_FTP_PASSWORD='private-password')
+        workspaces = []
+
+        def sync(config, password, work, stage):
+            workspaces.append(Path(work))
+            populate(work)
+            return dict(archivesImported=0, archivesPending=0, archiveErrors=0)
+
+        with tempfile.TemporaryDirectory() as directory:
+            environment['RUNNER_TEMP'] = directory
+            with patch.dict(os.environ, environment, clear=True), \
+                    patch.object(pages, 'restore_data', side_effect=['original-commit', 'concurrent-commit']) as restore, \
+                    patch.object(pages, 'sync_once', side_effect=sync), \
+                    patch.object(pages, 'save_data', side_effect=[pages.GitOperationError('private-password'), 'new-commit']) as save, \
+                    patch.object(pages.time, 'sleep') as sleep, \
+                    contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                self.assertEqual(pages.main(['--once', '--output', str(Path(directory) / 'pages')]), 0)
+                self.assertEqual(restore.call_count, 2)
+                self.assertEqual([call.args[2] for call in save.call_args_list], ['original-commit', 'concurrent-commit'])
+                sleep.assert_called_once_with(20)
+        self.assertEqual(len(set(workspaces)), 2)
+
+    def test_cli_stops_after_three_network_attempts_and_keeps_previous_publication(self):
+        environment = dict(RHUM_FTP_HOST='private-host', RHUM_FTP_USER='private-user', RHUM_FTP_PASSWORD='private-password')
+        def fail(config, password, work, stage):
+            stage('ftp-connect')
+            raise ConnectionResetError('private-password private-host private-user')
+
+        errors = io.StringIO()
+        with tempfile.TemporaryDirectory() as directory:
+            environment['RUNNER_TEMP'] = directory
+            destination = Path(directory) / 'pages'
+            destination.mkdir()
+            previous = destination / 'previous-publication'
+            previous.write_text('unchanged')
+            with patch.dict(os.environ, environment, clear=True), \
+                    patch.object(pages, 'restore_data', return_value='original-commit'), \
+                    patch.object(pages, 'sync_once', side_effect=fail) as sync, \
+                    patch.object(pages, 'save_data') as save, patch.object(pages, 'write_pages') as write, \
+                    patch.object(pages.time, 'sleep') as sleep, contextlib.redirect_stderr(errors):
+                self.assertEqual(pages.main(['--once', '--output', str(destination)]), 1)
+                self.assertEqual(sync.call_count, 3)
+                self.assertEqual(sleep.call_count, 2)
+                save.assert_not_called()
+                write.assert_not_called()
+            self.assertEqual(previous.read_text(), 'unchanged')
+            self.assertEqual(list(destination.iterdir()), [previous])
+        self.assertIn('stage=ftp-connect; category=connection', errors.getvalue())
+        for secret in ['private-password', 'private-host', 'private-user']:
+            self.assertNotIn(secret, errors.getvalue())
+
+    def test_cli_does_not_retry_ftp_permission_or_structural_validation_failures(self):
+        environment = dict(RHUM_FTP_HOST='private-host', RHUM_FTP_USER='private-user', RHUM_FTP_PASSWORD='private-password')
+        cases = [('ftp-connect', pages.ftplib.error_perm('530 private-password'), 'ftp-permission'),
+                 ('latest-download', ValueError('private-password partial report'), 'validation'),
+                 ('latest-validation', ValueError('private-password invalid report'), 'validation'),
+                 ('restore', ValueError('private-password forbidden file'), 'validation')]
+        for failed_stage, exception, category in cases:
+            with self.subTest(stage=failed_stage), tempfile.TemporaryDirectory() as directory:
+                environment['RUNNER_TEMP'] = directory
+                def fail(config, password, work, stage):
+                    stage(failed_stage)
+                    raise exception
+                errors = io.StringIO()
+                with patch.dict(os.environ, environment, clear=True), \
+                        patch.object(pages, 'restore_data', return_value='original-commit'), \
+                        patch.object(pages, 'sync_once', side_effect=fail) as sync, \
+                        patch.object(pages, 'save_data') as save, patch.object(pages, 'write_pages') as write, \
+                        patch.object(pages.time, 'sleep') as sleep, contextlib.redirect_stderr(errors):
+                    self.assertEqual(pages.main(['--once', '--output', str(Path(directory) / 'pages')]), 1)
+                    sync.assert_called_once()
+                    save.assert_not_called()
+                    write.assert_not_called()
+                    sleep.assert_not_called()
+                self.assertIn('stage=' + failed_stage + '; category=' + category, errors.getvalue())
+                self.assertNotIn('private-password', errors.getvalue())
+
 
 if __name__ == '__main__':
     unittest.main()

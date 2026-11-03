@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Un passage FTP pour GitHub Pages ; les archives durables restent dans race-data."""
 import argparse
+import ftplib
 import importlib.util
 import json
 import os
@@ -19,10 +20,43 @@ LIVE = ('historique.json', 'positions.geojson', 'status.json')
 REPORT_PATH = re.compile(r'state/ftp/reports/[a-f0-9]{64}\.json', re.ASCII)
 MAX_BLOB_BYTES = 90 * 1024 * 1024
 COPY_SOURCES = ('data.js', 'identities.js', 'historySnapshot.js', 'history.js', 'liveFeed.js')
+MAX_ATTEMPTS = 3
+RETRY_DELAY_SECONDS = 20
 
 spec = importlib.util.spec_from_file_location('rhum_ftp_relay', ROOT / 'tools' / 'ftp-relay.py')
 relay = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(relay)
+
+
+class GitOperationError(RuntimeError):
+    """Échec Git dont le dialogue distant ne doit jamais être journalisé."""
+
+
+def failure_category(error, stage):
+    """Codes constants : ni texte du serveur, ni chemin, ni identifiant."""
+    if isinstance(error, GitOperationError):
+        return 'git-operation'
+    if isinstance(error, ftplib.error_perm):
+        return 'ftp-permission'
+    if isinstance(error, ftplib.error_temp):
+        return 'ftp-temporary'
+    if isinstance(error, (TimeoutError, subprocess.TimeoutExpired)):
+        return 'timeout'
+    if isinstance(error, (ConnectionError, EOFError)):
+        return 'connection'
+    if isinstance(error, OSError):
+        return 'network' if stage in {'ftp-connect', 'latest-download'} else 'local-io'
+    if isinstance(error, ValueError):
+        return 'validation'
+    return 'unexpected'
+
+
+def retryable_failure(error, stage):
+    if stage in {'restore', 'save'}:
+        return isinstance(error, (GitOperationError, subprocess.TimeoutExpired))
+    if stage in {'ftp-connect', 'latest-download'}:
+        return isinstance(error, (OSError, EOFError, ftplib.error_temp))
+    return False
 
 
 def allowed_path(name):
@@ -56,7 +90,7 @@ def git(root, *args, data=None, env=None, allowed_codes=(0,)):
                             stderr=subprocess.PIPE, env=env, timeout=90, check=False)
     if result.returncode not in allowed_codes:
         # Git peut inclure une URL authentifiée ou un serveur distant dans stderr.
-        raise RuntimeError('La sauvegarde GitHub de la course est indisponible ; aucune publication effectuée.')
+        raise GitOperationError('La sauvegarde GitHub de la course est indisponible ; aucune publication effectuée.')
     return result
 
 
@@ -190,17 +224,22 @@ def prepare_runtime(repo, work):
     (work / 'package.json').write_text('{"type":"module"}\n', encoding='utf-8')
 
 
-def sync_once(config, password, work, client_factory=None, budget_seconds=240, max_archives=36):
+def sync_once(config, password, work, client_factory=None, budget_seconds=240, max_archives=36,
+              stage=lambda value: None):
     """Dernier point d’abord ; les archives en attente reprennent au passage suivant."""
     work = Path(work)
     manifest = work / MANIFEST
     published = read_manifest(manifest.read_bytes()) if manifest.exists() else set()
     started = time.monotonic()
     result = {'archivesImported': 0, 'archiveErrors': 0, 'archivesPending': 0}
+    stage('ftp-connect')
     with relay.connected_client(config, password, client_factory) as client:
         # Une erreur ici interrompt le job avant sauvegarde/déploiement.
+        stage('latest-download')
         latest = relay.download_from_client(client, config['remote_path'])
+        stage('latest-validation')
         result['latest'] = relay.publish_report(latest, config, work)
+        stage('archive-list')
         try:
             names = relay.list_archive_names(client, config['archive_path'])
         except Exception:
@@ -211,11 +250,13 @@ def sync_once(config, password, work, client_factory=None, budget_seconds=240, m
             if result['archivesImported'] >= max_archives or time.monotonic() - started >= budget_seconds:
                 break
             try:
+                stage('archive-download')
                 raw = relay.download_from_client(client, config['archive_path'] + '/' + name)
             except Exception:
                 result['archiveErrors'] += 1
                 break  # Une réponse FTP peut être restée en attente après un RETR interrompu.
             try:
+                stage('archive-validation')
                 relay.publish_report(raw, config, work)
             except Exception:
                 result['archiveErrors'] += 1
@@ -275,28 +316,51 @@ def main(argv=None):
     parser.add_argument('--once', action='store_true', required=True)
     parser.add_argument('--output', type=Path, default=ROOT / 'pages')
     args = parser.parse_args(argv)
+    current_stage = 'config'
+
+    def stage(value):
+        nonlocal current_stage
+        current_stage = value
+
     try:
         config, password = config_from_environment(os.environ)
         temp_dir = os.environ.get('RUNNER_TEMP')
         if not temp_dir or not Path(temp_dir).is_dir():
             raise ValueError('Le dossier temporaire privé du runner GitHub est absent.')
-        with tempfile.TemporaryDirectory(prefix='rhum-run-', dir=temp_dir) as directory:
-            work = Path(directory)
-            prepare_runtime(ROOT, work)
-            previous = restore_data(ROOT, work)
-            result = sync_once(config, password, work)
-            # La persistance doit réussir avant le déploiement ; les erreurs d’archives
-            # conservent les données déjà reçues et réessaient au passage suivant.
-            save_data(ROOT, work, previous, temp_dir)
-            write_pages(work, args.output)
-            print('Dernier relevé validé et sauvegardé. Archives ajoutées : ' + str(result['archivesImported']) +
-                  '. Archives en attente : ' + str(result['archivesPending']) + '.')
-            if result['archiveErrors']:
-                print('::warning::Certaines archives sont indisponibles ; nouvel essai au prochain passage.')
+        for attempt in range(1, MAX_ATTEMPTS + 1):
+            try:
+                # Un nouvel essai repart exclusivement de la sauvegarde durable ;
+                # aucun relevé partiellement traité ne passe d’un essai à l’autre.
+                stage('runtime')
+                with tempfile.TemporaryDirectory(prefix='rhum-run-', dir=temp_dir) as directory:
+                    work = Path(directory)
+                    prepare_runtime(ROOT, work)
+                    stage('restore')
+                    previous = restore_data(ROOT, work)
+                    result = sync_once(config, password, work, stage=stage)
+                    # La persistance doit réussir avant le déploiement ; les erreurs d’archives
+                    # conservent les données déjà reçues et réessaient au passage suivant.
+                    stage('save')
+                    save_data(ROOT, work, previous, temp_dir)
+                    stage('pages')
+                    write_pages(work, args.output)
+                    print('Dernier relevé validé et sauvegardé. Archives ajoutées : ' + str(result['archivesImported']) +
+                          '. Archives en attente : ' + str(result['archivesPending']) + '.')
+                    if result['archiveErrors']:
+                        print('::warning::Certaines archives sont indisponibles ; nouvel essai au prochain passage.')
+                return 0
+            except Exception as error:
+                if attempt == MAX_ATTEMPTS or not retryable_failure(error, current_stage):
+                    raise
+                print('::warning::Nouvel essai après interruption (stage=' + current_stage +
+                      '; category=' + failure_category(error, current_stage) + '; attempt=' + str(attempt) +
+                      '/' + str(MAX_ATTEMPTS) + ').', file=sys.stderr)
+                time.sleep(RETRY_DELAY_SECONDS)
         return 0
-    except Exception:
+    except Exception as error:
         # Ne jamais publier d’exception distante : elle peut contenir des identifiants.
-        print('::error::Actualisation refusée. Vérifiez les trois secrets FTP, la disponibilité du serveur et les droits GitHub. Le flux précédemment publié est conservé.', file=sys.stderr)
+        print('::error::Actualisation refusée (stage=' + current_stage + '; category=' +
+              failure_category(error, current_stage) + '). Le flux précédemment publié est conservé.', file=sys.stderr)
         return 1
 
 
