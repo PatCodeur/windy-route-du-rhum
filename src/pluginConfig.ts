@@ -1,7 +1,7 @@
 import type { ExternalPluginConfig } from '@windy/interfaces';
 
 const config: ExternalPluginConfig = {
-    name: 'windy-plugin-rhum-personnel',
+    name: 'windy-plugin-rhum',
     version: '0.9.2',
     icon: '⛵',
     title: 'Route du Rhum — ma flotte',
@@ -10,6 +10,6 @@ const config: ExternalPluginConfig = {
     mobileUI: 'small',
     desktopWidth: 360,
     routerPath: '/rhum-personnel',
-    private: true,
+    private: false,
 };
 export default config;
